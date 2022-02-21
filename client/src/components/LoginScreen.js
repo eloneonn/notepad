@@ -1,5 +1,5 @@
 import { Avatar, Button, Container, TextField, Typography } from "@mui/material";
-import { Box } from "@mui/system";
+import { Box, padding } from "@mui/system";
 import LoginIcon from '@mui/icons-material/Login';
 import React from "react";
 
@@ -50,7 +50,7 @@ const LoginScreen = () => {
                             autoComplete="current-password"
                         />
 
-                        <Button type="submit" variant="contained" fullWidth sx={{ mt: '2em'}} >login</Button>
+                        <Button type="submit" size="large" variant="contained" fullWidth sx={{ mt: '2em'}} >login</Button>
                     </Box>
                 </Box>
         </Container>
