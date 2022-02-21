@@ -33,8 +33,8 @@ const App = () => {
         <NoteMasonry />
 
         <StyledFab >
-            <EditIcon />
-          </StyledFab>
+          <EditIcon />
+        </StyledFab>
 
       </Container>
     </Root>
