@@ -14,7 +14,7 @@ const App = () => {
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   }));
 
-  const StyledFab = styled(Fab)(({ theme }) => ({
+  const StyledFab = styled(Fab)(({ theme }) => ({ //? Pitäisikö tästä tehdä oma react-komponentti?
     position: 'fixed',
     bottom: 16,
     left: '50%',
