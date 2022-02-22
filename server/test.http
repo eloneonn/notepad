@@ -1,12 +1,22 @@
+### //  LOGIN
+POST http://localhost:3003/api/login/
+Content-Type: application/json
+
+{
+    "email": "testi@testi.com",
+    "password": "asdasdasd"
+} 
+
 ### //  CREATE A NEW USER
 POST http://localhost:3003/api/users/
 Content-Type: application/json
 
 {
-    "email": "onni.elonen@gmail.com",
-    "type_id": 1,
-    "name": "Onni Elonen",
-    "password": "asdasdasd"
+    "email": "testi@testi.com",
+    "name": "Testeri Testimies",
+    "password": "asdasdasd",
+    "type_id": 1
 } 
 ### //  GET ALL USERS
 GET http://localhost:3003/api/users/
+
