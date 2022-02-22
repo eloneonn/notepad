@@ -1,11 +1,13 @@
 const bcrypt = require('bcrypt')
 const usersRouter = require('express').Router()
+const emailValidator = require('email-validator')
 const db = require('../db/index')
 
 usersRouter.post('/', async (request, response) => {
   const body = request.body
 
-  if (body.password.length > 3 && body.password !== undefined) {
+  //TODO EMAIL-DUPLIKAATION TARKISTAMINEN JO TÄSSÄ
+  if (body.password.length > 3 && body.password !== undefined && emailValidator.validate(body.email)) {
 
     const saltRounds = 15
     const passwordHash = await bcrypt.hash(body.password, saltRounds)
@@ -26,7 +28,7 @@ usersRouter.post('/', async (request, response) => {
           response.status(400).json(e.message)
       }
   } else {
-    response.status(400).json('User validation failed: password was either undefined or too short (minimum length: 3)')
+    response.status(400).json('User validation failed: either the password was too short or the email was invalid')
   }
 })
 

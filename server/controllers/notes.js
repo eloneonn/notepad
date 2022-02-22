@@ -14,8 +14,6 @@ notesRouter.get('/', async (request, response) => {
 notesRouter.post('/', async (request, response, next) => {
     const user = request.user
 
-    console.log('notes.js got the user:', user);
-
     if (!user) {
         return response.status(401).json({ error: 'token missing or invalid'})
     }

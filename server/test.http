@@ -14,7 +14,7 @@ Content-Type: application/json
 {
     "email": "testi@testi.com",
     "name": "Testeri Testimies",
-    "password": "asdasdasd",
+    "password": "eees",
     "type_id": 1
 } 
 ### //  GET ALL USERS
