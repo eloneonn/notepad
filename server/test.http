@@ -1,0 +1,12 @@
+### //  CREATE A NEW USER
+POST http://localhost:3003/api/users/
+Content-Type: application/json
+
+{
+    "email": "onni.elonen@gmail.com",
+    "type_id": 1,
+    "name": "Onni Elonen",
+    "password": "asdasdasd"
+} 
+### //  GET ALL USERS
+GET http://localhost:3003/api/users/

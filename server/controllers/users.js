@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
 const usersRouter = require('express').Router()
-const User = require('../models/user')
+const db = require('../db/index')
 
 usersRouter.post('/', async (request, response) => {
   const body = request.body
@@ -9,16 +9,17 @@ usersRouter.post('/', async (request, response) => {
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(body.password, saltRounds)
 
-    const user = new User({
-        username: body.username,
+    const user = ({
+        type_id: body.type_id,
+        email: body.email,
         name: body.name,
         passwordHash,
       })
     
       try {
-        const savedUser = await user.save() //! TÄMÄ MUUTTUU
+        const savedUser = await db.query('INSERT INTO users(type_id, name, email, hash) VALUES($1, $2, $3, $4) RETURNING *', [user.type_id, user.name, user.email, user.passwordHash])
 
-        response.json(savedUser)
+        response.json(savedUser.rows)
 
       } catch(e) {
           response.status(400).json(e.message)
@@ -31,8 +32,11 @@ usersRouter.post('/', async (request, response) => {
 })
 
 usersRouter.get('/', async (request, response) => {
-    const users = await User.find({}).populate('blogs', { user: 0 })  //! TÄMÄ MUUTTUU
-    response.json(users.map(u => u.toJSON()))
+
+    const res = await db.query('SELECT * FROM users')
+    response.json(res.rows)
+    
+//   response.json(users.map(u => u.toJSON()))
 })
 
 module.exports = usersRouter
