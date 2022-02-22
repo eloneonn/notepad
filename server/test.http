@@ -20,3 +20,18 @@ Content-Type: application/json
 ### //  GET ALL USERS
 GET http://localhost:3003/api/users/
 
+### //  CREATE A NEW NOTE
+POST http://localhost:3003/api/notes/
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RpQHRlc3RpLmNvbSIsImlkIjoxLCJpYXQiOjE2NDU1NjMxOTd9.iNCDbIczJtIhAAvvvqR8Y1HSUVCb-mv3lJxRIkN1P0E
+
+{
+    "title": "aaaaaaaaaaaaaaaaaaaaaaa",
+    "content": "blaal lbasld asidj alsidsaskdjalskd asld jals kjas asdl iajs"
+} 
+
+### //  GET ALL NOTES OF USER WHO IS LOGGED IN
+GET http://localhost:3003/api/notes/
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RpQHRlc3RpLmNvbSIsImlkIjoxLCJpYXQiOjE2NDU1NjM3NjJ9.-Y1D2Lm5yfTkpVa0fzHZFwC0CgjsYW3XNtmYJwv61nQ
+
