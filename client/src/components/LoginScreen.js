@@ -16,13 +16,15 @@ const LoginScreen = () => {
     const [ loading, setLoading] = useState(false)
 
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event) => { //! ILMAN ASYNC/AWAITTIA JA TILAN MYÖHÄISTÄ MUUTTAMISTA
         event.preventDefault()
 
         setLoading(true)
 
-        dispatch(login({ email, password }))
-        
+        await dispatch(login({ email, password }))
+
+        setLoading(false)
+
         setEmail('')
         setPassword('')
     }
@@ -37,13 +39,12 @@ const LoginScreen = () => {
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                    <Avatar sx={{ m: 1 }}>
                         <LoginIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
                         Login to notepad
                     </Typography>
-
 
                     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2, }}>
                         <TextField 
