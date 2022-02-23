@@ -25,9 +25,7 @@ export const login = (user) => {
                 
                 userService.setUser(resultedUser)
                 dispatch(setUser(resultedUser))
-                dispatch(initializeNotes())
-                console.log('User logged in:', resultedUser)
-    
+                dispatch(initializeNotes())    
             } else {
                 
             }

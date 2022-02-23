@@ -1,25 +1,13 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Fab from '@mui/material/Fab';
-import EditIcon from '@mui/icons-material/Edit';
 import Note from './Note'
-import { styled } from '@mui/material/styles';
 import Masonry from '@mui/lab/Masonry';
 import { useSelector } from 'react-redux';
 import { Container, Typography } from '@mui/material';
+import CreateButton from './CreateButton';
 
 const NoteMasonry = () => {
   const notes = useSelector(state => state.notes)
-
-  const StyledFab = styled(Fab)(({ theme }) => ({ //? Pitäisikö tästä tehdä oma react-komponentti?
-    position: 'fixed',
-    bottom: 16,
-    left: '50%',
-    transform: 'translate(-50%, -50%)',  
-    ariaLabel: 'create note',
-    color: 'secondary',
-    label: 'create-note',
-  }));
 
   return (
     <Box sx={{ maxWidth: '100%', }}>
@@ -42,10 +30,7 @@ const NoteMasonry = () => {
         </Masonry>
       )}  
 
-
-      <StyledFab >
-        <EditIcon />
-      </StyledFab>
+        <CreateButton type='createnote' />
 
 
     </Box>

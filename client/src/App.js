@@ -8,21 +8,29 @@ import LoginScreen from "./components/LoginScreen";
 import { initializeUser } from './reducers/userReducer'
 import { Routes, Route } from 'react-router-dom'
 import SignupScreen from './components/SignupScreen';
-
+import NoteView from './components/NoteView';
+import { useMatch } from 'react-router'
 
 const App = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.user)
+  const notes = useSelector(state => state.notes)
+
+  console.log(notes);
 
   useEffect(() => {
     dispatch(initializeUser())
   }, [dispatch]);
 
-
   const AppRoot = styled('div')(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   }));
 
+  const noteMatch = useMatch('/notes/:id')
+
+  const noteToShow = noteMatch
+    ? notes.find(n => n.id === Number(noteMatch.params.id))
+    : null
 
   if (user === null) {
     return (
@@ -35,14 +43,17 @@ const App = () => {
     )
   } else {
     return (
-      <AppRoot>
-        <ButtonAppBar />
-        <Container sx={{ paddingLeft: '0px', paddingRight: '0px', my: '4em'}}>
-
-          <NoteMasonry />
-
-        </Container>
-      </AppRoot>
+      <Routes>
+        <Route path='/' element={
+          <AppRoot>
+            <ButtonAppBar />
+            <Container sx={{ paddingLeft: '0px', paddingRight: '0px', my: '4em'}}>
+              <NoteMasonry />
+            </Container>
+          </AppRoot>
+        }/>
+        <Route path='notes/:id' element={<NoteView note={noteToShow}/>}/>
+      </Routes>
     )
   }
 }

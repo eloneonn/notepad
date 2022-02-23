@@ -17,7 +17,7 @@ const theme = createTheme({
     MuiMasonry: {
       styleOverrides: {
         root: {
-            margin: '0'    
+            margin: '0'
         }
       },
     },
