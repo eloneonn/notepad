@@ -1,5 +1,5 @@
 import axios from 'axios'
-import userService from './user'
+import userService from './userService'
 
 const baseUrl = '/api/notes'
 
@@ -12,7 +12,7 @@ const config = () => {
 }
 
 const getAll = () => {
-  const request = axios.get(baseUrl)
+  const request = axios.get(baseUrl, config())
   return request.then((response) => response.data)
 }
 

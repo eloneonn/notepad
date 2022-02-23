@@ -2,12 +2,18 @@ const db = require('../db')
 const notesRouter = require('express').Router()
 
 notesRouter.get('/', async (request, response) => {
-    const res = await db.query('SELECT * FROM notes WHERE user_id = $1', [request.user.user_id])
+    try {
+        console.log(request.user.user_id);
+        const res = await db.query('SELECT * FROM notes WHERE user_id = $1', [request.user.user_id])
 
-    if (!(res.rows.length === 0)) {
-        response.json(res.rows)
-    } else {
-        response.status(404).json('0 notes found')
+        if (!(res.rows.length === 0)) {
+            response.json(res.rows)
+        } else {
+            response.status(404).json('0 notes found')
+        }
+    
+    } catch (error) {
+        console.log(error.message)
     }
 })
 

@@ -49,18 +49,17 @@ const ButtonAppBar = (props) => {
   return (
     <Box sx={{ flexGrow: 1, zIndex: 1000 }}>
       <HideOnScroll {...props}>
-        <AppBar>
+        <AppBar sx={{ backgroundColor: 'secondary.main' }}>
           <Toolbar>
             <IconButton
               size="large"
               edge="start"
-              color="inherit"
               aria-label="menu"
-              sx={{ mr: 2 }}
+              sx={{ mr: 2, color:"primary.main"}}
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1, color:"primary.main" }}>
               Notepad
             </Typography>
 
@@ -71,6 +70,7 @@ const ButtonAppBar = (props) => {
                 aria-haspopup="true"
                 color="inherit"
                 onClick={handleClick}
+                sx={{ color:"primary.main" }}
               >
                 <AccountCircle />
             </IconButton>

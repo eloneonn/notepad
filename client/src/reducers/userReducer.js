@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import loginService from '../services/loginService'
+import { initializeNotes } from './noteReducer'
+import userService from '../services/userService'
 
 const userSlice = createSlice({
     name: 'user',
@@ -20,9 +22,10 @@ export const login = (user) => {
             const resultedUser = await loginService.login( {...user} )
             if (resultedUser) {
                 window.localStorage.setItem('loggedUser', JSON.stringify(resultedUser))
-
+                
+                userService.setUser(resultedUser)
                 dispatch(setUser(resultedUser))
-
+                dispatch(initializeNotes())
                 console.log('User logged in:', resultedUser)
     
             } else {
@@ -56,6 +59,8 @@ export const initializeUser = () => {
         if (loggedUserJSON) {
             const user = JSON.parse(loggedUserJSON)
             dispatch(setUser(user))
+            dispatch(initializeNotes())
+
 //            blogService.setToken(user.token)
     
 //            dispatch(initializeBlogs())

@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Fab, Container, } from "@mui/material";
+import { Container, } from "@mui/material";
 import { styled, } from '@mui/material/styles';
-import EditIcon from '@mui/icons-material/Edit';
 import ButtonAppBar from './components/ButtonAppBar'
 import NoteMasonry from "./components/NoteMasonry";
 import LoginScreen from "./components/LoginScreen";
@@ -24,15 +23,6 @@ const App = () => {
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   }));
 
-  const StyledFab = styled(Fab)(({ theme }) => ({ //? Pitäisikö tästä tehdä oma react-komponentti?
-    position: 'fixed',
-    bottom: 16,
-    left: '50%',
-    transform: 'translate(-50%, -50%)',  
-    ariaLabel: 'create note',
-    color: 'secondary',
-    label: 'create-note',
-  }));
 
   if (user === null) {
     return (
@@ -50,10 +40,6 @@ const App = () => {
         <Container sx={{ paddingLeft: '0px', paddingRight: '0px', my: '4em'}}>
 
           <NoteMasonry />
-
-          <StyledFab >
-            <EditIcon />
-          </StyledFab>
 
         </Container>
       </AppRoot>
