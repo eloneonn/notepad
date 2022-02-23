@@ -1,14 +1,22 @@
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Fab, Container, } from "@mui/material";
 import { styled, } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';
 import ButtonAppBar from './components/ButtonAppBar'
 import NoteMasonry from "./components/NoteMasonry";
-import { useSelector } from "react-redux";
 import LoginScreen from "./components/LoginScreen";
+import { initializeUser } from './reducers/userReducer'
 
 
 const App = () => {
+  const dispatch = useDispatch()
   const user = useSelector(state => state.user)
+
+  useEffect(() => {
+    dispatch(initializeUser())
+  }, [dispatch]);
+
 
   const AppRoot = styled('div')(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',

@@ -6,7 +6,9 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { AccountCircle } from '@mui/icons-material';
-import { Slide, useScrollTrigger } from '@mui/material';
+import { Menu, MenuItem, Slide, useScrollTrigger } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { logout } from '../reducers/userReducer'
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -25,8 +27,27 @@ function HideOnScroll(props) {
 }
 
 const ButtonAppBar = (props) => {
+  const dispatch = useDispatch()
+
+  const [ anchorEl, setAnchorEl ] = React.useState(null)
+
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout())
+    setAnchorEl(null);
+  }
+
+
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, zIndex: 1000 }}>
       <HideOnScroll {...props}>
         <AppBar>
           <Toolbar>
@@ -49,9 +70,23 @@ const ButtonAppBar = (props) => {
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 color="inherit"
+                onClick={handleClick}
               >
                 <AccountCircle />
-              </IconButton>
+            </IconButton>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                'aria-labelledby': 'basic-button',
+              }}
+            >
+              <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem onClick={handleClose}>My account</MenuItem>
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            </Menu>
           </Toolbar>
         </AppBar>
       </HideOnScroll>
