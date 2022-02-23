@@ -22,7 +22,7 @@ usersRouter.post('/', async (request, response) => {
       try {
         const savedUser = await db.query('INSERT INTO users(name, email, hash, type_id) VALUES($1, $2, $3, $4) RETURNING *', [user.name, user.email, user.passwordHash, user.type_id])
 
-        response.json(savedUser.rows)
+        response.status(201).json(savedUser.rows)
 
       } catch(e) {
           response.status(400).json(e.message)

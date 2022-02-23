@@ -1,9 +1,11 @@
-import { Avatar, Button, Container, TextField, Typography } from "@mui/material";
+import { Avatar, Container, Grid, TextField, Typography } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 import { Box } from "@mui/system";
 import LoginIcon from '@mui/icons-material/Login';
 import React, { useState } from "react";
 import { login } from "../reducers/userReducer";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 
 const LoginScreen = () => {
@@ -11,10 +13,13 @@ const LoginScreen = () => {
 
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
+    const [ loading, setLoading] = useState(false)
 
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault()
+
+        setLoading(true)
 
         dispatch(login({ email, password }))
         
@@ -67,7 +72,19 @@ const LoginScreen = () => {
                             onChange={({ target }) => setPassword(target.value)}
                         />
 
-                        <Button type="submit" size="large" variant="contained" fullWidth sx={{ mt: '2em'}} >login</Button>
+                        <LoadingButton loading={loading} type="submit" size="large" variant="contained" fullWidth sx={{ mt: '2em'}} >login</LoadingButton>
+
+                        <Grid container sx={{ mt: '1em' }}>
+                            <Grid item xs>
+                                forgot password?
+                            </Grid>
+                            <Grid item>
+                                <Link to="/signup">
+                                    {"Don't have an account? Sign Up"}
+                                </Link>
+                            </Grid>
+                        </Grid>
+
                     </Box>
                 </Box>
         </Container>

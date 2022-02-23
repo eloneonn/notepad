@@ -7,6 +7,8 @@ import ButtonAppBar from './components/ButtonAppBar'
 import NoteMasonry from "./components/NoteMasonry";
 import LoginScreen from "./components/LoginScreen";
 import { initializeUser } from './reducers/userReducer'
+import { Routes, Route } from 'react-router-dom'
+import SignupScreen from './components/SignupScreen';
 
 
 const App = () => {
@@ -32,27 +34,31 @@ const App = () => {
     label: 'create-note',
   }));
 
-  return (
-    <div>
-      {user === null 
-      ? (
-        <LoginScreen />
-      ) : (
-        <AppRoot>
-          <ButtonAppBar />
-          <Container sx={{ paddingLeft: '0px', paddingRight: '0px', my: '4em'}}>
+  if (user === null) {
+    return (
+      <AppRoot>
+        <Routes>
+          <Route path='/' element={<LoginScreen />} />
+          <Route path='signup' element={<SignupScreen />} />
+        </Routes>
+      </AppRoot>
+    )
+  } else {
+    return (
+      <AppRoot>
+        <ButtonAppBar />
+        <Container sx={{ paddingLeft: '0px', paddingRight: '0px', my: '4em'}}>
 
-            <NoteMasonry />
+          <NoteMasonry />
 
-            <StyledFab >
-              <EditIcon />
-            </StyledFab>
+          <StyledFab >
+            <EditIcon />
+          </StyledFab>
 
-          </Container>
-        </AppRoot>
-      )}
-    </div>
-  )
+        </Container>
+      </AppRoot>
+    )
+  }
 }
 
 export default App;

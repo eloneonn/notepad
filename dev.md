@@ -16,11 +16,11 @@
 
 # Frontend
 - Core functionality
-    - Service for users
-    - Service for notes
+    - Service for users DONE
+    - Service for notes 
     - Service for recordings
     - Main view
-    - React components: Login, Register, Note, NoteView, NoteMasonry, Settings 
+    - React components: Login DONE, Register DONE, Note, NoteView, NoteMasonry, Settings 
     - State management with redux
     - Routing with react-router
     - React components: SearchBar and Notification

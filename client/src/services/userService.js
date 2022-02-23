@@ -1,6 +1,8 @@
 /**
  *      USED FOR INTERACTING WITH LOCALSTORAGE ONLY
  */
+import axios from 'axios'
+const baseUrl = '/api/users'
 
 let token = null
 
@@ -31,5 +33,24 @@ const clearUser = () => {
 
 const getToken = () => token
 
-const exportedObject = { setUser, getUser, clearUser, getToken, }
+const createUser = async (user) => {
+  
+  try {
+    const newUser = {...user, type_id: 1}
+
+    const response = await axios.post(baseUrl, newUser)
+    console.log(response.status);
+
+    if (response.status !== 201) {
+      return false
+    } else {
+      return true
+    }
+  } catch (error) {
+    console.log(error.message);
+    return false
+  }
+}
+
+const exportedObject = { setUser, getUser, clearUser, getToken, createUser, }
 export default exportedObject
