@@ -10,8 +10,11 @@ import { newNote } from '../reducers/noteReducer';
 
 const NoteMasonry = () => {
   const notes = useSelector(state => state.notes)
+  const filter = useSelector(state => state.filter)
   const navigate = useNavigate()
   const dispatch = useDispatch()
+
+  const filteredNotes = notes.filter(n => n.title.includes(filter))
 
   const handleCreate = () => { //? NOPEAMPI TAPA LUODA NOTEJA
     dispatch(newNote())
@@ -33,7 +36,7 @@ const NoteMasonry = () => {
         </Container>
         ) : (
         <Masonry columns={{ xs: 2, sm: 3, md: 4 }} spacing={1.5}>
-          {notes.map((note) => (
+          {filteredNotes.map((note) => (
             <Note key={note.id} note={note} />
           ))}
         </Masonry>

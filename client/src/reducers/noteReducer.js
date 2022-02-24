@@ -26,8 +26,12 @@ const noteSlice = createSlice({
 
 export const initializeNotes = () => {
     return async dispatch => {
-        const notes = await noteService.getAll()
-        dispatch(setNotes(notes))
+        try {
+            const notes = await noteService.getAll()
+            dispatch(setNotes(notes))
+        } catch (error) {
+            console.log('0 notes found')
+        }
     }
 }
 

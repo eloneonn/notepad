@@ -32,7 +32,7 @@ const Note = ({ note }) => {
                             padding: '0em 0.25em 0.25em 0.25em',
                             fontSize: '100%',
                             opacity: '80%',
-                            maxHeight: '20em', 
+                            maxHeight: '19.5em', 
                             minHeight: '5em',
                             overflow: 'hidden'
                         }}>{note.content}</Typography> 
