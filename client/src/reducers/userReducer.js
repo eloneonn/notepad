@@ -1,8 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import loginService from '../services/loginService'
 import { initializeNotes } from './noteReducer'
-import axios from 'axios'
-const baseUrl = '/api/users'
 
 const userSlice = createSlice({
     name: 'user',
@@ -63,24 +61,5 @@ export const initializeUser = () => {
     }
 }
 
-export const createUser = async (user) => {
-  
-    try {
-      const newUser = {...user, type_id: 1}
-  
-      const response = await axios.post(baseUrl, newUser)
-      console.log(response.status);
-  
-      if (response.status !== 201) {
-        return false
-      } else {
-        return true
-      }
-    } catch (error) {
-      console.log(error.message);
-      return false
-    }
-  }
-  
 export const { setUser } = userSlice.actions
 export default userSlice.reducer

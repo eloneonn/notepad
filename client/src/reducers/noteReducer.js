@@ -18,6 +18,9 @@ const noteSlice = createSlice({
             const index = state.findIndex(e => e.id === action.payload.id)
             state[index] = action.payload
         },
+        clearNotes(state, action) {
+            return []
+        }
     }
 })
 
@@ -63,5 +66,5 @@ export const removeNote = (note) => {
 }
 
 
-export const { appendNote, setNotes, deleteNote, changeNote, initializeNotesLocally } = noteSlice.actions
+export const { appendNote, setNotes, deleteNote, changeNote, initializeNotesLocally, clearNotes } = noteSlice.actions
 export default noteSlice.reducer

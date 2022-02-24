@@ -3,11 +3,9 @@ import LoadingButton from '@mui/lab/LoadingButton'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useState } from "react";
 import { Link, useNavigate, } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { createUser } from "../reducers/userReducer";
+import { createUser } from '../services/userService'
 
 const SignupScreen = () => {
-    const dispatch = useDispatch()
     const navigate = useNavigate()
     const [ newFirstName, setNewFirstName ] = useState('')
     const [ newLastName, setNewLastName ] = useState('')
@@ -27,13 +25,14 @@ const SignupScreen = () => {
             password: newPassword
         }
 
-        if (await dispatch(createUser(newUser))) {
+        if (await createUser(newUser)) {
             console.log('user created!');
             setLoading(false)
-
+            //! NOTIFICATION HERE
             navigate('/')
         } else {
             console.log('user creation failed');
+            //! NOTIFICATION HERE
             setLoading(false)
         }
     }

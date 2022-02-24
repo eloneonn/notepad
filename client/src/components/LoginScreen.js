@@ -15,14 +15,13 @@ const LoginScreen = () => {
     const [ password, setPassword ] = useState('')
     const [ loading, setLoading] = useState(false)
 
-
     const handleSubmit = async (event) => { //! ILMAN ASYNC/AWAITTIA JA TILAN MYÖHÄISTÄ MUUTTAMISTA
         event.preventDefault()
 
         setLoading(true)
 
         await dispatch(login({ email, password }))
-
+        
         setLoading(false)
 
         setEmail('')

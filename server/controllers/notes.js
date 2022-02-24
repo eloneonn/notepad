@@ -13,6 +13,7 @@ notesRouter.get('/', async (request, response) => {
         }
     
     } catch (error) {
+        response.status(404).json('0 notes found')
         console.log(error.message)
     }
 })

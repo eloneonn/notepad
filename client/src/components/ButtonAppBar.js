@@ -9,6 +9,7 @@ import { AccountCircle } from '@mui/icons-material';
 import { Menu, MenuItem, Slide, useScrollTrigger } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { logout } from '../reducers/userReducer'
+import { clearNotes } from '../reducers/noteReducer';
 
 function HideOnScroll(props) {
   const { children } = props;
@@ -36,6 +37,7 @@ const ButtonAppBar = (props) => {
 
   const handleLogout = () => {
     dispatch(logout())
+    dispatch(clearNotes())
     setAnchorEl(null);
   }
 
