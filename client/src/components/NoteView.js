@@ -6,9 +6,12 @@ import { useNavigate } from "react-router";
 import CreateButton from "./CreateButton";
 import AudiotrackIcon from '@mui/icons-material/Audiotrack';
 import NotesIcon from '@mui/icons-material/Notes';
+import { useDispatch } from "react-redux";
+import { updateNote } from "../reducers/noteReducer";
 
 const NoteView = ({ note }) => { //! FIXAA BUGI JOSSA TITLE MENEE CONTENTIN PÄÄLLE KUN ON TARPEEKSI PITKÄ
     const navigate = useNavigate()
+    const dispatch = useDispatch()
  
     const [content, setContent] = useState('')
     const [title, setTitle] = useState('')
@@ -23,6 +26,13 @@ const NoteView = ({ note }) => { //! FIXAA BUGI JOSSA TITLE MENEE CONTENTIN PÄ�
         }
     }, [navigate, note]);
 
+    const handleBackbutton = () => { //! TÄMÄ ON HUONO TAPA
+        const newNote = {...note, title: title, content: content}
+
+        dispatch(updateNote(newNote))
+        navigate('/')
+    }
+
     return (
         <Container>
             <Grid
@@ -34,7 +44,7 @@ const NoteView = ({ note }) => { //! FIXAA BUGI JOSSA TITLE MENEE CONTENTIN PÄ�
                 <Grid item sm={3} sx={{ mb: '8em'}}>
                     <Box sx={{ position: 'fixed', backgroundColor: 'white', zIndex: '100', width: '100%',  pt: '1em' }}>
                         <IconButton
-                        onClick={() => navigate('/')}
+                        onClick={handleBackbutton}
                         size="large"
                         edge="start"
                         aria-label="menu"

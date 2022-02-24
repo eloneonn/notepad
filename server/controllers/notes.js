@@ -33,7 +33,21 @@ notesRouter.post('/', async (request, response, next) => {
     return response.status(201).json(res.rows[0])
 })
 
-notesRouter.put('/:id', async (request, response) => {
+notesRouter.put('/', async (request, response, next) => {
+    const user = request.user
+
+    if (!user) {
+        return response.status(401).json({ error: 'token missing or invalid'})
+    }
+
+    const note = {
+        title: request.body.title,
+        content: request.body.content,
+        id: request.body.id
+    }
+
+    const res = await db.query('UPDATE notes SET title = $1, content = $2 WHERE id = $3 RETURNING *', [note.title, note.content, note.id])
+    return response.json(res.rows[0])
 })
 
 notesRouter.delete('/:id', async (request, response) => {

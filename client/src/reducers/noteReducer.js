@@ -6,14 +6,18 @@ const noteSlice = createSlice({
     initialState: [],
     reducers: {
         appendNote(state, action) {
-            state.push(action.payload)
+            state.unshift(action.payload)
         },
         setNotes(state, action) {
             return action.payload //? SORT BY LAST EDITED
         },
         deleteNote(state, action) {
             
-        }
+        },
+        changeNote(state, action) {
+            const index = state.findIndex(e => e.id === action.payload.id)
+            state[index] = action.payload
+        },
     }
 })
 
@@ -24,15 +28,28 @@ export const initializeNotes = () => {
     }
 }
 
-export const newNote = (note) => {
+export const newNote = () => {
     return async dispatch => {
+        const newNote = {
+            title: '',
+            content: ''
+          }
 
+        const response = await noteService.create(newNote)
+        dispatch(appendNote(response))
+        
+        return(
+            response
+        )
     }
 }
 
 export const updateNote = (note) => {
     return async dispatch => {
+        await dispatch(changeNote(note))
+        const response = await noteService.update(note)
 
+        return response
     }
 }
 
@@ -43,5 +60,5 @@ export const removeNote = (note) => {
 }
 
 
-export const { appendNote, setNotes } = noteSlice.actions
+export const { appendNote, setNotes, deleteNote, changeNote, initializeNotesLocally } = noteSlice.actions
 export default noteSlice.reducer

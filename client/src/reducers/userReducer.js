@@ -55,9 +55,7 @@ export const initializeUser = () => {
         const loggedUserJSON = window.localStorage.getItem('loggedUser')
 
         if (loggedUserJSON) {
-            console.log(loggedUserJSON);
             const user = JSON.parse(loggedUserJSON)
-            console.log(user);
 
             dispatch(setUser(user))
             dispatch(initializeNotes())

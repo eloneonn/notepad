@@ -2,12 +2,23 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Note from './Note'
 import Masonry from '@mui/lab/Masonry';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Container, Typography } from '@mui/material';
 import CreateButton from './CreateButton';
+import { useNavigate } from 'react-router';
+import { newNote } from '../reducers/noteReducer';
 
 const NoteMasonry = () => {
   const notes = useSelector(state => state.notes)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const handleCreate = () => { //? NOPEAMPI TAPA LUODA NOTEJA
+    console.log('i was clicked');
+
+    dispatch(newNote())
+      .then(result => navigate(`/notes/${result.id}`))
+  }
 
   return (
     <Box sx={{ maxWidth: '100%', }}>
@@ -30,7 +41,7 @@ const NoteMasonry = () => {
         </Masonry>
       )}  
 
-        <CreateButton type='createnote' />
+        <CreateButton type='createnote' handler={handleCreate} />
 
 
     </Box>

@@ -16,8 +16,6 @@ const App = () => {
   const user = useSelector(state => state.user)
   const notes = useSelector(state => state.notes)
 
-  console.log(notes);
-
   useEffect(() => {
     dispatch(initializeUser())
   }, [dispatch]);
