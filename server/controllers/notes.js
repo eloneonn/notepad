@@ -50,8 +50,10 @@ notesRouter.put('/', async (request, response, next) => {
     return response.json(res.rows[0])
 })
 
-notesRouter.delete('/:id', async (request, response) => {
+notesRouter.delete('/', async (request, response, next) => {
 
+    const res = await db.query('DELETE FROM notes WHERE id = $1', [request.body.note.id])
+    return res
 })
 
 module.exports = notesRouter

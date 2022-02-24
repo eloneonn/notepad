@@ -14,8 +14,6 @@ const NoteMasonry = () => {
   const dispatch = useDispatch()
 
   const handleCreate = () => { //? NOPEAMPI TAPA LUODA NOTEJA
-    console.log('i was clicked');
-
     dispatch(newNote())
       .then(result => navigate(`/notes/${result.id}`))
   }
@@ -34,7 +32,7 @@ const NoteMasonry = () => {
           <Typography sx={{ opacity: '60%' }}>Use the button below</Typography>
         </Container>
         ) : (
-        <Masonry columns={2} spacing={2}>
+        <Masonry columns={{ xs: 2, sm: 3, md: 4 }} spacing={2}>
           {notes.map((note) => (
             <Note key={note.id} note={note} />
           ))}

@@ -28,8 +28,8 @@ const update = (newObject) => {
   return request.then((response) => response.data)
 }
 
-const remove = (id) => { //!NOT DONE
-  return axios.delete(`${baseUrl}/${id}`, config())
+const remove = (note) => {
+  return axios.delete(baseUrl, note, config())
 }
 
 const exportedObject = { getAll, create, update, remove }

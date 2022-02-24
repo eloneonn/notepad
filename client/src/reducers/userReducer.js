@@ -59,9 +59,6 @@ export const initializeUser = () => {
 
             dispatch(setUser(user))
             dispatch(initializeNotes())
-
-//            blogService.setToken(user.token)
-    
         }
     }
 }
@@ -84,6 +81,6 @@ export const createUser = async (user) => {
       return false
     }
   }
-
+  
 export const { setUser } = userSlice.actions
 export default userSlice.reducer

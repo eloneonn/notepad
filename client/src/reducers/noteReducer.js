@@ -12,7 +12,7 @@ const noteSlice = createSlice({
             return action.payload //? SORT BY LAST EDITED
         },
         deleteNote(state, action) {
-            
+            return state.filter(e => e.id !== action.payload.id)
         },
         changeNote(state, action) {
             const index = state.findIndex(e => e.id === action.payload.id)
@@ -55,7 +55,10 @@ export const updateNote = (note) => {
 
 export const removeNote = (note) => {
     return async dispatch => {
+        await dispatch(deleteNote(note))
+        const response = await noteService.remove({ data : { note } })
 
+        return response
     }
 }
 

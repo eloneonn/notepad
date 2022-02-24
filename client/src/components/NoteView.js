@@ -1,4 +1,4 @@
-import { AppBar, BottomNavigation, BottomNavigationAction, Container, Grid, IconButton, InputBase } from "@mui/material";
+import { AppBar, BottomNavigation, BottomNavigationAction, Container, Grid, IconButton, InputBase, Toolbar, Typography } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import React, { useEffect, useState } from "react";
 import { Box } from "@mui/system";
@@ -6,8 +6,9 @@ import { useNavigate } from "react-router";
 import CreateButton from "./CreateButton";
 import AudiotrackIcon from '@mui/icons-material/Audiotrack';
 import NotesIcon from '@mui/icons-material/Notes';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useDispatch } from "react-redux";
-import { updateNote } from "../reducers/noteReducer";
+import { removeNote, updateNote } from "../reducers/noteReducer";
 
 const NoteView = ({ note }) => { //! FIXAA BUGI JOSSA TITLE MENEE CONTENTIN PÄÄLLE KUN ON TARPEEKSI PITKÄ
     const navigate = useNavigate()
@@ -33,6 +34,11 @@ const NoteView = ({ note }) => { //! FIXAA BUGI JOSSA TITLE MENEE CONTENTIN PÄ�
         navigate('/')
     }
 
+    const handleRemove = () => {
+        dispatch(removeNote(note))
+        navigate('/')
+    }
+
     return (
         <Container>
             <Grid
@@ -41,27 +47,43 @@ const NoteView = ({ note }) => { //! FIXAA BUGI JOSSA TITLE MENEE CONTENTIN PÄ�
                 justifyContent="flex-start"
                 alignItems="stretch"
             >
-                <Grid item sm={3} sx={{ mb: '8em'}}>
-                    <Box sx={{ position: 'fixed', backgroundColor: 'white', zIndex: '100', width: '100%',  pt: '1em' }}>
-                        <IconButton
-                        onClick={handleBackbutton}
-                        size="large"
-                        edge="start"
-                        aria-label="menu"
-                        sx={{ mr: 2, color:"primary.main"}}
-                        >
-                            <ArrowBackIcon />
-                        </IconButton>
-                        <InputBase multiline value={title} fullWidth placeholder={'Set a title here...'} onChange={({ target }) => setTitle(target.value)} sx={{ 
-                                fontWeight: 'bold',
-                                fontSize: '26px',
-                                padding: '0.5em'
-                        }} />
+                <Grid item xs={3} sx={{ mb: '4.5em'}}>
+                    <Box sx={{ position: 'fixed', backgroundColor: 'white', zIndex: '100'}}>
+                        <AppBar elevation={0} sx={{ backgroundColor: 'white', padding: '0.5em 0.5em 0.5em 0.5em' }}>
+                            <Toolbar disableGutters>
+                                <IconButton
+                                    onClick={handleBackbutton}
+                                    size="large"
+                                    mr="2"
+                                    aria-label="menu"
+                                    sx={{ color:"primary.main"}}
+                                >
+                                    <ArrowBackIcon />
+                                </IconButton>  
+                                <Typography sx={{ flexGrow: '1'}}></Typography>
+
+                                <IconButton                             
+                                    onClick={handleRemove}
+                                    size="large"
+                                    aria-label="delete"
+                                    sx={{ color:"primary.main"}}
+                                >
+                                    <DeleteIcon />
+                                </IconButton>
+                            </Toolbar>
+
+                        </AppBar>
                     </Box> 
                 </Grid>
 
                 <Grid item xs={7}>
                     <Box sx={{ mb: '6em' }}>
+                    <InputBase multiline value={title} fullWidth placeholder={'Set a title here...'} onChange={({ target }) => setTitle(target.value)} sx={{ 
+                                fontWeight: 'bold',
+                                fontSize: '26px',
+                                padding: '0.5em'
+                        }} />
+
                         <InputBase multiline value={content} fullWidth placeholder={'Write here...'} onChange={({ target }) => setContent(target.value)}  />
                     </Box>
                 </Grid>
