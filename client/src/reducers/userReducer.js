@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 import loginService from '../services/loginService'
 import { initializeNotes } from './noteReducer'
-import userService from '../services/userService'
+import axios from 'axios'
+const baseUrl = '/api/users'
 
 const userSlice = createSlice({
     name: 'user',
@@ -23,7 +24,6 @@ export const login = (user) => {
             if (resultedUser) {
                 window.localStorage.setItem('loggedUser', JSON.stringify(resultedUser))
                 
-                userService.setUser(resultedUser)
                 dispatch(setUser(resultedUser))
                 dispatch(initializeNotes())    
             } else {
@@ -55,16 +55,37 @@ export const initializeUser = () => {
         const loggedUserJSON = window.localStorage.getItem('loggedUser')
 
         if (loggedUserJSON) {
+            console.log(loggedUserJSON);
             const user = JSON.parse(loggedUserJSON)
+            console.log(user);
+
             dispatch(setUser(user))
             dispatch(initializeNotes())
 
 //            blogService.setToken(user.token)
     
-//            dispatch(initializeBlogs())
         }
     }
 }
+
+export const createUser = async (user) => {
+  
+    try {
+      const newUser = {...user, type_id: 1}
+  
+      const response = await axios.post(baseUrl, newUser)
+      console.log(response.status);
+  
+      if (response.status !== 201) {
+        return false
+      } else {
+        return true
+      }
+    } catch (error) {
+      console.log(error.message);
+      return false
+    }
+  }
 
 export const { setUser } = userSlice.actions
 export default userSlice.reducer

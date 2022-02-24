@@ -1,12 +1,12 @@
 import axios from 'axios'
-import userService from './userService'
+import tokenService from './tokenService'
 
 const baseUrl = '/api/notes'
 
 const config = () => {
   return {
     headers: {
-      Authorization: `bearer ${userService.getToken()}`,
+      Authorization: `bearer ${tokenService.getToken()}`,
     },
   }
 }
@@ -21,13 +21,13 @@ const create = async (newObject) => {
   return response.data
 }
 
-const update = (id, newObject) => { //!NOT DONE
-  const request = axios.put(`${baseUrl}/${id}`, newObject)
+const update = async (id, newObject) => { //!NOT DONE
+  const request = await axios.put(`${baseUrl}/${id}`, newObject)
   return request.then((response) => response.data)
 }
 
-const remove = (id) => { //!NOT DONE
-  return axios.delete(`${baseUrl}/${id}`, config())
+const remove = async (id) => { //!NOT DONE
+  return await axios.delete(`${baseUrl}/${id}`, config())
 }
 
 const exportedObject = { getAll, create, update, remove }
