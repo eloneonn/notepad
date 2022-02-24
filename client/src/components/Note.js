@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 
 const Note = ({ note }) => {
+    const navigate = useNavigate()
+
     const Background = styled(Paper)(({ theme }) => ({ //? USE CARD VARIANT INSTEAD OF STYLED NOTE
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
         ...theme.typography.body2,
@@ -12,13 +14,9 @@ const Note = ({ note }) => {
         color: theme.palette.text.secondary,
       }));
 
-    const navigate = useNavigate()
-
     const handleClick = (event) => {
         event.preventDefault()
-        console.log('i was clicked');
         navigate(`/notes/${note.id}`)
-
     }
 
     return (
@@ -29,7 +27,6 @@ const Note = ({ note }) => {
                         <Typography sx={{ 
                             fontWeight: 'bold',
                             padding: '0.5em'
-                        
                         }}>{note.title}</Typography> 
                         <Typography sx={{
                             padding: '0em 0.25em 0.25em 0.25em',

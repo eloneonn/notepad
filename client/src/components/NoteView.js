@@ -1,6 +1,6 @@
 import { AppBar, BottomNavigation, BottomNavigationAction, Container, Grid, IconButton, InputBase } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import { useNavigate } from "react-router";
 import CreateButton from "./CreateButton";
@@ -9,9 +9,19 @@ import NotesIcon from '@mui/icons-material/Notes';
 
 const NoteView = ({ note }) => { //! FIXAA BUGI JOSSA TITLE MENEE CONTENTIN PÄÄLLE KUN ON TARPEEKSI PITKÄ
     const navigate = useNavigate()
+ 
+    const [content, setContent] = useState('')
+    const [title, setTitle] = useState('')
 
-    const [content, setContent] = useState(note.content)
-    const [title, setTitle] = useState(note.title)
+    useEffect(() => { // Preventing an error when browser refreshes in noteview, instead redirects to main view
+        if (!note) {
+            navigate('/')
+            return null
+        } else {
+            setContent(note.content)
+            setTitle(note.title)
+        }
+    }, [navigate, note]);
 
     return (
         <Container>
