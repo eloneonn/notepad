@@ -3,8 +3,8 @@ const notesRouter = require('express').Router()
 
 notesRouter.get('/', async (request, response) => {
     try {
-        console.log(request.user.user_id);
-        const res = await db.query('SELECT * FROM notes WHERE user_id = $1', [request.user.user_id])
+        console.log(request.user);
+        const res = await db.query('SELECT * FROM notes WHERE user_id = $1', [request.user.id])
 
         if (!(res.rows.length === 0)) {
             response.json(res.rows)
@@ -30,7 +30,7 @@ notesRouter.post('/', async (request, response, next) => {
         content: request.body.content
     }
 
-    const res = await db.query('INSERT INTO notes (user_id, title, content) VALUES($1, $2, $3) RETURNING *', [user.user_id, newNote.title, newNote.content])
+    const res = await db.query('INSERT INTO notes (user_id, title, content) VALUES($1, $2, $3) RETURNING *', [user.id, newNote.title, newNote.content])
     return response.status(201).json(res.rows[0])
 })
 

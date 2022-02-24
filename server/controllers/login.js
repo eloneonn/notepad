@@ -22,7 +22,7 @@ loginRouter.post('/', async (request, response) => {
   
     const userForToken = {
       email: user.email,
-      id: user.user_id,
+      id: user.id,
     }
   
     const token = jwt.sign(userForToken, SECRET)
