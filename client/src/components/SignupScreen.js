@@ -4,9 +4,12 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useState } from "react";
 import { Link, useNavigate, } from "react-router-dom";
 import { createUser } from '../services/userService'
+import { useDispatch } from "react-redux";
+import { setNotification } from "../reducers/notificationReducer";
 
 const SignupScreen = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const [ newFirstName, setNewFirstName ] = useState('')
     const [ newLastName, setNewLastName ] = useState('')
     const [ newEmail, setNewEmail ] = useState('')
@@ -26,13 +29,11 @@ const SignupScreen = () => {
         }
 
         if (await createUser(newUser)) {
-            console.log('user created!');
             setLoading(false)
-            //! NOTIFICATION HERE
+            dispatch(setNotification('success', 'User created. You can now log in!'))
             navigate('/')
         } else {
-            console.log('user creation failed');
-            //! NOTIFICATION HERE
+            dispatch(setNotification('error', 'User creation failed'))
             setLoading(false)
         }
     }

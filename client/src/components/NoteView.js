@@ -9,6 +9,7 @@ import NotesIcon from '@mui/icons-material/Notes';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useDispatch } from "react-redux";
 import { removeNote, updateNote } from "../reducers/noteReducer";
+import { setNotification } from "../reducers/notificationReducer";
 
 const NoteView = ({ note }) => { //! FIXAA BUGI JOSSA TITLE MENEE CONTENTIN PÄÄLLE KUN ON TARPEEKSI PITKÄ
     const navigate = useNavigate()
@@ -36,6 +37,7 @@ const NoteView = ({ note }) => { //! FIXAA BUGI JOSSA TITLE MENEE CONTENTIN PÄ�
 
     const handleRemove = () => {
         dispatch(removeNote(note))
+        dispatch(setNotification('info', 'Note removed!'))
         navigate('/')
     }
 

@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import loginService from '../services/loginService'
 import { initializeNotes } from './noteReducer'
+import { setNotification } from './notificationReducer'
 
 const userSlice = createSlice({
     name: 'user',
@@ -22,10 +23,11 @@ export const login = (user) => {
             if (resultedUser) {
                 window.localStorage.setItem('loggedUser', JSON.stringify(resultedUser))
                 
+                dispatch(setNotification('success', 'Login succesful!'))
                 dispatch(setUser(resultedUser))
                 dispatch(initializeNotes())    
             } else {
-                
+                dispatch(setNotification('error', 'Wrong email or password'))
             }
 
 //            blogService.setToken(resultedUser.token)
@@ -35,7 +37,7 @@ export const login = (user) => {
 
         } catch (error) {
             console.log(error);
-//            dispatch(setNotification('wrong username or password', 4))
+            dispatch(setNotification('error', 'Wrong email or password'))
         }
     }
 }
@@ -43,8 +45,8 @@ export const login = (user) => {
 export const logout = () => {
     return async (dispatch) => {
         window.localStorage.removeItem('loggedUser')
-        dispatch(setUser(null))
-//        dispatch(setNotification('logged out!', 4))
+        dispatch(setUser(null))      
+        dispatch(setNotification('info', 'Logged out!' ))
     }
 }
 

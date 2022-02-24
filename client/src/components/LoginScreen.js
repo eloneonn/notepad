@@ -21,7 +21,7 @@ const LoginScreen = () => {
         setLoading(true)
 
         await dispatch(login({ email, password }))
-        
+                
         setLoading(false)
 
         setEmail('')

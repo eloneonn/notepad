@@ -41,7 +41,7 @@ const Note = ({ note }) => {
                                 
                             </Grid>
                             <Grid item xs>  
-                                <Typography variant="caption" sx={{ fontSize: '75%', opacity: '60%' }}>edited: {note.created_at.slice(0, 10)}</Typography>
+                                <Typography variant="caption" sx={{ fontSize: '80%', opacity: '60%', float: 'right' }}>{note.created_at.slice(0, 10)}</Typography>
                             </Grid>
                         </Grid>
                     </Background>

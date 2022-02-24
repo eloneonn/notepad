@@ -10,6 +10,7 @@ import { Routes, Route } from 'react-router-dom'
 import SignupScreen from './components/SignupScreen';
 import NoteView from './components/NoteView';
 import { useMatch } from 'react-router'
+import Notification from './components/Notification';
 
 const App = () => {
   const dispatch = useDispatch()
@@ -37,6 +38,7 @@ const App = () => {
           <Route path='/' element={<LoginScreen />} />
           <Route path='signup' element={<SignupScreen />} />
         </Routes>
+        <Notification />
       </AppRoot>
     )
   } else {
@@ -48,6 +50,7 @@ const App = () => {
             <Container sx={{ paddingLeft: '0px', paddingRight: '0px', my: '4em'}}>
               <NoteMasonry />
             </Container>
+            <Notification />
           </AppRoot>
         }/>
         <Route path='notes/:id' element={<NoteView note={noteToShow}/>}/>
