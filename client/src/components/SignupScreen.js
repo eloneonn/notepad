@@ -15,6 +15,7 @@ const SignupScreen = () => {
     const [ newEmail, setNewEmail ] = useState('')
     const [ newPassword, setNewPassword ] = useState('')
     const [ loading, setLoading] = useState(false)
+    const [ hasFailed, setHasFailed ] = useState(false)
 
 
     const handleSubmit = async (event) => {
@@ -34,6 +35,7 @@ const SignupScreen = () => {
             navigate('/')
         } else {
             dispatch(setNotification('error', 'User creation failed'))
+            setHasFailed(true)
             setLoading(false)
         }
     }
@@ -109,6 +111,16 @@ const SignupScreen = () => {
                             onChange={({ target }) => setNewPassword(target.value)}
                         />
 
+                        {hasFailed === true
+                            ? (
+                                <div>
+                                <Typography variant='caption' sx={{ opacity: '75%', color: 'red'}}>Password must be at least 3 characters</Typography> <br></br>
+                                <Typography variant='caption' sx={{ opacity: '75%', color: 'red'}}>Email must be a valid email</Typography>
+                                </div>
+    
+                            ) : (
+                                <div></div>
+                            )}
                         <LoadingButton loading={loading} type="submit" size="large" variant="contained" fullWidth sx={{ mt: '2em'}} >Create account</LoadingButton>
 
                         <Grid container sx={{ mt: '1em' }}>
