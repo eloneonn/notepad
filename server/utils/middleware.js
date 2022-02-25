@@ -13,8 +13,9 @@ const errorHandler = (error, request, response, next) => {
     return response.status(401).json({
       error: 'invalid token'
     })
+  } else if (error.name === 'triggerUncaughtException') {
+    return response.status(500).json({ error: 'database connection lost' })
   }
-
   next(error)
 }
 

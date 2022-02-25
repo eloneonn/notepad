@@ -91,7 +91,7 @@ const ButtonAppBar = (props) => {
     }));
 
   return (
-    <Box sx={{ flexGrow: 1, zIndex: 1000 }}>
+    <Box sx={{ flexGrow: 1, zIndex: 10 }}>
       <HideOnScroll {...props}>
         <AppBar sx={{ backgroundColor: 'secondary.main' }}>
           <Toolbar>
@@ -104,7 +104,7 @@ const ButtonAppBar = (props) => {
               <MenuIcon />
             </IconButton>
 
-            <Search>
+            <Search sx={{ flexGrow: '1' }}>
               <SearchIconWrapper>
                   <SearchIcon />
               </SearchIconWrapper>

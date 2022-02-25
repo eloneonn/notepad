@@ -1,7 +1,7 @@
 const db = require('../db')
 const notesRouter = require('express').Router()
 
-notesRouter.get('/', async (request, response) => {
+notesRouter.get('/', async (request, response, next) => {
     try {
         console.log(request.user);
         const res = await db.query('SELECT * FROM notes WHERE user_id = $1', [request.user.id])

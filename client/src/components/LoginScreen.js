@@ -7,7 +7,6 @@ import { login } from "../reducers/userReducer";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
-
 const LoginScreen = () => {
     const dispatch = useDispatch()
 

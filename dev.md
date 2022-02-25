@@ -1,25 +1,25 @@
-## Development roadmap
+# Development roadmap
 
-# Database
+## Database
 - users-table DONE
 - usertypes-table DONE
 - notes-table DONE
 - recordings-table
 - errorlogs-table
 
-# Backend
+## Backend
 - API for users DONE
 - API for logging in DONE
-- API for notes
+- API for notes DONE
 - Finish validations
 - API for recordings
 
-# Frontend
+## Frontend
 - Core functionality
     - Service for users DONE
-    - Service for notes 
+    - Service for notes DONE
     - Service for recordings
-    - Main view
+    - Main view DONE
     - React components: Login DONE, Register DONE, Note, NoteView, NoteMasonry, Settings 
     - State management with redux
     - Routing with react-router
@@ -30,6 +30,6 @@
     - Implement embedded recordings and recording functionality
     - Implement undo/redo, note pinning and tags 
     
-# Admin-functionality
+## Admin-functionality
 - Admin react component with statistics about the app
 - Admin API for deleting and adding users, changing passwords?
