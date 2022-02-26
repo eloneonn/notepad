@@ -9,6 +9,8 @@ const notesRouter = require('./controllers/notes')
 const { errorHandler, userExtractor } = require('./utils/middleware')
 
 
+app.use(express.static('build'))
+
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
