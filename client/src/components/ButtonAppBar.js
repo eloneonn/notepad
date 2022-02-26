@@ -52,6 +52,7 @@ const ButtonAppBar = (props) => {
 
   const Search = styled('div')(({ theme }) => ({
       position: 'relative',
+      color: theme.palette.primary.main,
       borderRadius: theme.shape.borderRadius,
       backgroundColor: alpha(theme.palette.common.white, 0.15),
       '&:hover': {
@@ -78,6 +79,8 @@ const ButtonAppBar = (props) => {
     
     const StyledInputBase = styled(InputBase)(({ theme }) => ({
       color: 'inherit',
+      value: filter,
+      onChange: handleChange,
       '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
         // vertical padding + font size from searchIcon
@@ -104,16 +107,13 @@ const ButtonAppBar = (props) => {
               <MenuIcon />
             </IconButton>
 
-            <Search sx={{ flexGrow: '1' }}>
+            <Search sx={{ flexGrow: '1' }} key='search'>
               <SearchIconWrapper>
                   <SearchIcon />
               </SearchIconWrapper>
               <StyledInputBase
                   placeholder="Search…"
                   key='searchfield'
-                  value={filter}
-                  onChange={handleChange}       
-                  inputProps={{ 'aria-label': 'search' }}
               />
             </Search>
 

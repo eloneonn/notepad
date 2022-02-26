@@ -1,7 +1,7 @@
 import axios from 'axios'
 import tokenService from './tokenService'
 
-const baseUrl = '/api/notes'
+const baseUrl = 'api/notes'
 
 //? KAIKKI ASYNC/AWAITIKSI?
 

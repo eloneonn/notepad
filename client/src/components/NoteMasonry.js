@@ -9,12 +9,10 @@ import { useNavigate } from 'react-router';
 import { newNote } from '../reducers/noteReducer';
 
 const NoteMasonry = () => {
-  const notes = useSelector(state => state.notes)
   const filter = useSelector(state => state.filter)
+  const notes = useSelector(state => state.notes.filter(n => n.title.includes(filter) || n.content.includes(filter)))
   const navigate = useNavigate()
   const dispatch = useDispatch()
-
-  const filteredNotes = notes.filter(n => n.title.includes(filter))
 
   const handleCreate = () => { //? NOPEAMPI TAPA LUODA NOTEJA
     dispatch(newNote())
@@ -36,7 +34,7 @@ const NoteMasonry = () => {
         </Container>
         ) : (
         <Masonry columns={{ xs: 2, sm: 3, md: 4 }} spacing={1.5}>
-          {filteredNotes.map((note) => (
+          {notes.map((note) => (
             <Note key={note.id} note={note} />
           ))}
         </Masonry>
