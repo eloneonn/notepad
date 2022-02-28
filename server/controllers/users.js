@@ -7,24 +7,27 @@ const { SALTROUNDS } = require('../utils/config')
 usersRouter.post('/', async (request, response) => {
   const body = request.body
 
-  if (body.password === undefined && body.password.length <= 3) {
-    return response.status(400).json({ error: 'Invalid password' }).end()
+  if (body.password === undefined || body.password.length <= 3) {
+    response.statusMessage = 'Invalid password'
+    return response.status(400).end()
   }
 
   if (!emailValidator.validate(body.email)) {
-    return response.status(400).json({ error: 'Invalid email' }).end()
+    response.statusMessage = 'Invalid email'
+    return response.status(400).end()
   }
 
   const res = await db.query('SELECT * FROM users WHERE email = $1', [body.email])
 
   if (res.rows.length !== 0) {
-    return response.status(400).json({ error: 'Email already in use' }).end()
+    response.statusMessage = 'Email already in use'
+    return response.status(400).end()
   }
 
   const passwordHash = await bcrypt.hash(body.password, SALTROUNDS)
 
   try {
-    const savedUser = await db.query('INSERT INTO users(name, email, hash, type_id) VALUES($1, $2, $3, $4) RETURNING *', [body.name, body.email, passwordHash, body.type_id])
+    const savedUser = await db.query('INSERT INTO users(name, email, hash) VALUES($1, $2, $3) RETURNING *', [body.name, body.email, passwordHash])
     return response.status(201).json(savedUser.rows)
   } catch(e) {
     return response.status(400).json(e.message)

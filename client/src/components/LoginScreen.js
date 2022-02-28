@@ -12,19 +12,23 @@ const LoginScreen = () => {
 
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
-    const [ loading, setLoading] = useState(false)
+    const [ loading, setLoading ] = useState(false)
+    const [ didFail, setDidFail ] = useState(false)
 
-    const handleSubmit = async (event) => { //! ILMAN ASYNC/AWAITTIA JA TILAN MYÖHÄISTÄ MUUTTAMISTA
+    const handleSubmit = async (event) => { //? Ilman async/awaittia
         event.preventDefault()
 
         setLoading(true)
 
-        await dispatch(login({ email, password }))
-                
-        setLoading(false)
+        const res = await dispatch(login({ email, password }))
 
-        setEmail('')
-        setPassword('')
+        if (res.status !== null && res.status === 401) {
+            setLoading(false)
+            setDidFail(true)
+
+            setEmail('')
+            setPassword('')
+        }   
     }
 
     return (
@@ -54,6 +58,7 @@ const LoginScreen = () => {
                             id="email"
                             autoComplete="email"
                             autoFocus
+                            error={didFail}
                             value={email}
                             onChange={({ target }) => setEmail(target.value)}
                         />
@@ -67,6 +72,7 @@ const LoginScreen = () => {
                             id="password"
                             type="password"
                             autoComplete="current-password"
+                            error={didFail}
                             value={password}
                             onChange={({ target }) => setPassword(target.value)}
                         />

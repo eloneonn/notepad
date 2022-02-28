@@ -26,19 +26,12 @@ export const login = (user) => {
                 dispatch(setNotification('success', 'Login succesful!'))
                 dispatch(setUser(resultedUser))
                 dispatch(initializeNotes())    
-            } else {
-                dispatch(setNotification('error', 'Wrong email or password'))
-            }
-
-//            blogService.setToken(resultedUser.token)
-
-//            dispatch(initializeBlogs())
-//            dispatch(setNotification('login succesful!', 4))
-
+            } 
         } catch (error) {
-            console.log(error);
             dispatch(setNotification('error', 'Wrong email or password'))
+            return error.toJSON()        
         }
+        return { status: 200 }
     }
 }
 

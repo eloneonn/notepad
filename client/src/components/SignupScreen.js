@@ -15,8 +15,8 @@ const SignupScreen = () => {
     const [ newEmail, setNewEmail ] = useState('')
     const [ newPassword, setNewPassword ] = useState('')
     const [ loading, setLoading] = useState(false)
-    const [ hasFailed, setHasFailed ] = useState(false)
-
+    const [ emailDidFail, setEmailDidFail ] = useState(false)
+    const [ passwordDidFail, setPasswordDidFail ] = useState(false)
 
     const handleSubmit = async (event) => {
         event.preventDefault()
@@ -29,13 +29,23 @@ const SignupScreen = () => {
             password: newPassword
         }
 
-        if (await createUser(newUser)) {
+        const res = await createUser(newUser)
+
+        if (res.status === 201) {
             setLoading(false)
-            dispatch(setNotification('success', 'User created. You can now log in!'))
+            dispatch(setNotification('success', 'Account created. You can now log in!'))
             navigate('/')
         } else {
-            dispatch(setNotification('error', 'User creation failed'))
-            setHasFailed(true)
+            dispatch(setNotification('error', res.statusText))
+
+            if (res.statusText === 'Invalid password') {
+                setPasswordDidFail(true)
+                setEmailDidFail(false)
+
+            } else if (res.statusText === 'Invalid email' || res.statusText === 'Email already in use' ) {
+                setEmailDidFail(true)
+                setPasswordDidFail(false)
+            }
             setLoading(false)
         }
     }
@@ -54,7 +64,7 @@ const SignupScreen = () => {
                         <AddCircleIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Create a new user
+                        Create a new account
                     </Typography>
 
 
@@ -94,6 +104,8 @@ const SignupScreen = () => {
                             label="Email address"
                             id="email"
                             autoComplete="email"
+                            error={emailDidFail}
+                            helperText={emailDidFail ? "Enter a valid email address" : null}
                             value={newEmail}
                             onChange={({ target }) => setNewEmail(target.value)}
                         />
@@ -107,20 +119,12 @@ const SignupScreen = () => {
                             id="password"
                             type="password"
                             autoComplete="current-password"
+                            error={passwordDidFail}
+                            helperText={passwordDidFail ? "Password must be at least 4 characters long" : null}
                             value={newPassword}
                             onChange={({ target }) => setNewPassword(target.value)}
                         />
 
-                        {hasFailed === true
-                            ? (
-                                <div>
-                                <Typography variant='caption' sx={{ opacity: '75%', color: 'red'}}>Password must be at least 3 characters</Typography> <br></br>
-                                <Typography variant='caption' sx={{ opacity: '75%', color: 'red'}}>Email must be a valid email</Typography>
-                                </div>
-    
-                            ) : (
-                                <div></div>
-                            )}
                         <LoadingButton loading={loading} type="submit" size="large" variant="contained" fullWidth sx={{ mt: '2em'}} >Create account</LoadingButton>
 
                         <Grid container sx={{ mt: '1em' }}>
