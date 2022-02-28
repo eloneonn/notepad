@@ -3,18 +3,15 @@ const notesRouter = require('express').Router()
 
 notesRouter.get('/', async (request, response, next) => {
     try {
-        console.log(request.user);
-        const res = await db.query('SELECT * FROM notes WHERE user_id = $1', [request.user.id])
-
-        if (!(res.rows.length === 0)) {
-            response.json(res.rows)
-        } else {
-            response.status(404).json('0 notes found')
-        }
-    
+        var res = await db.query('SELECT * FROM notes WHERE user_id = $1', [request.user.id])
     } catch (error) {
-        response.status(404).json('0 notes found')
-        console.log(error.message)
+        return response.status(404).json(error)
+    }
+
+    if (res.rows.length === 0) {
+        return response.status(404).json({ error: '0 notes found' })
+    } else {
+        return response.json(res.rows)
     }
 })
 
@@ -25,12 +22,7 @@ notesRouter.post('/', async (request, response, next) => {
         return response.status(401).json({ error: 'token missing or invalid'})
     }
 
-    const newNote = {
-        title: request.body.title,
-        content: request.body.content
-    }
-
-    const res = await db.query('INSERT INTO notes (user_id, title, content) VALUES($1, $2, $3) RETURNING *', [user.id, newNote.title, newNote.content])
+    const res = await db.query('INSERT INTO notes (user_id, title, content) VALUES($1, $2, $3) RETURNING *', [user.id, request.body.title, request.body.content])
     return response.status(201).json(res.rows[0])
 })
 
@@ -41,13 +33,7 @@ notesRouter.put('/', async (request, response, next) => {
         return response.status(401).json({ error: 'token missing or invalid'})
     }
 
-    const note = {
-        title: request.body.title,
-        content: request.body.content,
-        id: request.body.id
-    }
-
-    const res = await db.query('UPDATE notes SET title = $1, content = $2 WHERE id = $3 RETURNING *', [note.title, note.content, note.id])
+    const res = await db.query('UPDATE notes SET title = $1, content = $2 WHERE id = $3 RETURNING *', [request.body.title, request.body.content, request.body.id])
     return response.json(res.rows[0])
 })
 

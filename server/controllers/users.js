@@ -2,40 +2,38 @@ const bcrypt = require('bcrypt')
 const usersRouter = require('express').Router()
 const emailValidator = require('email-validator')
 const db = require('../db/index')
+const { SALTROUNDS } = require('../utils/config')
 
 usersRouter.post('/', async (request, response) => {
   const body = request.body
 
-  //TODO EMAIL-DUPLIKAATION TARKISTAMINEN JO TÄSSÄ
-  if (body.password.length > 3 && body.password !== undefined && emailValidator.validate(body.email)) {
+  if (body.password === undefined && body.password.length <= 3) {
+    return response.status(400).json({ error: 'Invalid password' }).end()
+  }
 
-    const saltRounds = 15
-    const passwordHash = await bcrypt.hash(body.password, saltRounds)
+  if (!emailValidator.validate(body.email)) {
+    return response.status(400).json({ error: 'Invalid email' }).end()
+  }
 
-    const user = ({
-        passwordHash,
-        type_id: body.type_id,
-        email: body.email,
-        name: body.name
-        })
-    
-      try {
-        const savedUser = await db.query('INSERT INTO users(name, email, hash, type_id) VALUES($1, $2, $3, $4) RETURNING *', [user.name, user.email, user.passwordHash, user.type_id])
+  const res = await db.query('SELECT * FROM users WHERE email = $1', [body.email])
 
-        response.status(201).json(savedUser.rows)
+  if (res.rows.length !== 0) {
+    return response.status(400).json({ error: 'Email already in use' }).end()
+  }
 
-      } catch(e) {
-          response.status(400).json(e.message)
-      }
-  } else {
-    response.status(400).json('User validation failed: either the password was too short or the email was invalid')
+  const passwordHash = await bcrypt.hash(body.password, SALTROUNDS)
+
+  try {
+    const savedUser = await db.query('INSERT INTO users(name, email, hash, type_id) VALUES($1, $2, $3, $4) RETURNING *', [body.name, body.email, passwordHash, body.type_id])
+    return response.status(201).json(savedUser.rows)
+  } catch(e) {
+    return response.status(400).json(e.message)
   }
 })
 
 usersRouter.get('/', async (request, response) => {
-
-    const res = await db.query('SELECT * FROM users')
-    response.json(res.rows)
+  const res = await db.query('SELECT FROM users')
+  return response.json(res.rows)
 })
 
 module.exports = usersRouter
