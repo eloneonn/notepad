@@ -8,14 +8,11 @@ import LoginScreen from "./components/LoginScreen";
 import { initializeUser } from './reducers/userReducer'
 import { Routes, Route } from 'react-router-dom'
 import SignupScreen from './components/SignupScreen';
-import NoteView from './components/NoteView';
-import { useMatch } from 'react-router'
 import Notification from './components/Notification';
 
 const App = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.user)
-  const notes = useSelector(state => state.notes)
 
   useEffect(() => {
     dispatch(initializeUser())
@@ -24,12 +21,6 @@ const App = () => {
   const AppRoot = styled('div')(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   }));
-
-  const noteMatch = useMatch('/notes/:id')
-
-  const noteToShow = noteMatch
-    ? notes.find(n => n.id === Number(noteMatch.params.id))
-    : null
 
   if (user === null) {
     return (
@@ -53,7 +44,6 @@ const App = () => {
             <Notification />
           </AppRoot>
         }/>
-        <Route path='notes/:id' element={<NoteView note={noteToShow}/>}/>
       </Routes>
     )
   }

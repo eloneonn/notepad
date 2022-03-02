@@ -22,7 +22,7 @@ notesRouter.post('/', async (request, response, next) => {
         return response.status(401).json({ error: 'token missing or invalid'})
     }
 
-    const res = await db.query('INSERT INTO notes (user_id, title, content) VALUES($1, $2, $3) RETURNING *', [user.id, request.body.title, request.body.content])
+    const res = await db.query('INSERT INTO notes (id, user_id, title, content) VALUES($1, $2, $3, $4) RETURNING *', [request.body.id, user.id, request.body.title, request.body.content])
     return response.status(201).json(res.rows[0])
 })
 

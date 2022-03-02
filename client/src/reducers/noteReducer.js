@@ -35,19 +35,11 @@ export const initializeNotes = () => {
     }
 }
 
-export const newNote = () => {
+export const newNote = (newNote) => {
     return async dispatch => {
-        const newNote = {
-            title: '',
-            content: ''
-          }
-
         const response = await noteService.create(newNote)
-        dispatch(appendNote(response))
-        
-        return(
-            response
-        )
+
+        dispatch(changeNote(response))
     }
 }
 

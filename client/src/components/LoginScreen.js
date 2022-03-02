@@ -81,7 +81,7 @@ const LoginScreen = () => {
 
                         <Grid container sx={{ mt: '1em' }}>
                             <Grid item xs>
-                                forgot password?
+                                
                             </Grid>
                             <Grid item>
                                 <Link to="/signup">
