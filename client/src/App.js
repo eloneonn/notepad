@@ -20,6 +20,7 @@ const App = () => {
 
   const AppRoot = styled('div')(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    overflow: 'hidden'
   }));
 
   if (user === null) {

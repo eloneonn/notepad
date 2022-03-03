@@ -3,6 +3,7 @@ import filterReducer from './reducers/filterReducer'
 import noteReducer from './reducers/noteReducer'
 import notificationReducer from './reducers/notificationReducer'
 import userReducer from './reducers/userReducer'
+import sorterReducer from './reducers/sorterReducer'
 
 const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
         user: userReducer,
         notification: notificationReducer,
         filter: filterReducer,
+        sorter: sorterReducer,
     },
 })
 

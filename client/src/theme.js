@@ -21,20 +21,6 @@ const theme = createTheme({
         }
       },
     },
-    MuiAppBar: {
-      styleOverrides: {
-        root: {
-          padding: '0'
-        },
-      },
-    },
-    MuiPaper: {
-      styleOverrides: {
-        root: {
-          padding: '0'
-        },
-      },
-    },
 }
 
 });

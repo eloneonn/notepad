@@ -3,8 +3,6 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import { AccountCircle } from '@mui/icons-material';
 import { Menu, MenuItem, Slide, useScrollTrigger } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../reducers/userReducer'
@@ -13,6 +11,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import { setFilter } from '../reducers/filterReducer';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 function HideOnScroll(props) {
   const { children } = props;
@@ -79,8 +78,6 @@ const ButtonAppBar = (props) => {
     
     const StyledInputBase = styled(InputBase)(({ theme }) => ({
       color: 'inherit',
-      value: filter,
-      onChange: handleChange,
       '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
         // vertical padding + font size from searchIcon
@@ -94,39 +91,32 @@ const ButtonAppBar = (props) => {
     }));
 
   return (
-    <Box sx={{ flexGrow: 1, zIndex: 10 }}>
+    <Box key="searchbox" sx={{ flexGrow: 1, zIndex: 10 }}>
       <HideOnScroll {...props}>
         <AppBar sx={{ backgroundColor: 'secondary.main' }}>
-          <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              aria-label="menu"
-              sx={{ mr: 2, color:"primary.main"}}
-            >
-              <MenuIcon />
-            </IconButton>
-
+          <Toolbar key="searchtoolbar">
             <Search sx={{ flexGrow: '1' }} key='search'>
               <SearchIconWrapper>
-                  <SearchIcon />
+                <SearchIcon />
               </SearchIconWrapper>
               <StyledInputBase
-                  placeholder="Search…"
-                  key='searchfield'
+                value={filter}
+                onChange={handleChange}
+                placeholder="Search…"
+                key='searchfield'
               />
             </Search>
 
             <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                color="inherit"
-                onClick={handleClick}
-                sx={{ color:"primary.main" }}
-              >
-                <AccountCircle />
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              color="inherit"
+              onClick={handleClick}
+              sx={{ color:"primary.main" }}
+            >
+              <SettingsIcon />
             </IconButton>
             <Menu
               id="basic-menu"
@@ -137,6 +127,7 @@ const ButtonAppBar = (props) => {
                 'aria-labelledby': 'basic-button',
               }}
             >
+              <MenuItem onClick={handleClose}>Settings</MenuItem>
               <MenuItem onClick={handleClose}>My account</MenuItem>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>

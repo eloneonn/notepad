@@ -9,7 +9,7 @@ const noteSlice = createSlice({
             state.unshift(action.payload)
         },
         setNotes(state, action) {
-            return action.payload //? SORT BY LAST EDITED
+            return action.payload
         },
         deleteNote(state, action) {
             return state.filter(e => e.id !== action.payload.id)

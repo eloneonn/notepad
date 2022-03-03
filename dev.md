@@ -23,7 +23,7 @@
     - React components: Login DONE, Register DONE, Note DONE, NoteView DONE, NoteMasonry DONE, Settings 
     - State management with redux
     - Routing with react-router
-    - React components: SearchBar and Notification DONE
+    - React components: SearchBar DONE and Notification DONE
 - Bonus features
     - Personalized styling and dark mode
     - Implement rhyme and synonym -dictionaries with datamuse API
@@ -35,6 +35,8 @@
 - Admin API for deleting and adding users, changing passwords?
 
 ## BUGS AND OTHER TODOS
-- Fix creating a new note having to wait for database for id
+- FIXED Fix creating a new note having to wait for database for id
 - Fix main view having to render twice when logging in (2nd render after fetching notes from db)
 - Implement a better saving mechanism for notes
+- Body is still scrollable when in note dialog
+- Search bar loses focus when a character is typed

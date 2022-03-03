@@ -8,10 +8,9 @@ import CreateButton from './CreateButton';
 import { appendNote, newNote } from '../reducers/noteReducer';
 import { v4 as uuidv4} from 'uuid'
 
-
 const NoteMasonry = () => {
   const filter = useSelector(state => state.filter)
-  const notes = useSelector(state => state.notes.filter(n => n.title.includes(filter) || n.content.includes(filter)))
+  const notes = useSelector(state => state.notes.filter(n => n.title.toLowerCase().includes(filter.toLowerCase()) || n.content.toLowerCase().includes(filter.toLowerCase())))
   const dispatch = useDispatch()
   const refs = useRef([])
 
@@ -19,9 +18,9 @@ const NoteMasonry = () => {
     const id = uuidv4()
 
     const newNoteObj = {
-        id: id,
-        title: '',
-        content: ''
+      id: id,
+      title: '',
+      content: ''
       }
 
     await dispatch(appendNote(newNoteObj))
@@ -31,8 +30,7 @@ const NoteMasonry = () => {
   }
 
   return (
-    <Box sx={{ maxWidth: '100%', }}>
-
+    <Box key='masonry-box'>
       {notes.length === 0 ? (
         <Container sx={{
           marginTop: 10,
@@ -44,7 +42,7 @@ const NoteMasonry = () => {
           <Typography sx={{ opacity: '60%' }}>Use the button below</Typography>
         </Container>
         ) : (
-        <Masonry columns={{ xs: 2, sm: 3, md: 4 }} spacing={1.5}>
+        <Masonry columns={{ xs: 2, sm: 3, md: 4 }} spacing={1} key='masonry'>
           {notes.map((note, i) => (
             <Note key={note.id} note={note} ref={(element) => refs.current[i] = element}/>
           ))}
