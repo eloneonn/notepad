@@ -1,5 +1,5 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
-import { Card, CardActionArea, Grid, Typography, AppBar, BottomNavigation, BottomNavigationAction, Container, IconButton, InputBase, Toolbar, Modal, Fade  } from '@mui/material';
+import { Card, CardActionArea, Grid, Typography, AppBar, BottomNavigation, BottomNavigationAction, Container, IconButton, InputBase, Toolbar, Fade, Dialog, useMediaQuery  } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Box } from "@mui/system";
 import CreateButton from "./CreateButton";
@@ -11,9 +11,13 @@ import DoneIcon from '@mui/icons-material/Done';
 import { useDispatch } from "react-redux";
 import { removeNote, updateNote } from "../reducers/noteReducer";
 import { setNotification } from "../reducers/notificationReducer";
+import { useTheme } from "@emotion/react";
 
 const Note = forwardRef(({ note }, ref) => {
     const dispatch = useDispatch()
+    const theme = useTheme()
+
+    const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
     const [ modalView, setModalView ] = useState(false)
     const [ content, setContent ] = useState('')
@@ -73,7 +77,7 @@ const Note = forwardRef(({ note }, ref) => {
     } 
 
     return (
-        <div>
+        <div style={{backgroundColor: 'secondary.main' }}>
         <Card>
             <CardActionArea onClick={handleClick}>
                 <Typography sx={{ 
@@ -99,14 +103,15 @@ const Note = forwardRef(({ note }, ref) => {
             </CardActionArea>
         </Card>
 
-        <Modal
+        <Dialog
             open={modalView}
             onClose={handleClose}
-            hideBackdrop
-            sx={{ backgroundColor: 'secondary.main' }}
+            hideBackdrop={fullScreen}
+            fullScreen={fullScreen}
+            disableScrollLock={true}
         >
             <Fade in={modalView}>
-                <Container sx={{ height: '100vh'}}>
+                <Container sx={{ height: '100vh', pb: '8em', backgroundColor: 'secondary.main', overflow: 'auto'}}>
                     <Grid
                         container
                         direction="column"
@@ -114,8 +119,8 @@ const Note = forwardRef(({ note }, ref) => {
                         alignItems="stretch"
                     >
                         <Grid item xs={3} sx={{ mb: '4.5em' }}>
-                            <Box sx={{ position: 'fixed', backgroundColor: 'secondary.main', zIndex: '100' }}>
-                                <AppBar elevation={0} sx={{ backgroundColor: 'secondary.main', padding: '0.5em 0.5em 0.5em 0.5em' }}>
+                            <Box sx={{ zIndex: '100' }}>
+                                <AppBar elevation={0} sx={{ position: fullScreen ? 'fixed' : 'absolute', backgroundColor: 'secondary.main', padding: '0.5em 0.5em 0.5em 0.5em' }}>
                                     <Toolbar disableGutters>
                                         <IconButton
                                             onClick={handleClose}
@@ -155,7 +160,7 @@ const Note = forwardRef(({ note }, ref) => {
                         </Grid>
 
                         <Grid item xs={7}>
-                            <Box sx={{ pb: '10em', overflow: 'auto', height: '100vh'}}>
+                            <Box sx={{ pb: '10em' }}>
                             <InputBase 
                                 multiline 
                                 value={title} 
@@ -181,8 +186,8 @@ const Note = forwardRef(({ note }, ref) => {
                         </Grid>
 
                         <Grid item xs={2}>
-                            <Box>
-                                <AppBar position="fixed" sx={{ top: 'auto', bottom: 0 , padding: 0 }}>
+                            <Box sx={{ zIndex: '2000' }}>
+                                <AppBar sx={{ position: 'absolute', top: 'auto', bottom: 0 , padding: 0}}>
                                     <BottomNavigation showLabels>
                                         <BottomNavigationAction label="Note" icon={<NotesIcon />} />
                                         <BottomNavigationAction label="Recordings" icon={<AudiotrackIcon />} />
@@ -194,7 +199,7 @@ const Note = forwardRef(({ note }, ref) => {
                     </Grid>
                 </Container>
             </Fade>
-        </Modal>
+        </Dialog>
         </div>
     )
 })

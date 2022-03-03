@@ -3,12 +3,17 @@ import { styled } from '@mui/material/styles';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import MicIcon from '@mui/icons-material/Mic';
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@emotion/react";
 
 const CreateButton = ({ type, handler }) => {
+  const theme = useTheme()
+  const bigger = useMediaQuery(theme.breakpoints.down('md'));
+
   const StyledFab = styled(Fab)(({ theme }) => ({ //? Pitäisikö tästä tehdä oma react-komponentti?
       position: 'fixed',
       fontSize: 'large',
-      bottom: 10,
+      bottom: bigger ? 10 : 40,
       size: 'large',
       left: '50%',
       transform: 'translate(-50%, -50%)',  

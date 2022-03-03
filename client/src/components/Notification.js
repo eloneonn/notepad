@@ -16,7 +16,7 @@ const Notification = () => { //? GROW-TRANSITIO MYÖS PIILOTETTAESSA (saattaa va
         const type = notification[0]
         const message = notification[1]    
         return (
-            <Snackbar open={open} autoHideDuration={5000} sx={{ bottom: { xs: 110, sm: 0 } }}>
+            <Snackbar open={open} autoHideDuration={5000} sx={{ bottom: { xs: 110, sm: 150 } }}>
                 <Alert severity={type}>
                     {message}
                 </Alert>

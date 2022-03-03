@@ -22,7 +22,11 @@ notesRouter.post('/', async (request, response, next) => {
         return response.status(401).send('token missing or invalid')
     }
 
-    const res = await db.query('INSERT INTO notes (id, user_id, title, content) VALUES($1, $2, $3, $4) RETURNING *', [request.body.id, user.id, request.body.title, request.body.content])
+    try {
+        const res = await db.query('INSERT INTO notes (id, user_id, title, content) VALUES($1, $2, $3, $4) RETURNING *', [request.body.id, user.id, request.body.title, request.body.content])
+    } catch (error) {
+        response.status(400).json(error)
+    }
     return response.status(201).json(res.rows[0])
 })
 
@@ -33,13 +37,21 @@ notesRouter.put('/', async (request, response, next) => {
         return response.status(401).send('token missing or invalid')
     }
 
-    const res = await db.query('UPDATE notes SET title = $1, content = $2 WHERE id = $3 RETURNING *', [request.body.title, request.body.content, request.body.id])
+    try {
+        const res = await db.query('UPDATE notes SET title = $1, content = $2 WHERE id = $3 RETURNING *', [request.body.title, request.body.content, request.body.id])
+    } catch (error) {
+        response.status(404).json(error)
+    }
     return response.json(res.rows[0])
 })
 
 notesRouter.delete('/', async (request, response, next) => {
+    try {
+        const res = await db.query('DELETE FROM notes WHERE id = $1', [request.body.note.id])
+    } catch (error) {
+        response.status(404).json(error)
+    }
 
-    const res = await db.query('DELETE FROM notes WHERE id = $1', [request.body.note.id])
     return res
 })
 
