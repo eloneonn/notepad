@@ -1,11 +1,13 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
-import { Card, CardActionArea, Grid, Typography, AppBar, BottomNavigation, BottomNavigationAction, Container, IconButton, InputBase, Toolbar, Modal, Grow, Slide  } from '@mui/material';
+import { Card, CardActionArea, Grid, Typography, AppBar, BottomNavigation, BottomNavigationAction, Container, IconButton, InputBase, Toolbar, Modal, Fade  } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Box } from "@mui/system";
 import CreateButton from "./CreateButton";
 import AudiotrackIcon from '@mui/icons-material/Audiotrack';
+import SaveIcon from '@mui/icons-material/Save';
 import NotesIcon from '@mui/icons-material/Notes';
 import DeleteIcon from '@mui/icons-material/Delete';
+import DoneIcon from '@mui/icons-material/Done';
 import { useDispatch } from "react-redux";
 import { removeNote, updateNote } from "../reducers/noteReducer";
 import { setNotification } from "../reducers/notificationReducer";
@@ -16,6 +18,7 @@ const Note = forwardRef(({ note }, ref) => {
     const [ modalView, setModalView ] = useState(false)
     const [ content, setContent ] = useState('')
     const [ title, setTitle ] = useState('')
+    const [ updated, setUpdated ] = useState(true)
 
     useImperativeHandle(ref, () => {
         return {
@@ -23,17 +26,10 @@ const Note = forwardRef(({ note }, ref) => {
         }
     })
 
-    useEffect(() => { // Preventing an error when browser refreshes in noteview, instead redirects to main view
+    useEffect(() => {
         setContent(note.content)
         setTitle(note.title)
     }, [note]);
-
-    const handleBackbutton = () => { //! TÄMÄ ON HUONO TAPA
-        const newNote = {...note, title: title, content: content}
-    
-        handleClose()
-        dispatch(updateNote(newNote))
-    }
 
     const handleRemove = () => {
         handleClose()
@@ -45,12 +41,36 @@ const Note = forwardRef(({ note }, ref) => {
         setModalView(false)
     }
 
+    const handleUpdate = () => {
+        const newNote = {...note, title: title, content: content}
+
+        dispatch(updateNote(newNote))
+        dispatch(setNotification('success', 'Note saved!'))
+        setUpdated(true)
+    }
+
     const handleClick = (event) => {
         event.preventDefault()
         setModalView(true)
     }
 
-    // TIME: {note.created_at.slice(0, 10)}
+    const handleTitleChange = (event) => {
+        event.preventDefault()
+        setTitle(event.target.value)
+        setUpdated(false)
+    }
+
+    const handleContentChange = (event) => {
+        event.preventDefault()
+        setContent(event.target.value)
+        setUpdated(false)
+    }
+
+    var time = 'just now'
+
+    if (typeof note.created_at !== 'undefined') {
+        time = note.created_at.slice(0, 10)
+    } 
 
     return (
         <div>
@@ -73,7 +93,7 @@ const Note = forwardRef(({ note }, ref) => {
                         
                     </Grid>
                     <Grid item xs>  
-                        <Typography variant="caption" sx={{ fontSize: '80%', opacity: '60%', float: 'right' }}></Typography>
+                        <Typography variant="caption" sx={{ fontSize: '80%', opacity: '60%', float: 'right' }}>{time}</Typography>
                     </Grid>
                 </Grid>
             </CardActionArea>
@@ -83,23 +103,22 @@ const Note = forwardRef(({ note }, ref) => {
             open={modalView}
             onClose={handleClose}
             hideBackdrop
-            keepMounted
             sx={{ backgroundColor: 'secondary.main' }}
         >
-            <Grow in={modalView}>
-                <Container>
+            <Fade in={modalView}>
+                <Container sx={{ height: '100vh'}}>
                     <Grid
                         container
                         direction="column"
                         justifyContent="flex-start"
                         alignItems="stretch"
                     >
-                        <Grid item xs={3} sx={{ mb: '4.5em'}}>
-                            <Box sx={{ position: 'fixed', backgroundColor: 'secondary.main', zIndex: '100'}}>
+                        <Grid item xs={3} sx={{ mb: '4.5em' }}>
+                            <Box sx={{ position: 'fixed', backgroundColor: 'secondary.main', zIndex: '100' }}>
                                 <AppBar elevation={0} sx={{ backgroundColor: 'secondary.main', padding: '0.5em 0.5em 0.5em 0.5em' }}>
                                     <Toolbar disableGutters>
                                         <IconButton
-                                            onClick={handleBackbutton}
+                                            onClick={handleClose}
                                             size="large"
                                             mr="2"
                                             aria-label="menu"
@@ -107,7 +126,20 @@ const Note = forwardRef(({ note }, ref) => {
                                         >
                                             <ArrowBackIcon />
                                         </IconButton>  
-                                        <Typography sx={{ flexGrow: '1'}}></Typography>
+                                        <IconButton
+                                            onClick={handleUpdate}
+                                            size="large"
+                                            mr="2"
+                                            aria-label="menu"
+                                            sx={{ color:"primary.main"}}
+                                        >
+                                            {updated ? (
+                                                <DoneIcon />
+                                            ) : (
+                                                <SaveIcon />
+                                            )}
+                                        </IconButton>  
+                                        <Typography variant="caption" sx={{ color: 'primary.main', opacity: '60%', flexGrow: '1' }}>{updated ? 'note saved' : 'unsaved changes'}</Typography>
 
                                         <IconButton                             
                                             onClick={handleRemove}
@@ -130,7 +162,7 @@ const Note = forwardRef(({ note }, ref) => {
                                 fullWidth 
                                 placeholder={'Set a title here...'} 
                                 spellCheck="false"
-                                onChange={({ target }) => setTitle(target.value)} 
+                                onChange={handleTitleChange} 
                                 sx={{ 
                                     fontWeight: 'bold',
                                     fontSize: '26px',
@@ -142,28 +174,26 @@ const Note = forwardRef(({ note }, ref) => {
                                     value={content} 
                                     fullWidth 
                                     placeholder={'Write here...'} 
-                                    onChange={({ target }) => setContent(target.value)} 
+                                    onChange={handleContentChange} 
                                     spellCheck="false"
                                 />
                             </Box>
                         </Grid>
 
                         <Grid item xs={2}>
-                            <Grid container sx={{ marginTop: '0.5em' }}>
-                                <Slide in={modalView} direction="up" timeout={3000}>
-                                    <AppBar position="fixed" sx={{ top: 'auto', bottom: 0 , padding: 0 }}>
-                                        <BottomNavigation showLabels>
-                                            <BottomNavigationAction label="Note" icon={<NotesIcon />} />
-                                            <BottomNavigationAction label="Recordings" icon={<AudiotrackIcon />} />
-                                        </BottomNavigation>
-                                        <CreateButton />
-                                    </AppBar>
-                                </Slide>
-                            </Grid>
+                            <Box>
+                                <AppBar position="fixed" sx={{ top: 'auto', bottom: 0 , padding: 0 }}>
+                                    <BottomNavigation showLabels>
+                                        <BottomNavigationAction label="Note" icon={<NotesIcon />} />
+                                        <BottomNavigationAction label="Recordings" icon={<AudiotrackIcon />} />
+                                    </BottomNavigation>
+                                    <CreateButton />
+                                </AppBar>
+                            </Box>
                         </Grid>
                     </Grid>
                 </Container>
-            </Grow>
+            </Fade>
         </Modal>
         </div>
     )
