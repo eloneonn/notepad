@@ -9,7 +9,7 @@ notesRouter.get('/', async (request, response, next) => {
     }
 
     if (res.rows.length === 0) {
-        return response.status(404).json({ error: '0 notes found' })
+        return response.status(404).send('0 notes found')
     } else {
         return response.json(res.rows)
     }
@@ -19,7 +19,7 @@ notesRouter.post('/', async (request, response, next) => {
     const user = request.user
 
     if (!user) {
-        return response.status(401).json({ error: 'token missing or invalid'})
+        return response.status(401).send('token missing or invalid')
     }
 
     const res = await db.query('INSERT INTO notes (id, user_id, title, content) VALUES($1, $2, $3, $4) RETURNING *', [request.body.id, user.id, request.body.title, request.body.content])
@@ -30,7 +30,7 @@ notesRouter.put('/', async (request, response, next) => {
     const user = request.user
 
     if (!user) {
-        return response.status(401).json({ error: 'token missing or invalid'})
+        return response.status(401).send('token missing or invalid')
     }
 
     const res = await db.query('UPDATE notes SET title = $1, content = $2 WHERE id = $3 RETURNING *', [request.body.title, request.body.content, request.body.id])

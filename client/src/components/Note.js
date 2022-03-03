@@ -1,5 +1,5 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
-import { Card, CardActionArea, Grid, Typography, AppBar, BottomNavigation, BottomNavigationAction, Container, IconButton, InputBase, Toolbar, Modal  } from '@mui/material';
+import { Card, CardActionArea, Grid, Typography, AppBar, BottomNavigation, BottomNavigationAction, Container, IconButton, InputBase, Toolbar, Modal, Grow, Slide  } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Box } from "@mui/system";
 import CreateButton from "./CreateButton";
@@ -80,75 +80,90 @@ const Note = forwardRef(({ note }, ref) => {
         </Card>
 
         <Modal
-            fullscreen="true"
             open={modalView}
             onClose={handleClose}
             hideBackdrop
+            keepMounted
             sx={{ backgroundColor: 'secondary.main' }}
         >
-            <Container>
-                <Grid
-                    container
-                    direction="column"
-                    justifyContent="flex-start"
-                    alignItems="stretch"
-                >
-                    <Grid item xs={3} sx={{ mb: '4.5em'}}>
-                        <Box sx={{ position: 'fixed', backgroundColor: 'secondary.main', zIndex: '100'}}>
-                            <AppBar elevation={0} sx={{ backgroundColor: 'secondary.main', padding: '0.5em 0.5em 0.5em 0.5em' }}>
-                                <Toolbar disableGutters>
-                                    <IconButton
-                                        onClick={handleBackbutton}
-                                        size="large"
-                                        mr="2"
-                                        aria-label="menu"
-                                        sx={{ color:"primary.main"}}
-                                    >
-                                        <ArrowBackIcon />
-                                    </IconButton>  
-                                    <Typography sx={{ flexGrow: '2'}}></Typography>
+            <Grow in={modalView}>
+                <Container>
+                    <Grid
+                        container
+                        direction="column"
+                        justifyContent="flex-start"
+                        alignItems="stretch"
+                    >
+                        <Grid item xs={3} sx={{ mb: '4.5em'}}>
+                            <Box sx={{ position: 'fixed', backgroundColor: 'secondary.main', zIndex: '100'}}>
+                                <AppBar elevation={0} sx={{ backgroundColor: 'secondary.main', padding: '0.5em 0.5em 0.5em 0.5em' }}>
+                                    <Toolbar disableGutters>
+                                        <IconButton
+                                            onClick={handleBackbutton}
+                                            size="large"
+                                            mr="2"
+                                            aria-label="menu"
+                                            sx={{ color:"primary.main"}}
+                                        >
+                                            <ArrowBackIcon />
+                                        </IconButton>  
+                                        <Typography sx={{ flexGrow: '1'}}></Typography>
 
-                                    <IconButton                             
-                                        onClick={handleRemove}
-                                        size="large"
-                                        aria-label="delete"
-                                        sx={{ color:"primary.main"}}
-                                    >
-                                        <DeleteIcon />
-                                    </IconButton>
-                                </Toolbar>
-                            </AppBar>
-                        </Box> 
-                    </Grid>
+                                        <IconButton                             
+                                            onClick={handleRemove}
+                                            size="large"
+                                            aria-label="delete"
+                                            sx={{ color:"primary.main"}}
+                                        >
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </Toolbar>
+                                </AppBar>
+                            </Box> 
+                        </Grid>
 
-                    <Grid item xs={7}>
-                        <Box sx={{ pb: '10em', overflow: 'auto', height: '100vh'}}>
-                        <InputBase multiline value={title} fullWidth placeholder={'Set a title here...'} onChange={({ target }) => setTitle(target.value)} sx={{ 
-                                fontWeight: 'bold',
-                                fontSize: '26px',
-                                padding: '0.5em'
-                            }} />
+                        <Grid item xs={7}>
+                            <Box sx={{ pb: '10em', overflow: 'auto', height: '100vh'}}>
+                            <InputBase 
+                                multiline 
+                                value={title} 
+                                fullWidth 
+                                placeholder={'Set a title here...'} 
+                                spellCheck="false"
+                                onChange={({ target }) => setTitle(target.value)} 
+                                sx={{ 
+                                    fontWeight: 'bold',
+                                    fontSize: '26px',
+                                    padding: '0.5em'
+                                }} />
 
-                            <InputBase multiline value={content} fullWidth placeholder={'Write here...'} onChange={({ target }) => setContent(target.value)} sx={{
-                            }} />
-                        </Box>
-                    </Grid>
+                                <InputBase 
+                                    multiline 
+                                    value={content} 
+                                    fullWidth 
+                                    placeholder={'Write here...'} 
+                                    onChange={({ target }) => setContent(target.value)} 
+                                    spellCheck="false"
+                                />
+                            </Box>
+                        </Grid>
 
-                    <Grid item xs={2}>
-                        <Grid container sx={{ marginTop: '0.5em' }}>
-                            <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 , padding: 0}}>
-                                <BottomNavigation
-                                    showLabels
-                                    >
-                                    <BottomNavigationAction label="Note" icon={<NotesIcon />} />
-                                    <BottomNavigationAction label="Recordings" icon={<AudiotrackIcon />} />
-                                </BottomNavigation>
-                                <CreateButton />
-                            </AppBar>
+                        <Grid item xs={2}>
+                            <Grid container sx={{ marginTop: '0.5em' }}>
+                                <Slide in={modalView} direction="up" timeout={3000}>
+                                    <AppBar position="fixed" sx={{ top: 'auto', bottom: 0 , padding: 0 }}>
+                                        <BottomNavigation showLabels>
+                                            <BottomNavigationAction label="Note" icon={<NotesIcon />} />
+                                            <BottomNavigationAction label="Recordings" icon={<AudiotrackIcon />} />
+                                        </BottomNavigation>
+                                        <CreateButton />
+                                    </AppBar>
+                                </Slide>
+                            </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-            </Container>
+                </Container>
+            </Grow>
         </Modal>
         </div>
     )

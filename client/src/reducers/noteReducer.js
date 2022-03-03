@@ -30,7 +30,7 @@ export const initializeNotes = () => {
             const notes = await noteService.getAll()
             dispatch(setNotes(notes))
         } catch (error) {
-            console.log('0 notes found')
+            console.log(error.response.data)
         }
     }
 }
