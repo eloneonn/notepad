@@ -10,9 +10,11 @@ import { v4 as uuidv4} from 'uuid'
 
 const NoteMasonry = () => {
   const filter = useSelector(state => state.filter)
-  const notes = useSelector(state => state.notes.filter(n => n.title.toLowerCase().includes(filter.toLowerCase()) || n.content.toLowerCase().includes(filter.toLowerCase())))
+  const notes = useSelector(state => state.notes)
   const dispatch = useDispatch()
   const refs = useRef([])
+
+  const filteredNotes = notes.filter(n => n.title.toLowerCase().includes(filter.toLowerCase()) || n.content.toLowerCase().includes(filter.toLowerCase()))
 
   const handleCreate = async () => {
     const id = uuidv4()
@@ -32,21 +34,24 @@ const NoteMasonry = () => {
   return (
     <Box key='masonry-box'>
       {notes.length === 0 ? (
-        <Container sx={{
-          marginTop: 10,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}>
+        <Container sx={{ marginTop: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', }}>
           <Typography sx={{ opacity: '60%' }}>You haven't created any notes yet</Typography>
           <Typography sx={{ opacity: '60%' }}>Use the button below</Typography>
         </Container>
         ) : (
-        <Masonry columns={{ xs: 2, sm: 3, md: 4 }} spacing={1} key='masonry'>
-          {notes.map((note, i) => (
-            <Note key={note.id} note={note} ref={(element) => refs.current[i] = element}/>
-          ))}
-        </Masonry>
+          <div>
+            <Masonry columns={{ xs: 2, sm: 3, md: 4 }} spacing={1} key='masonry'>
+              {filteredNotes.map((note, i) => (
+                <Note key={note.id} note={note} ref={(element) => refs.current[i] = element}/>
+              ))}
+            </Masonry>
+            {filteredNotes.length === 0 
+              ? <Container sx={{ marginTop: 10, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                  <Typography sx={{ opacity: '60%' }}>0 notes found</Typography>
+                </Container> 
+              : null}
+          </div>
+
       )}  
         <CreateButton type='createnote' handler={handleCreate} />
     </Box>

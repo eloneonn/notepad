@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../reducers/userReducer'
 import { clearNotes } from '../reducers/noteReducer';
 import SearchIcon from '@mui/icons-material/Search';
-import { styled, alpha } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import { setFilter } from '../reducers/filterReducer';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -65,46 +65,15 @@ const ButtonAppBar = (props) => {
   const handleThemeMode = () => {
 
   }
-
-  const Search = styled('div')(({ theme }) => ({
-      position: 'relative',
-      color: theme.palette.primary.main,
-      borderRadius: theme.shape.borderRadius,
-      backgroundColor: alpha(theme.palette.common.white, 0.15),
-      '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
-      },
-      marginRight: theme.spacing(2),
-      marginLeft: 0,
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(3),
-        width: 'auto',
-      },
-    }));
     
     const SearchIconWrapper = styled('div')(({ theme }) => ({
-      padding: theme.spacing(0, 2),
+      padding: theme.spacing(0, 1),
+      color: 'black',
       height: '100%',
-      position: 'absolute',
       pointerEvents: 'none',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-    }));
-    
-    const StyledInputBase = styled(InputBase)(({ theme }) => ({
-      color: 'inherit',
-      '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('md')]: {
-          width: '20ch',
-        },
-      },
     }));
 
   return (
@@ -113,17 +82,17 @@ const ButtonAppBar = (props) => {
         <HideOnScroll {...props}>
           <AppBar sx={{ backgroundColor: 'secondary.main' }}>
             <Toolbar key="searchtoolbar">
-              <Search sx={{ flexGrow: '1' }} key='search'>
                 <SearchIconWrapper>
                   <SearchIcon />
                 </SearchIconWrapper>
-                <StyledInputBase
+                <InputBase
+                  spellCheck="false"
                   value={filter}
                   onChange={handleChange}
                   placeholder="Search…"
                   key='searchfield'
+                  sx={{ flexGrow: '1' }}
                 />
-              </Search>
 
               <IconButton
                 size="large"
@@ -180,8 +149,6 @@ const ButtonAppBar = (props) => {
             />
           </FormGroup>
         <FormLabel component="legend">App version</FormLabel>
-
-
           <FormHelperText>0.8</FormHelperText>
         </FormControl>
 
@@ -190,7 +157,6 @@ const ButtonAppBar = (props) => {
             Close
           </Button>
         </DialogActions>
-
       </Dialog>
     </div>
   );
