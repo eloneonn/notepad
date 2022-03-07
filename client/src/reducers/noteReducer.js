@@ -1,5 +1,9 @@
+import store from '../store'
+
 import { createSlice } from "@reduxjs/toolkit";
 import noteService from '../services/noteService'
+
+
 
 const noteSlice = createSlice({
     name: 'notes',
@@ -26,12 +30,14 @@ const noteSlice = createSlice({
 
 export const initializeNotes = () => {
     return async dispatch => {
-        try {
-            const notes = await noteService.getAll()
-            dispatch(setNotes(notes))
+        try {    
+            var notes = await noteService.getAll()
         } catch (error) {
-            console.log(error.response.data)
+            console.log(error)
         }
+
+        dispatch(setNotes(notes))
+        dispatch(sortNotes())
     }
 }
 
@@ -40,6 +46,7 @@ export const newNote = (newNote) => {
         const response = await noteService.create(newNote)
 
         dispatch(changeNote(response))
+        dispatch(sortNotes())
     }
 }
 
@@ -58,6 +65,41 @@ export const removeNote = (note) => {
         const response = await noteService.remove({ data : { note } })
 
         return response
+    }
+}
+
+export const sortNotes = () => {
+    return async dispatch => {
+        const notes = store.getState().notes
+        const sorter = store.getState().sorter
+
+        console.log(sorter);
+
+        const notesToSort = [...notes]
+        var sortedNotes = []
+
+        switch (sorter) {
+            case 'Last created':
+                sortedNotes = notesToSort.sort((a, b) => Date(a.created_at) - Date(b.created_at))
+                dispatch(setNotes(sortedNotes))
+
+                break
+            case 'Last edited':
+                sortedNotes = notesToSort.sort((a, b) => Date(a.modified_at) - Date(b.modified_at))
+                dispatch(setNotes(sortedNotes))
+
+                break
+            case 'Alphabetical':
+                sortedNotes = notesToSort.sort((a, b) => a.title.localeCompare(b.title))
+                dispatch(setNotes(sortedNotes))
+
+                break
+            default:
+                dispatch(setNotes(notesToSort))
+                break
+        }
+
+
     }
 }
 

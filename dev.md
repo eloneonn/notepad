@@ -20,10 +20,11 @@
     - Service for notes DONE
     - Service for recordings
     - Main view DONE
-    - React components: Login DONE, Register DONE, Note DONE, NoteView DONE, NoteMasonry DONE, Settings 
-    - State management with redux
-    - Routing with react-router
+    - React components: Login DONE, Register DONE, Note DONE, NoteView DONE, NoteMasonry DONE, Settings DONE
+    - State management with redux DONE
+    - Routing with react-router DONE
     - React components: SearchBar DONE and Notification DONE
+    - Implement sorting
 - Bonus features
     - Personalized styling and dark mode
     - Implement rhyme and synonym -dictionaries with datamuse API
@@ -37,6 +38,6 @@
 ## BUGS AND OTHER TODOS
 - FIXED Fix creating a new note having to wait for database for id
 - Fix main view having to render twice when logging in (2nd render after fetching notes from db)
-- Implement a better saving mechanism for notes
+- Implement autosave for notes
 - Body is still scrollable when in note dialog
-- Search bar loses focus when a character is typed
+- FIXED Search bar loses focus when a character is typed

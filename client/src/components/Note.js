@@ -72,8 +72,9 @@ const Note = forwardRef(({ note }, ref) => {
 
     var time = 'just now'
 
-    if (typeof note.created_at !== 'undefined') {
-        time = note.created_at.slice(0, 10)
+    if (typeof note.modified_at !== 'undefined') {
+        const newDate = new Date(note.modified_at)
+        time = newDate.toLocaleDateString()
     } 
 
     return (

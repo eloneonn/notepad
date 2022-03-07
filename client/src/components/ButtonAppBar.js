@@ -3,7 +3,7 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import { Button, Dialog, DialogActions, DialogTitle, FormControl, FormControlLabel, FormGroup, FormHelperText, FormLabel, Menu, MenuItem, Slide, Switch, useScrollTrigger } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogTitle, FormControl, FormControlLabel, FormGroup, FormLabel, Menu, MenuItem, Select, Slide, Switch, useScrollTrigger } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../reducers/userReducer'
 import { clearNotes } from '../reducers/noteReducer';
@@ -13,6 +13,7 @@ import InputBase from '@mui/material/InputBase';
 import { setFilter } from '../reducers/filterReducer';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
+import { setSorter } from '../reducers/sorterReducer';
 // import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 function HideOnScroll(props) {
@@ -31,9 +32,14 @@ const ButtonAppBar = (props) => {
   const filter = useSelector(state => state.filter)
   const [ anchorEl, setAnchorEl ] = useState(null)
   const [ settingsOpen, setSettingsOpen ] = useState(false)
+  const sorter = useSelector(state => state.sorter)
 
   const open = Boolean(anchorEl);
   
+  const handleSelectChange = (event) => {
+    dispatch(setSorter(event.target.value))
+  }
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -127,31 +133,38 @@ const ButtonAppBar = (props) => {
         <DialogTitle>Settings</DialogTitle>
 
           <FormControl component="fieldset" variant="standard"  sx={{ padding: '2em'}}>
-          <FormLabel component="legend">Assign responsibility</FormLabel>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Switch/>
-              }
-              label="Some setting here"
-            />
-            <FormControlLabel
-              control={
-                <Switch/>
-              }
-              label="Another one here"
-            />
-            <FormControlLabel
-              control={
-                <Switch><IconButton onClick={handleThemeMode}><Brightness4Icon /></IconButton></Switch>
-              }
-              label="Dark mode"
-            />
-          </FormGroup>
-        <FormLabel component="legend">App version</FormLabel>
-          <FormHelperText>0.8</FormHelperText>
-        </FormControl>
-
+          <FormLabel component="legend"></FormLabel>
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Switch/>
+                }
+                label="Some setting here"
+              />
+              <FormControlLabel
+                control={
+                  <Switch/>
+                }
+                label="Another one here"
+              />
+              <FormControlLabel
+                control={
+                  <Switch><IconButton onClick={handleThemeMode}><Brightness4Icon /></IconButton></Switch>
+                }
+                label="Dark mode"
+              />
+              <FormControlLabel
+                control={
+                  <Select value={sorter} label="Sort by" onChange={handleSelectChange} >
+                    <MenuItem value={'Last created'}>Last created</MenuItem>
+                    <MenuItem value={'Last edited'}>Last edited</MenuItem>
+                    <MenuItem value={'Alphabetical'}>Alphabetical</MenuItem>
+                  </Select>
+                }
+                label="Sort notes by"
+              />
+            </FormGroup>
+          </FormControl>
         <DialogActions>
           <Button onClick={handleSettingsClose}>
             Close

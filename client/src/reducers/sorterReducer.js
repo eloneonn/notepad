@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const sorterSlice = createSlice({ // SORT BY... 0: CREATED, 1: EDITED, 2: ABC
+const sorterSlice = createSlice({
     name: 'sorter',
-    initialState: 0,
+    initialState: 'Last created',
     reducers: {
         setSorter (state, action) {
             return action.payload

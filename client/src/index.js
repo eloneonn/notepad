@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import store from './store'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
-import store from './store'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ThemeProvider } from '@mui/material/styles';
 import '@fontsource/roboto/300.css';
