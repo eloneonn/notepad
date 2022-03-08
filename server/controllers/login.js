@@ -8,7 +8,7 @@ loginRouter.post('/', async (request, response) => {
   const body = request.body
 
   try {
-    var res = await db.query('SELECT * FROM users WHERE email=($1)', [body.email])
+    var res = await db.query('SELECT users.id, users.type_id, users.name, users.email, users.hash, userprefs.sorter, userprefs.darkmode FROM users INNER JOIN userprefs ON users.id=userprefs.user_id WHERE email=($1)', [body.email])
   } catch (err) {
     return response.status(401).json(err)
   }
@@ -18,6 +18,7 @@ loginRouter.post('/', async (request, response) => {
   }
 
   const user = res.rows[0]
+  console.log(user);
 
   if (!(await bcrypt.compare(body.password, user.hash))) {
     return response.status(401).json({ error: 'Wrong password' }).end()
@@ -27,7 +28,7 @@ loginRouter.post('/', async (request, response) => {
 
   return response
     .status(200)
-    .send({ token, email: user.email, name: user.name })
+    .send({ token, id: user.id, email: user.email, name: user.name, darkmode: user.darkmode, sorter: user.sorter })
 })
 
 module.exports = loginRouter

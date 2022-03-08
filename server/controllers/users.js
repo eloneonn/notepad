@@ -28,6 +28,7 @@ usersRouter.post('/', async (request, response) => {
 
   try {
     const savedUser = await db.query('INSERT INTO users(name, email, hash) VALUES($1, $2, $3) RETURNING *', [body.name, body.email, passwordHash])
+    await db.query('INSERT INTO userprefs(user_id) VALUES($1)', [savedUser.rows[0].id])
     return response.status(201).json(savedUser.rows)
   } catch(e) {
     return response.status(400).json(e.message)

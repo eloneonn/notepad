@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import loginService from '../services/loginService'
 import { initializeNotes } from './noteReducer'
 import { setNotification } from './notificationReducer'
+import { setSorter } from './sorterReducer'
 
 const userSlice = createSlice({
     name: 'user',
@@ -25,6 +26,7 @@ export const login = (user) => {
                 
                 dispatch(setNotification('success', 'Login succesful!'))
                 dispatch(setUser(resultedUser))
+                dispatch(setSorter(resultedUser.sorter))
                 dispatch(initializeNotes())    
             } 
         } catch (error) {
@@ -51,6 +53,7 @@ export const initializeUser = () => {
             const user = JSON.parse(loggedUserJSON)
 
             dispatch(setUser(user))
+            dispatch(setSorter(user.sorter))
             dispatch(initializeNotes())
         }
     }

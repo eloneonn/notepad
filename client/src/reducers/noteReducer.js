@@ -73,8 +73,6 @@ export const sortNotes = () => {
         const notes = store.getState().notes
         const sorter = store.getState().sorter
 
-        console.log(sorter);
-
         const notesToSort = [...notes]
         var sortedNotes = []
 

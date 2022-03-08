@@ -14,7 +14,9 @@ import { setFilter } from '../reducers/filterReducer';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import { setSorter } from '../reducers/sorterReducer';
-// import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { setNotification } from '../reducers/notificationReducer';
+import { updatePrefs } from '../services/userprefsService'
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 function HideOnScroll(props) {
   const { children } = props;
@@ -30,8 +32,10 @@ function HideOnScroll(props) {
 const ButtonAppBar = (props) => {
   const dispatch = useDispatch()
   const filter = useSelector(state => state.filter)
+  const user = useSelector(state => state.user)
   const [ anchorEl, setAnchorEl ] = useState(null)
   const [ settingsOpen, setSettingsOpen ] = useState(false)
+  const [ darkmode, setDarkmode ] = useState(user.darkmode)
   const sorter = useSelector(state => state.sorter)
 
   const open = Boolean(anchorEl);
@@ -68,8 +72,15 @@ const ButtonAppBar = (props) => {
     setSettingsOpen(false)
   }
 
-  const handleThemeMode = () => {
+  const handleSettingsSave = () => {
+    setSettingsOpen(false)
+    updatePrefs({darkmode, sorter}, user.id)
+    dispatch(setNotification('success', 'Settings saved!'))
+  }
 
+  const handleThemeMode = (event) => {
+    event.preventDefault()
+    setDarkmode(!darkmode)
   }
     
     const SearchIconWrapper = styled('div')(({ theme }) => ({
@@ -149,7 +160,7 @@ const ButtonAppBar = (props) => {
               />
               <FormControlLabel
                 control={
-                  <Switch><IconButton onClick={handleThemeMode}><Brightness4Icon /></IconButton></Switch>
+                  <IconButton onClick={handleThemeMode}>{darkmode ? <Brightness4Icon /> : <Brightness7Icon />}</IconButton>
                 }
                 label="Dark mode"
               />
@@ -166,9 +177,8 @@ const ButtonAppBar = (props) => {
             </FormGroup>
           </FormControl>
         <DialogActions>
-          <Button onClick={handleSettingsClose}>
-            Close
-          </Button>
+          <Button onClick={handleSettingsSave}>Save settigs</Button>
+          <Button onClick={handleSettingsClose}>Close</Button>
         </DialogActions>
       </Dialog>
     </div>
