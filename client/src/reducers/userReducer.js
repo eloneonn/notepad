@@ -23,7 +23,7 @@ export const login = (user) => {
             const resultedUser = await loginService.login( {...user} )
             if (resultedUser) {
                 window.localStorage.setItem('loggedUser', JSON.stringify(resultedUser))
-                
+
                 dispatch(setNotification('success', 'Login succesful!'))
                 dispatch(setUser(resultedUser))
                 dispatch(setSorter(resultedUser.sorter))
@@ -51,7 +51,7 @@ export const initializeUser = () => {
 
         if (loggedUserJSON) {
             const user = JSON.parse(loggedUserJSON)
-
+            console.log(user);
             dispatch(setUser(user))
             dispatch(setSorter(user.sorter))
             dispatch(initializeNotes())

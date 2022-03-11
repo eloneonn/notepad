@@ -4,7 +4,7 @@
 - users-table DONE
 - usertypes-table DONE
 - notes-table DONE
-- userprefs-table
+- userprefs-table DONE
 - recordings-table
 - errorlogs-table
 
@@ -26,7 +26,7 @@
     - Routing with react-router DONE
     - React components: SearchBar DONE and Notification DONE
     - Implement sorting DONE
-    - User preferences
+    - User preferences DONE
 - Bonus features
     - Personalized styling and dark mode
     - Implement rhyme and synonym -dictionaries with datamuse API

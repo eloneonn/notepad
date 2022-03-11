@@ -75,6 +75,7 @@ const ButtonAppBar = (props) => {
   const handleSettingsSave = () => {
     setSettingsOpen(false)
     updatePrefs({darkmode, sorter}, user.id)
+    dispatch(setSorter(sorter))
     dispatch(setNotification('success', 'Settings saved!'))
   }
 

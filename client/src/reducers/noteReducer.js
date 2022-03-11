@@ -78,12 +78,12 @@ export const sortNotes = () => {
 
         switch (sorter) {
             case 'Last created':
-                sortedNotes = notesToSort.sort((a, b) => Date(a.created_at) - Date(b.created_at))
-                dispatch(setNotes(sortedNotes))
+                sortedNotes = notesToSort.sort((a, b) => Date(b.created_at) - Date(a.created_at))
+                dispatch(setNotes(sortedNotes.reverse()))
 
                 break
             case 'Last edited':
-                sortedNotes = notesToSort.sort((a, b) => Date(a.modified_at) - Date(b.modified_at))
+                sortedNotes = notesToSort.sort((a, b) => Date(b.modified_at) - Date(a.modified_at))
                 dispatch(setNotes(sortedNotes))
 
                 break
