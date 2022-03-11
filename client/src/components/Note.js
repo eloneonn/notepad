@@ -1,11 +1,14 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
-import { Card, CardActionArea, Grid, Typography, AppBar, Container, IconButton, InputBase, Toolbar, Fade, Dialog, useMediaQuery, Drawer } from '@mui/material';
+import { Card, CardActionArea, Grid, Typography, AppBar, Container, IconButton, InputBase, Toolbar, Fade, Dialog, useMediaQuery, Drawer, Button, TextField, ToggleButtonGroup, ToggleButton, ListItem, List, ListItemText } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Box } from "@mui/system";
 import CreateButton from "./CreateButton";
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DoneIcon from '@mui/icons-material/Done';
+import ShortTextIcon from '@mui/icons-material/ShortText';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import wordService from '../services/wordService';
 import { useDispatch } from "react-redux";
 import { removeNote, updateNote } from "../reducers/noteReducer";
 import { setNotification } from "../reducers/notificationReducer";
@@ -18,6 +21,10 @@ const Note = forwardRef(({ note }, ref) => {
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
     const [ modalView, setModalView ] = useState(false)
+    const [ wordView, setWordView ] = useState(false)
+    const [ word, setWord ] = useState('')
+    const [ words, setWords ] = useState([])
+    const [ wordServiceValue, setWordServiceValue ] = useState('rhyme')
     const [ content, setContent ] = useState('')
     const [ title, setTitle ] = useState('')
     const [ updated, setUpdated ] = useState(true)
@@ -68,6 +75,31 @@ const Note = forwardRef(({ note }, ref) => {
         event.preventDefault()
         setContent(event.target.value)
         setUpdated(false)
+    }
+
+    const handleWordServiceValueChange = () => {
+        if (wordServiceValue === 'rhyme') {
+            setWordServiceValue('synonym')
+        } else {
+            setWordServiceValue('rhyme')
+        }
+    }
+
+    const handleFind = (event) => {
+        event.preventDefault()
+        if (wordServiceValue === 'rhyme') {
+            wordService.rhyme(word).then(result => {
+                if (result.length === 0) {
+                    dispatch(setNotification('error', `0 ${wordServiceValue}s found`))
+                }
+                setWords(result)})
+        } else {
+            wordService.synonym(word).then(result => {
+                if (result.length === 0) {
+                    dispatch(setNotification('error', `0 ${wordServiceValue}s found`))
+                }
+                setWords(result)})
+        }
     }
 
     const handleRecord = (event) => {
@@ -136,7 +168,7 @@ const Note = forwardRef(({ note }, ref) => {
                                                 onClick={handleClose}
                                                 size="large"
                                                 mr="2"
-                                                aria-label="menu"
+                                                aria-label="back"
                                                 sx={{ color:"primary.main"}}
                                             >
                                                 <ArrowBackIcon />
@@ -145,7 +177,7 @@ const Note = forwardRef(({ note }, ref) => {
                                                 onClick={handleUpdate}
                                                 size="large"
                                                 mr="2"
-                                                aria-label="menu"
+                                                aria-label="save"
                                                 sx={{ color:"primary.main"}}
                                             >
                                                 {updated ? (
@@ -196,8 +228,27 @@ const Note = forwardRef(({ note }, ref) => {
 
                             <Grid item xs={2}>
                                 <Box>
-                                    <AppBar sx={{ zIndex: '1900', position: fullScreen ? 'fixed' : 'absolute', top: 'auto', bottom: 0 , padding: 0, backgroundColor: 'secondary.main' }}>
-                                        <Toolbar>
+                                    <AppBar sx={{ zIndex: '1900', position: fullScreen ? 'fixed' : 'absolute', top: 'auto', bottom: 0 , padding: '0em 0.5em 0em 0.5em', backgroundColor: 'secondary.main' }}>
+                                        <Toolbar disableGutters>
+                                            <IconButton 
+                                                size="large"
+                                                mr="2"
+                                                aria-label="back"
+                                                sx={{ color:"primary.main"}}
+                                            >
+                                                <MoreVertIcon />
+                                            </IconButton>
+                                            <Typography variant="caption" sx={{ display: 'flex', justifyContent: 'center', alignContent: 'center', flexGrow: '1', color:"primary.main", opacity: '60%' }}>last edited: {time}</Typography>
+                                            <IconButton
+                                                onClick={() => setWordView(true)}
+                                                size="large"
+                                                mr="2"
+                                                aria-label="rhymes and synonyms"
+                                                sx={{ color:"primary.main"}}
+                                            >
+                                                <ShortTextIcon />
+                                            </IconButton>
+
                                             <Drawer
                                                 anchor="bottom"
                                                 open={drawer}
@@ -224,11 +275,9 @@ const Note = forwardRef(({ note }, ref) => {
                                                             </Box>
                                                         </Grid>
                                                         <Grid item xs={6} sx={{ mb: '8em' }}>
-                                                        <Box>
+                                                            <Box>
                                                                 <Typography>some more stuf</Typography>    
-
                                                             </Box>
-
                                                         </Grid>
                                                     </Grid>
                                                 </Container>
@@ -239,6 +288,43 @@ const Note = forwardRef(({ note }, ref) => {
                                 </Box>
                             </Grid>
                         </Grid>
+                        <Dialog
+                            open={wordView}
+                            onClose={() => setWordView(false)}
+                        >
+                            <Container>
+                                <Typography variant="h5" sx={{ display: 'flex', alignContent: 'center', justifyContent:'center', pt: '0.5em', fontWeight: 'bold'}}>Rhymes & synonyms</Typography>    
+                                <Typography variant="caption">Select option and enter a word below</Typography>
+                                <ToggleButtonGroup
+                                    fullWidth
+                                    size="small"
+                                    value={wordServiceValue}
+                                    exclusive
+                                    onChange={handleWordServiceValueChange}
+                                >
+                                    <ToggleButton value="synonym">Synonym</ToggleButton>
+                                    <ToggleButton value="rhyme">Rhyme</ToggleButton>
+
+                                </ToggleButtonGroup>
+                                <TextField 
+                                    label="Enter a word" 
+                                    fullWidth 
+                                    variant="standard"
+                                    value={word}
+                                    onChange={({ target }) => setWord(target.value)}
+                                />
+                                <Button variant="contained" sx={{ margin: '1em' }} onClick={handleFind}>Find</Button>
+
+                                <List
+                                    dense={true}
+                                >
+                                    {words.map(e => (
+                                        <ListItem key={e.word}><ListItemText>{e.word}</ListItemText></ListItem>
+                                    ))}
+                                </List>
+                                <Typography variant="caption" sx={{ display: 'flex', alignContent: 'center', justifyContent:'center', pt: '0.5em', opacity: '60%'}}>Service provided by Datamuse API</Typography>    
+                            </Container>
+                        </Dialog>
                     </Container>
                 </Fade>
             </Dialog>
