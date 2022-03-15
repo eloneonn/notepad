@@ -5,24 +5,25 @@ const theme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#000000'
+      main: '#000000',
     },
     secondary: {
-      main: '#ffffff'
+      main: '#ffffff',
     },
     error: {
-      main: red.A400
-    }
+      main: red.A400,
+    },
   },
   components: {
     MuiMasonry: {
       styleOverrides: {
         root: {
-          margin: '0'
+            margin: '0'
         }
-      }
-    }
-  }
+      },
+    },
+}
+
 });
 
 export default theme;

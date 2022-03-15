@@ -6,10 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dev": "cross-env NODE_ENV=development nodemon index.js",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix",
-    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
+    "dev": "cross-env NODE_ENV=development nodemon index.js"
   },
   "author": "Onni Elonen",
   "license": "ISC",
@@ -25,11 +22,6 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "eslint": "^8.11.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-react": "^7.29.4",
-    "nodemon": "^2.0.15",
-    "prettier": "^2.5.1"
+    "nodemon": "^2.0.15"
   }
 }
