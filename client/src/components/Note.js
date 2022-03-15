@@ -119,7 +119,7 @@ const Note = forwardRef(({ note }, ref) => {
     } 
 
     return (
-        <div style={{backgroundColor: 'secondary.main' }}>
+        <div>
             <Card variant="outlined">
                 <CardActionArea onClick={handleClick} sx={{ padding: '5px' }}>
                     <Typography sx={{ 
@@ -150,10 +150,11 @@ const Note = forwardRef(({ note }, ref) => {
                 onClose={handleClose}
                 hideBackdrop={fullScreen}
                 fullScreen={fullScreen}
-                disableScrollLock={true}
+                disableScrollLock
+                PaperProps={{ sx: { overflow: 'hidden' } }}
             >
                 <Fade in={modalView}>
-                    <Container id="note-container" sx={{ height: '100vh', pb: '8em', backgroundColor: 'secondary.main', overflow: 'auto'}}>
+                    <Container id="note-container" sx={{ height: '100vh', pb: '8em', overflow: 'auto', backgroundColor: theme.palette.mode === 'dark' ? '#000000' : '#fff', }} >
                         <Grid
                             container
                             direction="column"
@@ -162,14 +163,13 @@ const Note = forwardRef(({ note }, ref) => {
                         >
                             <Grid item xs={3} sx={{ mb: '4.5em' }}>
                                 <Box sx={{ zIndex: '100' }}>
-                                    <AppBar elevation={0} sx={{ position: fullScreen ? 'fixed' : 'absolute', backgroundColor: 'secondary.main', padding: '0.5em 0.5em 0.5em 0.5em' }}>
+                                    <AppBar elevation={0} sx={{ position: fullScreen ? 'fixed' : 'absolute',  backgroundColor: theme.palette.mode === 'dark' ? '#000000' : '#fff', padding: '0.5em 0.5em 0.5em 0.5em' }}>
                                         <Toolbar disableGutters>
                                             <IconButton
                                                 onClick={handleClose}
                                                 size="large"
                                                 mr="2"
                                                 aria-label="back"
-                                                sx={{ color:"primary.main"}}
                                             >
                                                 <ArrowBackIcon />
                                             </IconButton>  
@@ -178,7 +178,6 @@ const Note = forwardRef(({ note }, ref) => {
                                                 size="large"
                                                 mr="2"
                                                 aria-label="save"
-                                                sx={{ color:"primary.main"}}
                                             >
                                                 {updated ? (
                                                     <DoneIcon />
@@ -186,12 +185,11 @@ const Note = forwardRef(({ note }, ref) => {
                                                     <SaveIcon />
                                                 )}
                                             </IconButton>  
-                                            <Typography variant="caption" sx={{ color: 'primary.main', opacity: '60%', flexGrow: '1' }}>{updated ? 'note saved' : 'unsaved changes'}</Typography>
+                                            <Typography variant="caption" sx={{ opacity: '60%', flexGrow: '1' }}>{updated ? 'note saved' : 'unsaved changes'}</Typography>
                                             <IconButton                             
                                                 onClick={handleRemove}
                                                 size="large"
                                                 aria-label="delete"
-                                                sx={{ color:"primary.main"}}
                                             >
                                                 <DeleteIcon />
                                             </IconButton>
@@ -228,23 +226,21 @@ const Note = forwardRef(({ note }, ref) => {
 
                             <Grid item xs={2}>
                                 <Box>
-                                    <AppBar sx={{ zIndex: '1900', position: fullScreen ? 'fixed' : 'absolute', top: 'auto', bottom: 0 , padding: '0em 0.5em 0em 0.5em', backgroundColor: 'secondary.main' }}>
+                                    <AppBar sx={{ zIndex: '1900', position: fullScreen ? 'fixed' : 'absolute', top: 'auto', bottom: 0 , padding: '0em 0.5em 0em 0.5em',  backgroundColor: theme.palette.mode === 'dark' ? '#000000' : '#fff',  }}>
                                         <Toolbar disableGutters>
                                             <IconButton 
                                                 size="large"
                                                 mr="2"
                                                 aria-label="back"
-                                                sx={{ color:"primary.main"}}
                                             >
                                                 <MoreVertIcon />
                                             </IconButton>
-                                            <Typography variant="caption" sx={{ display: 'flex', justifyContent: 'center', alignContent: 'center', flexGrow: '1', color:"primary.main", opacity: '60%' }}>last edited: {time}</Typography>
+                                            <Typography variant="caption" sx={{ display: 'flex', justifyContent: 'center', alignContent: 'center', flexGrow: '1', opacity: '60%' }}>last edited: {time}</Typography>
                                             <IconButton
                                                 onClick={() => setWordView(true)}
                                                 size="large"
                                                 mr="2"
                                                 aria-label="rhymes and synonyms"
-                                                sx={{ color:"primary.main"}}
                                             >
                                                 <ShortTextIcon />
                                             </IconButton>

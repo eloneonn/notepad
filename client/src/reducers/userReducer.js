@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import loginService from '../services/loginService'
+import { initializeColorMode } from './colorModeReducer'
 import { initializeNotes } from './noteReducer'
 import { setNotification } from './notificationReducer'
 import { setSorter } from './sorterReducer'
@@ -28,6 +29,7 @@ export const login = (user) => {
                 dispatch(setUser(resultedUser))
                 dispatch(setSorter(resultedUser.sorter))
                 dispatch(initializeNotes())    
+                dispatch(initializeColorMode())
             } 
         } catch (error) {
             dispatch(setNotification('error', 'Wrong email or password'))
@@ -55,6 +57,7 @@ export const initializeUser = () => {
             dispatch(setUser(user))
             dispatch(setSorter(user.sorter))
             dispatch(initializeNotes())
+            dispatch(initializeColorMode())
         }
     }
 }

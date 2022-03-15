@@ -13,6 +13,7 @@ const CreateButton = ({ type, handler }) => {
   const StyledFab = styled(Fab)(({ theme }) => ({ //? Pitäisikö tästä tehdä oma react-komponentti?
       position: 'fixed',
       fontSize: 'large',
+      backgroundColor: theme.palette.mode === 'light' ? 'grey' : 'crimson',
       bottom: bigger ? 10 : 40,
       size: 'large',
       left: '50%',

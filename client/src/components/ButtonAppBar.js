@@ -17,6 +17,8 @@ import { setSorter } from '../reducers/sorterReducer';
 import { setNotification } from '../reducers/notificationReducer';
 import { updatePrefs } from '../services/userprefsService'
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { useTheme } from "@emotion/react";
+import { setColorMode } from '../reducers/colorModeReducer';
 
 function HideOnScroll(props) {
   const { children } = props;
@@ -37,6 +39,7 @@ const ButtonAppBar = (props) => {
   const [ settingsOpen, setSettingsOpen ] = useState(false)
   const [ darkmode, setDarkmode ] = useState(user.darkmode)
   const sorter = useSelector(state => state.sorter)
+  const theme = useTheme()
 
   const open = Boolean(anchorEl);
   
@@ -60,6 +63,7 @@ const ButtonAppBar = (props) => {
   const handleLogout = () => {
     dispatch(logout())
     dispatch(clearNotes())
+    dispatch(setColorMode('light'))
     setAnchorEl(null);
   }
 
@@ -74,6 +78,8 @@ const ButtonAppBar = (props) => {
 
   const handleSettingsSave = () => {
     setSettingsOpen(false)
+    dispatch(setColorMode(darkmode ? 'dark' : 'light'))
+
     updatePrefs({darkmode, sorter}, user.id)
     dispatch(setSorter(sorter))
     dispatch(setNotification('success', 'Settings saved!'))
@@ -86,7 +92,7 @@ const ButtonAppBar = (props) => {
     
     const SearchIconWrapper = styled('div')(({ theme }) => ({
       padding: theme.spacing(0, 1),
-      color: 'black',
+      color: theme.palette.mode === 'dark' ? '#fff' : '#000', 
       height: '100%',
       pointerEvents: 'none',
       display: 'flex',
@@ -98,8 +104,8 @@ const ButtonAppBar = (props) => {
     <div>
       <Box key="searchbox" sx={{ flexGrow: 1, zIndex: 10 }}>
         <HideOnScroll {...props}>
-          <AppBar sx={{ backgroundColor: 'secondary.main' }}>
-            <Toolbar key="searchtoolbar">
+          <AppBar>
+            <Toolbar key="searchtoolbar" sx={{ backgroundColor: theme.palette.mode === 'dark' ? '#000' : '#fff', }}>
                 <SearchIconWrapper>
                   <SearchIcon />
                 </SearchIconWrapper>
@@ -117,9 +123,7 @@ const ButtonAppBar = (props) => {
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
-                color="inherit"
                 onClick={handleClick}
-                sx={{ color:"primary.main" }}
               >
                 <SettingsIcon />
               </IconButton>
@@ -163,7 +167,7 @@ const ButtonAppBar = (props) => {
                 control={
                   <IconButton onClick={handleThemeMode}>{darkmode ? <Brightness4Icon /> : <Brightness7Icon />}</IconButton>
                 }
-                label="Dark mode"
+                label="Theme color mode"
               />
               <FormControlLabel
                 control={
@@ -178,8 +182,8 @@ const ButtonAppBar = (props) => {
             </FormGroup>
           </FormControl>
         <DialogActions>
-          <Button onClick={handleSettingsSave}>Save settigs</Button>
-          <Button onClick={handleSettingsClose}>Close</Button>
+          <Button variant='filled' onClick={handleSettingsSave}>Save settings</Button>
+          <Button variant='filled' onClick={handleSettingsClose}>Close</Button>
         </DialogActions>
       </Dialog>
     </div>

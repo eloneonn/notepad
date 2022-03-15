@@ -29,9 +29,9 @@
     - User preferences DONE
 - Bonus features
     - Personalized styling and dark mode
-    - Implement rhyme and synonym -dictionaries with datamuse API
+    - Implement rhyme and synonym -dictionaries with datamuse API DONE
     - Implement embedded recordings and recording functionality
-    - Implement undo/redo, note pinning and tags 
+    - Implement undo/redo, note pinning and tags
     
 ## Admin-functionality
 - Admin react component with statistics about the app
