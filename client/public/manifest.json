@@ -10,12 +10,12 @@
     {
       "src": "logo_md.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "36x36"
     },
     {
       "src": "logo_l.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "48x48"
     }
   ],
   "start_url": ".",

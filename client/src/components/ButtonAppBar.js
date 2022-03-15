@@ -122,8 +122,7 @@ const ButtonAppBar = (props) => {
           <AppBar>
             <Toolbar
               key="searchtoolbar"
-              sx={{ backgroundColor: theme.palette.mode === 'dark' ? '#000' : '#fff' }}
-            >
+              sx={{ backgroundColor: theme.palette.mode === 'dark' ? '#000' : '#fff' }}>
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>
@@ -141,19 +140,18 @@ const ButtonAppBar = (props) => {
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
-                onClick={handleClick}
-              >
+                onClick={handleClick}>
                 <SettingsIcon />
               </IconButton>
               <Menu
                 id="basic-menu"
                 anchorEl={anchorEl}
                 open={open}
+                disableScrollLock
                 onClose={handleClose}
                 MenuListProps={{
                   'aria-labelledby': 'basic-button'
-                }}
-              >
+                }}>
                 <MenuItem onClick={handleSettingsOpen}>Settings</MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>

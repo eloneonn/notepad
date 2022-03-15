@@ -11,7 +11,6 @@ const CreateButton = ({ type, handler }) => {
   const bigger = useMediaQuery(theme.breakpoints.down('md'));
 
   const StyledFab = styled(Fab)(({ theme }) => ({
-    //? Pitäisikö tästä tehdä oma react-komponentti?
     position: 'fixed',
     fontSize: 'large',
     backgroundColor: theme.palette.mode === 'light' ? 'grey' : 'crimson',

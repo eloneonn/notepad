@@ -57,8 +57,7 @@ const SignupScreen = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center'
-        }}
-      >
+        }}>
         <Avatar sx={{ m: 1 }}>
           <AddCircleIcon />
         </Avatar>
@@ -129,8 +128,7 @@ const SignupScreen = () => {
             size="large"
             variant="contained"
             fullWidth
-            sx={{ mt: '2em' }}
-          >
+            sx={{ mt: '2em' }}>
             Create account
           </LoadingButton>
 

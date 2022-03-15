@@ -147,8 +147,7 @@ const Note = forwardRef(({ note }, ref) => {
             sx={{
               fontWeight: 'bold',
               padding: '0.5em'
-            }}
-          >
+            }}>
             {note.title}
           </Typography>
           <Typography
@@ -159,8 +158,7 @@ const Note = forwardRef(({ note }, ref) => {
               maxHeight: '15em',
               minHeight: '1em',
               overflow: 'hidden'
-            }}
-          >
+            }}>
             {note.content}
           </Typography>
           <Grid container sx={{ marginTop: '0.5em' }}>
@@ -168,8 +166,7 @@ const Note = forwardRef(({ note }, ref) => {
             <Grid item xs>
               <Typography
                 variant="caption"
-                sx={{ fontSize: '80%', opacity: '60%', float: 'right' }}
-              >
+                sx={{ fontSize: '80%', opacity: '60%', float: 'right' }}>
                 {time}
               </Typography>
             </Grid>
@@ -183,8 +180,7 @@ const Note = forwardRef(({ note }, ref) => {
         hideBackdrop={fullScreen}
         fullScreen={fullScreen}
         disableScrollLock
-        PaperProps={{ sx: { overflow: 'hidden' } }}
-      >
+        PaperProps={{ sx: { overflow: 'hidden' } }}>
         <Fade in={modalView}>
           <Container
             id="note-container"
@@ -193,8 +189,7 @@ const Note = forwardRef(({ note }, ref) => {
               pb: '8em',
               overflow: 'auto',
               backgroundColor: theme.palette.mode === 'dark' ? '#000000' : '#fff'
-            }}
-          >
+            }}>
             <Grid container direction="column" justifyContent="flex-start" alignItems="stretch">
               <Grid item xs={3} sx={{ mb: '4.5em' }}>
                 <Box sx={{ zIndex: '100' }}>
@@ -204,8 +199,7 @@ const Note = forwardRef(({ note }, ref) => {
                       position: fullScreen ? 'fixed' : 'absolute',
                       backgroundColor: theme.palette.mode === 'dark' ? '#000000' : '#fff',
                       padding: '0.5em 0.5em 0.5em 0.5em'
-                    }}
-                  >
+                    }}>
                     <Toolbar disableGutters>
                       <IconButton onClick={handleClose} size="large" mr="2" aria-label="back">
                         <ArrowBackIcon />
@@ -261,8 +255,7 @@ const Note = forwardRef(({ note }, ref) => {
                       bottom: 0,
                       padding: '0em 0.5em 0em 0.5em',
                       backgroundColor: theme.palette.mode === 'dark' ? '#000000' : '#fff'
-                    }}
-                  >
+                    }}>
                     <Toolbar disableGutters>
                       <IconButton size="large" mr="2" aria-label="back">
                         <MoreVertIcon />
@@ -275,16 +268,14 @@ const Note = forwardRef(({ note }, ref) => {
                           alignContent: 'center',
                           flexGrow: '1',
                           opacity: '60%'
-                        }}
-                      >
+                        }}>
                         last edited: {time}
                       </Typography>
                       <IconButton
                         onClick={() => setWordView(true)}
                         size="large"
                         mr="2"
-                        aria-label="rhymes and synonyms"
-                      >
+                        aria-label="rhymes and synonyms">
                         <ShortTextIcon />
                       </IconButton>
 
@@ -299,15 +290,13 @@ const Note = forwardRef(({ note }, ref) => {
                           container: document.getElementById('note-container'),
                           style: { position: fullScreen ? 'fixed' : 'absolute' },
                           keepMounted: true
-                        }}
-                      >
+                        }}>
                         <Container>
                           <Grid
                             container
                             direction="column"
                             justifyContent="flex-start"
-                            alignItems="stretch"
-                          >
+                            alignItems="stretch">
                             <Grid item xs={6}>
                               <Box>
                                 <Typography
@@ -318,8 +307,7 @@ const Note = forwardRef(({ note }, ref) => {
                                     justifyContent: 'center',
                                     pt: '0.5em',
                                     fontWeight: 'bold'
-                                  }}
-                                >
+                                  }}>
                                   Record
                                 </Typography>
                               </Box>
@@ -348,8 +336,7 @@ const Note = forwardRef(({ note }, ref) => {
                     justifyContent: 'center',
                     pt: '0.5em',
                     fontWeight: 'bold'
-                  }}
-                >
+                  }}>
                   Rhymes & synonyms
                 </Typography>
                 <Typography variant="caption">Select option and enter a word below</Typography>
@@ -358,8 +345,7 @@ const Note = forwardRef(({ note }, ref) => {
                   size="small"
                   value={wordServiceValue}
                   exclusive
-                  onChange={handleWordServiceValueChange}
-                >
+                  onChange={handleWordServiceValueChange}>
                   <ToggleButton value="synonym">Synonym</ToggleButton>
                   <ToggleButton value="rhyme">Rhyme</ToggleButton>
                 </ToggleButtonGroup>
@@ -389,8 +375,7 @@ const Note = forwardRef(({ note }, ref) => {
                     justifyContent: 'center',
                     pt: '0.5em',
                     opacity: '60%'
-                  }}
-                >
+                  }}>
                   Service provided by Datamuse API
                 </Typography>
               </Container>

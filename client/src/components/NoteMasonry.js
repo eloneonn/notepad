@@ -39,8 +39,7 @@ const NoteMasonry = () => {
     <Box key="masonry-box">
       {notes.length === 0 ? (
         <Container
-          sx={{ marginTop: 10, display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-        >
+          sx={{ marginTop: 10, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <Typography sx={{ opacity: '60%' }}>You haven't created any notes yet</Typography>
           <Typography sx={{ opacity: '60%' }}>Use the button below</Typography>
         </Container>
@@ -53,8 +52,12 @@ const NoteMasonry = () => {
           </Masonry>
           {filteredNotes.length === 0 ? (
             <Container
-              sx={{ marginTop: 10, display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-            >
+              sx={{
+                marginTop: 10,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center'
+              }}>
               <Typography sx={{ opacity: '60%' }}>0 notes found</Typography>
             </Container>
           ) : null}

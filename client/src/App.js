@@ -31,11 +31,23 @@ const App = () => {
         main: colorMode === 'light' ? '#ffffff' : '#000000'
       }
     },
+    typography: {
+      caption: {
+        color: colorMode === 'light' ? '#000000' : '#ffffff'
+      }
+    },
     components: {
       MuiMasonry: {
         styleOverrides: {
           root: {
             margin: '0'
+          }
+        }
+      },
+      MuiIconButton: {
+        styleOverrides: {
+          root: {
+            color: colorMode === 'light' ? '#000000' : '#ffffff'
           }
         }
       }
