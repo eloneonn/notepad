@@ -1,20 +1,19 @@
-import axios from 'axios'
-const baseUrl = '/api/userprefs'
+import axios from 'axios';
+const baseUrl = '/api/userprefs';
 
 export const updatePrefs = async (prefs, id) => {
-    const request = {prefs, id}
+  const request = { prefs, id };
 
-    try {
-      await axios.put(baseUrl, request)
-    } catch (error) {
-      return error.response
-    }
-
-    // UPDATE PREFERENCES LOCALLY AS WELL TO ENSURE CHANGES PERSIST ON REFRESH 
-    
-    const user = JSON.parse(window.localStorage.getItem('loggedUser'))
-    const newUser = {...user, darkmode: prefs.darkmode, sorter: prefs.sorter }
-
-    window.localStorage.setItem('loggedUser', JSON.stringify(newUser))
-
+  try {
+    await axios.put(baseUrl, request);
+  } catch (error) {
+    return error.response;
   }
+
+  // UPDATE PREFERENCES LOCALLY AS WELL TO ENSURE CHANGES PERSIST ON REFRESH
+
+  const user = JSON.parse(window.localStorage.getItem('loggedUser'));
+  const newUser = { ...user, darkmode: prefs.darkmode, sorter: prefs.sorter };
+
+  window.localStorage.setItem('loggedUser', JSON.stringify(newUser));
+};
