@@ -48,3 +48,4 @@
 - Implement autosave for notes
 - Body is still scrollable when in note dialog
 - FIXED Search bar loses focus when a character is typed
+- ADDED eslint and prettier
