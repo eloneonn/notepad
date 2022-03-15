@@ -29,16 +29,14 @@ loginRouter.post('/', async (request, response) => {
 
   const token = jwt.sign({ email: user.email, id: user.id }, SECRET);
 
-  return response
-    .status(200)
-    .send({
-      token,
-      id: user.id,
-      email: user.email,
-      name: user.name,
-      darkmode: user.darkmode,
-      sorter: user.sorter
-    });
+  return response.status(200).send({
+    token,
+    id: user.id,
+    email: user.email,
+    name: user.name,
+    darkmode: user.darkmode,
+    sorter: user.sorter
+  });
 });
 
 module.exports = loginRouter;

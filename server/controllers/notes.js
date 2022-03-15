@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const db = require('../db');
 const notesRouter = require('express').Router();
 
@@ -23,7 +24,7 @@ notesRouter.post('/', async (request, response, next) => {
   }
 
   try {
-    const res = await db.query(
+    var res = await db.query(
       'INSERT INTO notes (id, user_id, title, content) VALUES($1, $2, $3, $4) RETURNING *',
       [request.body.id, user.id, request.body.title, request.body.content]
     );
@@ -41,7 +42,7 @@ notesRouter.put('/', async (request, response, next) => {
   }
 
   try {
-    const res = await db.query(
+    var res = await db.query(
       'UPDATE notes SET title = $1, content = $2 WHERE id = $3 RETURNING *',
       [request.body.title, request.body.content, request.body.id]
     );
@@ -53,7 +54,7 @@ notesRouter.put('/', async (request, response, next) => {
 
 notesRouter.delete('/', async (request, response, next) => {
   try {
-    const res = await db.query('DELETE FROM notes WHERE id = $1', [request.body.note.id]);
+    var res = await db.query('DELETE FROM notes WHERE id = $1', [request.body.note.id]);
   } catch (error) {
     response.status(404).json(error);
   }
