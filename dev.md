@@ -31,7 +31,7 @@
   - Implement sorting DONE
   - User preferences DONE
 - Bonus features
-  - Personalized styling and dark mode
+  - Personalized styling and dark mode DONE
   - Implement rhyme and synonym -dictionaries with datamuse API DONE
   - Implement embedded recordings and recording functionality
   - Implement undo/redo, note pinning and tags

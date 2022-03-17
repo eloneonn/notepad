@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Container } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Container, CssBaseline } from '@mui/material';
 import ButtonAppBar from './components/ButtonAppBar';
 import NoteMasonry from './components/NoteMasonry';
 import LoginScreen from './components/LoginScreen';
@@ -29,6 +28,9 @@ const App = () => {
       },
       secondary: {
         main: colorMode === 'light' ? '#ffffff' : '#000000'
+      },
+      background: {
+        default: colorMode === 'light' ? '#ffffff' : '#000000'
       }
     },
     typography: {
@@ -36,6 +38,7 @@ const App = () => {
         color: colorMode === 'light' ? '#000000' : '#ffffff'
       }
     },
+
     components: {
       MuiMasonry: {
         styleOverrides: {
@@ -54,32 +57,28 @@ const App = () => {
     }
   });
 
-  const AppRoot = styled('div')(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#000' : '#fff'
-  }));
-
   if (user === null) {
     return (
       <ThemeProvider theme={theme}>
-        <AppRoot>
+        <CssBaseline>
           <Routes>
             <Route path="/" element={<LoginScreen />} />
             <Route path="signup" element={<SignupScreen />} />
           </Routes>
           <Notification />
-        </AppRoot>
+        </CssBaseline>
       </ThemeProvider>
     );
   } else {
     return (
       <ThemeProvider theme={theme}>
-        <AppRoot>
+        <CssBaseline>
           <ButtonAppBar />
           <Container sx={{ paddingLeft: '0px', paddingRight: '0px', py: '4em' }}>
             <NoteMasonry />
           </Container>
           <Notification />
-        </AppRoot>
+        </CssBaseline>
       </ThemeProvider>
     );
   }

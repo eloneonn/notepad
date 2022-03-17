@@ -69,6 +69,12 @@ const Note = forwardRef(({ note }, ref) => {
   };
 
   const handleClose = () => {
+    if (title === '' && content === '') {
+      dispatch(removeNote(note));
+      dispatch(setNotification('info', 'Empty note removed!'));
+    } else {
+      handleUpdate();
+    }
     setDrawer(false);
     setModalView(false);
   };
