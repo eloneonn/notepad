@@ -13,7 +13,12 @@ export const updatePrefs = async (prefs, id) => {
   // UPDATE PREFERENCES LOCALLY AS WELL TO ENSURE CHANGES PERSIST ON REFRESH
 
   const user = JSON.parse(window.localStorage.getItem('loggedUser'));
-  const newUser = { ...user, darkmode: prefs.darkmode, sorter: prefs.sorter };
+  const newUser = {
+    ...user,
+    darkmode: prefs.darkmode,
+    sorter: prefs.sorter,
+    autosave: prefs.autosave
+  };
 
   window.localStorage.setItem('loggedUser', JSON.stringify(newUser));
 };

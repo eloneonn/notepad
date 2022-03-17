@@ -25,7 +25,11 @@ const userExtractor = async (request, response, next) => {
   if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
     const decodedToken = jwt.verify(authorization.substring(7), SECRET);
     if (decodedToken) {
-      const res = await db.query('SELECT * FROM users WHERE id = $1', [decodedToken.id]);
+      try {
+        var res = await db.query('SELECT * FROM users WHERE id = $1', [decodedToken.id]);
+      } catch (error) {
+        next();
+      }
       request.user = res.rows[0];
     }
   }

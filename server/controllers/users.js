@@ -12,6 +12,11 @@ usersRouter.post('/', async (request, response) => {
     return response.status(400).end();
   }
 
+  if (body.name === undefined || body.name.length < 0) {
+    response.statusMessage = 'Invalid name';
+    return response.status(400).end();
+  }
+
   if (!emailValidator.validate(body.email)) {
     response.statusMessage = 'Invalid email';
     return response.status(400).end();

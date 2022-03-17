@@ -9,7 +9,7 @@ loginRouter.post('/', async (request, response) => {
 
   try {
     var res = await db.query(
-      'SELECT users.id, users.type_id, users.name, users.email, users.hash, userprefs.sorter, userprefs.darkmode FROM users INNER JOIN userprefs ON users.id=userprefs.user_id WHERE email=($1)',
+      'SELECT users.id, users.type_id, users.name, users.email, users.hash, userprefs.sorter, userprefs.darkmode, userprefs.autosave FROM users INNER JOIN userprefs ON users.id=userprefs.user_id WHERE email=($1)',
       [body.email]
     );
   } catch (err) {
@@ -35,7 +35,8 @@ loginRouter.post('/', async (request, response) => {
     email: user.email,
     name: user.name,
     darkmode: user.darkmode,
-    sorter: user.sorter
+    sorter: user.sorter,
+    autosave: user.autosave
   });
 });
 

@@ -53,6 +53,7 @@ const ButtonAppBar = (props) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [darkmode, setDarkmode] = useState(user.darkmode);
+  const [autosave, setAutosave] = useState(user.autosave);
   const sorter = useSelector((state) => state.sorter);
   const theme = useTheme();
 
@@ -95,7 +96,7 @@ const ButtonAppBar = (props) => {
     setSettingsOpen(false);
     dispatch(setColorMode(darkmode ? 'dark' : 'light'));
 
-    updatePrefs({ darkmode, sorter }, user.id);
+    updatePrefs({ darkmode, sorter, autosave }, user.id);
     dispatch(setSorter(sorter));
     dispatch(setNotification('success', 'Settings saved!'));
   };
@@ -103,6 +104,11 @@ const ButtonAppBar = (props) => {
   const handleThemeMode = (event) => {
     event.preventDefault();
     setDarkmode(!darkmode);
+  };
+
+  const handleAutosave = (event) => {
+    event.preventDefault();
+    setAutosave(!autosave);
   };
 
   const SearchIconWrapper = styled('div')(({ theme }) => ({
@@ -167,8 +173,11 @@ const ButtonAppBar = (props) => {
         <FormControl component="fieldset" variant="standard" sx={{ padding: '2em' }}>
           <FormLabel component="legend"></FormLabel>
           <FormGroup>
+            <FormControlLabel
+              control={<Switch onChange={handleAutosave} checked={autosave} />}
+              label="Autosave notes"
+            />
             <FormControlLabel control={<Switch />} label="Some setting here" />
-            <FormControlLabel control={<Switch />} label="Another one here" />
             <FormControlLabel
               control={
                 <IconButton onClick={handleThemeMode}>

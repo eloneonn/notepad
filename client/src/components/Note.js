@@ -34,10 +34,14 @@ import { useDispatch } from 'react-redux';
 import { removeNote, updateNote } from '../reducers/noteReducer';
 import { setNotification } from '../reducers/notificationReducer';
 import { useTheme } from '@emotion/react';
+let timeoutID;
 
 const Note = forwardRef(({ note }, ref) => {
   const dispatch = useDispatch();
   const theme = useTheme();
+
+  const user = JSON.parse(window.localStorage.getItem('loggedUser'));
+  const autosave = user.autosave;
 
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -46,8 +50,8 @@ const Note = forwardRef(({ note }, ref) => {
   const [word, setWord] = useState('');
   const [words, setWords] = useState([]);
   const [wordServiceValue, setWordServiceValue] = useState('rhyme');
-  const [content, setContent] = useState('');
-  const [title, setTitle] = useState('');
+  const [content, setContent] = useState(note.content);
+  const [title, setTitle] = useState(note.title);
   const [updated, setUpdated] = useState(true);
   const [drawer, setDrawer] = useState(false);
 
@@ -58,9 +62,12 @@ const Note = forwardRef(({ note }, ref) => {
   });
 
   useEffect(() => {
-    setContent(note.content);
-    setTitle(note.title);
-  }, [note]);
+    if (autosave) {
+      if (timeoutID) clearTimeout(timeoutID);
+      timeoutID = setTimeout(handleUpdate, 1000);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [title, content]);
 
   const handleRemove = () => {
     handleClose();
@@ -72,9 +79,9 @@ const Note = forwardRef(({ note }, ref) => {
     if (title === '' && content === '') {
       dispatch(removeNote(note));
       dispatch(setNotification('info', 'Empty note removed!'));
-    } else {
-      handleUpdate();
     }
+    if (!updated) handleUpdate();
+
     setDrawer(false);
     setModalView(false);
   };
@@ -83,7 +90,7 @@ const Note = forwardRef(({ note }, ref) => {
     const newNote = { ...note, title: title, content: content };
 
     dispatch(updateNote(newNote));
-    dispatch(setNotification('success', 'Note saved!'));
+    if (!autosave) dispatch(setNotification('success', 'Note saved!'));
     setUpdated(true);
   };
 
@@ -95,13 +102,13 @@ const Note = forwardRef(({ note }, ref) => {
   const handleTitleChange = (event) => {
     event.preventDefault();
     setTitle(event.target.value);
-    setUpdated(false);
+    if (updated) setUpdated(false);
   };
 
   const handleContentChange = (event) => {
     event.preventDefault();
     setContent(event.target.value);
-    setUpdated(false);
+    if (updated) setUpdated(false);
   };
 
   const handleWordServiceValueChange = () => {
@@ -210,12 +217,19 @@ const Note = forwardRef(({ note }, ref) => {
                       <IconButton onClick={handleClose} size="large" mr="2" aria-label="back">
                         <ArrowBackIcon />
                       </IconButton>
-                      <IconButton onClick={handleUpdate} size="large" mr="2" aria-label="save">
-                        {updated ? <DoneIcon /> : <SaveIcon />}
-                      </IconButton>
-                      <Typography variant="caption" sx={{ opacity: '60%', flexGrow: '1' }}>
-                        {updated ? 'note saved' : 'unsaved changes'}
-                      </Typography>
+
+                      {autosave ? null : (
+                        <div>
+                          <IconButton onClick={handleUpdate} size="large" mr="2" aria-label="save">
+                            {updated ? <DoneIcon /> : <SaveIcon />}
+                          </IconButton>
+                          <Typography variant="caption" sx={{ opacity: '60%' }}>
+                            {updated ? 'note saved' : 'unsaved changes'}
+                          </Typography>
+                        </div>
+                      )}
+
+                      <span style={{ flexGrow: '1' }}></span>
                       <IconButton onClick={handleRemove} size="large" aria-label="delete">
                         <DeleteIcon />
                       </IconButton>
@@ -233,6 +247,7 @@ const Note = forwardRef(({ note }, ref) => {
                     placeholder={'Set a title here...'}
                     spellCheck="false"
                     onChange={handleTitleChange}
+                    inputProps={{ maxLength: 100 }}
                     sx={{
                       fontWeight: 'bold',
                       fontSize: '26px',
