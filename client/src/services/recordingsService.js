@@ -17,5 +17,9 @@ const remove = (recording) => {
   axios.delete(baseUrl, recording, config());
 };
 
-const exportedObject = { add, remove, getAll };
+const removeAllOfNote = (note_id) => {
+  axios.delete(`${baseUrl}/multiple`, note_id, config());
+};
+
+const exportedObject = { add, remove, getAll, removeAllOfNote };
 export default exportedObject;

@@ -48,7 +48,6 @@ notesRouter.put('/', async (request, response, next) => {
 });
 
 notesRouter.delete('/', async (request, response, next) => {
-  console.log(request.body);
   try {
     var res = await deleteNote([request.body.note.id]);
   } catch (error) {

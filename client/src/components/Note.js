@@ -34,6 +34,7 @@ import { setNotification } from '../reducers/notificationReducer';
 import { useTheme } from '@emotion/react';
 import RecorderControls from './RecorderControls';
 import useRecorder from '../hooks/useRecorder';
+import { removeRecordingsOfNote } from '../reducers/recordingReducer';
 let timeoutID;
 
 const Note = forwardRef(({ note }, ref) => {
@@ -71,6 +72,7 @@ const Note = forwardRef(({ note }, ref) => {
 
   const handleRemove = () => {
     handleClose();
+    dispatch(removeRecordingsOfNote(note.id));
     dispatch(removeNote(note));
     dispatch(setNotification('info', 'Note removed!'));
   };

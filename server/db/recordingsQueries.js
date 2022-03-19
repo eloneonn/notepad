@@ -15,4 +15,8 @@ const deleteRecording = async (props) => {
   return await db.query('DELETE FROM recordings WHERE id = $1', props);
 };
 
-module.exports = { getRecordings, postRecording, deleteRecording };
+const deleteRecordings = async (props) => {
+  return await db.query('DELETE FROM recordings WHERE note_id = $1', props);
+};
+
+module.exports = { getRecordings, postRecording, deleteRecording, deleteRecordings };

@@ -14,6 +14,9 @@ const recordingSlice = createSlice({
     deleteRecording(state, action) {
       return state.filter((e) => e.id !== action.payload.id);
     },
+    deleteRecordingsOfNote(state, action) {
+      return state.filter((e) => e.note_id !== action.payload);
+    },
     clearRecordings(state, action) {
       return [];
     }
@@ -70,6 +73,22 @@ export const removeRecording = (recording) => {
   };
 };
 
-export const { setRecordings, appendRecording, deleteRecording, clearRecordings } =
-  recordingSlice.actions;
+export const removeRecordingsOfNote = (note_id) => {
+  return async (dispatch) => {
+    try {
+      recordingService.removeAllOfNote({ data: { note_id } });
+    } catch (error) {
+      console.log(error);
+    }
+    dispatch(deleteRecordingsOfNote(note_id));
+  };
+};
+
+export const {
+  setRecordings,
+  appendRecording,
+  deleteRecording,
+  clearRecordings,
+  deleteRecordingsOfNote
+} = recordingSlice.actions;
 export default recordingSlice.reducer;

@@ -49,4 +49,4 @@
 - Body is still scrollable when in note dialog & other scrollwheel related bugs
 - **FIXED** Search bar loses focus when a character is typed
 - **ADDED** eslint and prettier
-- Deleting note does not delete recordings
+- **FIXED** Deleting note does not delete recordings
