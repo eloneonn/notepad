@@ -17,6 +17,7 @@ notesRouter.get('/', async (request, response, next) => {
 });
 
 notesRouter.post('/', async (request, response, next) => {
+  //TODO validaatiot
   const user = request.user;
 
   if (!user) {
@@ -53,6 +54,7 @@ notesRouter.put('/', async (request, response, next) => {
 });
 
 notesRouter.delete('/', async (request, response, next) => {
+  console.log(request.body);
   try {
     var res = await db.query('DELETE FROM notes WHERE id = $1', [request.body.note.id]);
   } catch (error) {

@@ -2,6 +2,7 @@ import store from '../store';
 
 import { createSlice } from '@reduxjs/toolkit';
 import noteService from '../services/noteService';
+import { initializeRecordings } from './recordingReducer';
 
 const noteSlice = createSlice({
   name: 'notes',
@@ -34,6 +35,7 @@ export const initializeNotes = () => {
       console.log(error);
     }
 
+    dispatch(initializeRecordings());
     dispatch(setNotes(notes));
     dispatch(sortNotes());
   };

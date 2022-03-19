@@ -7,6 +7,7 @@ const usersRouter = require('./controllers/users');
 const loginRouter = require('./controllers/login');
 const notesRouter = require('./controllers/notes');
 const userprefsRouter = require('./controllers/userprefs');
+const recordingsRouter = require('./controllers/recordings');
 const { errorHandler, userExtractor } = require('./utils/middleware');
 
 app.use(express.static('build'));
@@ -21,6 +22,7 @@ app.use('/api/login', loginRouter);
 app.use('/api/notes', userExtractor, notesRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/userprefs', userprefsRouter);
+app.use('/api/recordings', recordingsRouter);
 
 app.use(errorHandler);
 

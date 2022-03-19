@@ -7,5 +7,13 @@ const getToken = () => {
   }
 };
 
+export const config = () => {
+  return {
+    headers: {
+      Authorization: `bearer ${getToken()}`
+    }
+  };
+};
+
 const exportedObject = { getToken };
 export default exportedObject;

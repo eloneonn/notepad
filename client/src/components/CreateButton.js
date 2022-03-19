@@ -22,9 +22,18 @@ const CreateButton = ({ type, handler }) => {
     label: 'create-note'
   }));
 
-  return (
-    <StyledFab onClick={handler}>{type === 'createnote' ? <AddIcon /> : <MicIcon />}</StyledFab>
-  );
+  const icon = () => {
+    switch (type) {
+      case 'createnote':
+        return <AddIcon />;
+      case 'recordings':
+        return <MicIcon />;
+      default:
+        return null;
+    }
+  };
+
+  return <StyledFab onClick={handler}>{icon()}</StyledFab>;
 };
 
 export default CreateButton;

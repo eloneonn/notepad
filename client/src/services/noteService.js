@@ -1,17 +1,9 @@
 import axios from 'axios';
-import tokenService from './tokenService';
+import { config } from './tokenService';
 
 const baseUrl = 'api/notes';
 
 //? KAIKKI ASYNC/AWAITIKSI?
-
-const config = () => {
-  return {
-    headers: {
-      Authorization: `bearer ${tokenService.getToken()}`
-    }
-  };
-};
 
 const getAll = async () => {
   const response = await axios.get(baseUrl, config());

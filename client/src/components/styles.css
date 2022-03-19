@@ -1,0 +1,17 @@
+.recording-animation {
+  animation-name: animated-block;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes animated-block {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

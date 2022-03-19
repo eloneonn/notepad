@@ -12,7 +12,6 @@ import {
   Fade,
   Dialog,
   useMediaQuery,
-  Drawer,
   Button,
   TextField,
   ToggleButtonGroup,
@@ -23,7 +22,6 @@ import {
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Box } from '@mui/system';
-import CreateButton from './CreateButton';
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DoneIcon from '@mui/icons-material/Done';
@@ -34,11 +32,14 @@ import { useDispatch } from 'react-redux';
 import { removeNote, updateNote } from '../reducers/noteReducer';
 import { setNotification } from '../reducers/notificationReducer';
 import { useTheme } from '@emotion/react';
+import RecorderControls from './RecorderControls';
+import useRecorder from '../hooks/useRecorder';
 let timeoutID;
 
 const Note = forwardRef(({ note }, ref) => {
   const dispatch = useDispatch();
   const theme = useTheme();
+  const { recorderState, ...handlers } = useRecorder(note.id);
 
   const user = JSON.parse(window.localStorage.getItem('loggedUser'));
   const autosave = user.autosave;
@@ -53,7 +54,6 @@ const Note = forwardRef(({ note }, ref) => {
   const [content, setContent] = useState(note.content);
   const [title, setTitle] = useState(note.title);
   const [updated, setUpdated] = useState(true);
-  const [drawer, setDrawer] = useState(false);
 
   useImperativeHandle(ref, () => {
     return {
@@ -82,7 +82,6 @@ const Note = forwardRef(({ note }, ref) => {
     }
     if (!updated) handleUpdate();
 
-    setDrawer(false);
     setModalView(false);
   };
 
@@ -138,13 +137,6 @@ const Note = forwardRef(({ note }, ref) => {
     }
   };
 
-  const handleRecord = (event) => {
-    event.preventDefault();
-    if (!drawer) {
-      setDrawer(true);
-    }
-  };
-
   var time = 'just now';
 
   if (typeof note.modified_at !== 'undefined') {
@@ -193,7 +185,7 @@ const Note = forwardRef(({ note }, ref) => {
         hideBackdrop={fullScreen}
         fullScreen={fullScreen}
         disableScrollLock
-        PaperProps={{ sx: { overflow: 'hidden' } }}>
+        PaperProps={{ sx: { overflowY: 'clip' } }}>
         <Fade in={modalView}>
           <Container
             id="note-container"
@@ -299,49 +291,11 @@ const Note = forwardRef(({ note }, ref) => {
                         aria-label="rhymes and synonyms">
                         <ShortTextIcon />
                       </IconButton>
-
-                      <Drawer
-                        anchor="bottom"
-                        open={drawer}
-                        onBackdropClick={() => setDrawer(false)}
-                        onClose={() => setDrawer(false)}
-                        PaperProps={{ style: { position: 'absolute' } }}
-                        BackdropProps={{ style: { position: 'absolute' } }}
-                        ModalProps={{
-                          container: document.getElementById('note-container'),
-                          style: { position: fullScreen ? 'fixed' : 'absolute' },
-                          keepMounted: true
-                        }}>
-                        <Container>
-                          <Grid
-                            container
-                            direction="column"
-                            justifyContent="flex-start"
-                            alignItems="stretch">
-                            <Grid item xs={6}>
-                              <Box>
-                                <Typography
-                                  variant="h4"
-                                  sx={{
-                                    display: 'flex',
-                                    alignContent: 'center',
-                                    justifyContent: 'center',
-                                    pt: '0.5em',
-                                    fontWeight: 'bold'
-                                  }}>
-                                  Record
-                                </Typography>
-                              </Box>
-                            </Grid>
-                            <Grid item xs={6} sx={{ mb: '8em' }}>
-                              <Box>
-                                <Typography>some more stuf</Typography>
-                              </Box>
-                            </Grid>
-                          </Grid>
-                        </Container>
-                      </Drawer>
-                      <CreateButton type={'Record'} handler={handleRecord} />
+                      <RecorderControls
+                        note_id={note.id}
+                        recorderState={recorderState}
+                        handlers={handlers}
+                      />
                     </Toolbar>
                   </AppBar>
                 </Box>

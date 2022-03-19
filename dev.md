@@ -6,7 +6,7 @@
 - usertypes-table **DONE**
 - notes-table **DONE**
 - userprefs-table **DONE**
-- recordings-table
+- recordings-table **DONE**
 - errorlogs-table
 
 ## Backend
@@ -15,7 +15,7 @@
 - API for logging in **DONE**
 - API for notes **DONE**
 - Finish validations **DONE**
-- API for recordings
+- API for recordings **DONE**
 
 ## Frontend
 
@@ -33,7 +33,7 @@
 - Bonus features
   - Personalized styling and dark mode **DONE**
   - Implement rhyme and synonym -dictionaries with datamuse API **DONE**
-  - Implement embedded recordings and recording functionality
+  - Implement embedded recordings and recording functionality **DONE**
   - Implement undo/redo, note pinning and tags
 
 ## Admin-functionality
@@ -46,6 +46,6 @@
 - **FIXED** Fix creating a new note having to wait for database for id
 - Fix main view having to render twice when logging in (2nd render after fetching notes from db)
 - **ADDED** Implement autosave for notes
-- Body is still scrollable when in note dialog
+- Body is still scrollable when in note dialog & other scrollwheel related bugs
 - **FIXED** Search bar loses focus when a character is typed
 - **ADDED** eslint and prettier

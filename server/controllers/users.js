@@ -12,7 +12,7 @@ usersRouter.post('/', async (request, response) => {
     return response.status(400).end();
   }
 
-  if (body.name === undefined || body.name.length < 0) {
+  if (body.name === undefined || body.name.trim() === '') {
     response.statusMessage = 'Invalid name';
     return response.status(400).end();
   }
