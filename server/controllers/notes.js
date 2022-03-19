@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
-const db = require('../db');
+const { getNotes, postNote, putNote, deleteNote } = require('../db/notesQueries');
 const notesRouter = require('express').Router();
 
 notesRouter.get('/', async (request, response, next) => {
   try {
-    var res = await db.query('SELECT * FROM notes WHERE user_id = $1', [request.user.id]);
+    var res = await getNotes([request.user.id]);
   } catch (error) {
     return response.status(404).json(error);
   }
@@ -25,10 +25,7 @@ notesRouter.post('/', async (request, response, next) => {
   }
 
   try {
-    var res = await db.query(
-      'INSERT INTO notes (id, user_id, title, content) VALUES($1, $2, $3, $4) RETURNING *',
-      [request.body.id, user.id, request.body.title, request.body.content]
-    );
+    var res = await postNote([request.body.id, user.id, request.body.title, request.body.content]);
   } catch (error) {
     response.status(400).json(error);
   }
@@ -43,10 +40,7 @@ notesRouter.put('/', async (request, response, next) => {
   }
 
   try {
-    var res = await db.query(
-      'UPDATE notes SET title = $1, content = $2 WHERE id = $3 RETURNING *',
-      [request.body.title, request.body.content, request.body.id]
-    );
+    var res = await putNote([request.body.title, request.body.content, request.body.id]);
   } catch (error) {
     response.status(404).json(error);
   }
@@ -56,7 +50,7 @@ notesRouter.put('/', async (request, response, next) => {
 notesRouter.delete('/', async (request, response, next) => {
   console.log(request.body);
   try {
-    var res = await db.query('DELETE FROM notes WHERE id = $1', [request.body.note.id]);
+    var res = await deleteNote([request.body.note.id]);
   } catch (error) {
     response.status(404).json(error);
   }

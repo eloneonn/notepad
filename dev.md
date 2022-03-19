@@ -22,7 +22,7 @@
 - Core functionality
   - Service for users **DONE**
   - Service for notes **DONE**
-  - Service for recordings
+  - Service for recordings **DONE**
   - Main view **DONE**
   - React components: Login **DONE**, Register **DONE**, Note **DONE**, NoteView **DONE**, NoteMasonry **DONE**, Settings **DONE**
   - State management with redux **DONE**
@@ -49,3 +49,4 @@
 - Body is still scrollable when in note dialog & other scrollwheel related bugs
 - **FIXED** Search bar loses focus when a character is typed
 - **ADDED** eslint and prettier
+- Deleting note does not delete recordings

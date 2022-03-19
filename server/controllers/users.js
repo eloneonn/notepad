@@ -1,7 +1,8 @@
 const bcrypt = require('bcrypt');
 const usersRouter = require('express').Router();
 const emailValidator = require('email-validator');
-const db = require('../db/index');
+const { postUserprefs } = require('../db/userprefsQueries');
+const { checkEmail, postUser, getUsers } = require('../db/usersQueries');
 const { SALTROUNDS } = require('../utils/config');
 
 usersRouter.post('/', async (request, response) => {
@@ -22,7 +23,7 @@ usersRouter.post('/', async (request, response) => {
     return response.status(400).end();
   }
 
-  const res = await db.query('SELECT * FROM users WHERE email = $1', [body.email]);
+  const res = await checkEmail([body.email]);
 
   if (res.rows.length !== 0) {
     response.statusMessage = 'Email already in use';
@@ -32,11 +33,8 @@ usersRouter.post('/', async (request, response) => {
   const passwordHash = await bcrypt.hash(body.password, SALTROUNDS);
 
   try {
-    const savedUser = await db.query(
-      'INSERT INTO users(name, email, hash) VALUES($1, $2, $3) RETURNING *',
-      [body.name, body.email, passwordHash]
-    );
-    await db.query('INSERT INTO userprefs(user_id) VALUES($1)', [savedUser.rows[0].id]);
+    const savedUser = await postUser([body.name, body.email, passwordHash]);
+    await postUserprefs([savedUser.rows[0].id]);
     return response.status(201).json(savedUser.rows);
   } catch (e) {
     return response.status(400).json(e.message);
@@ -44,7 +42,7 @@ usersRouter.post('/', async (request, response) => {
 });
 
 usersRouter.get('/', async (request, response) => {
-  const res = await db.query('SELECT FROM users');
+  const res = await getUsers();
   return response.json(res.rows);
 });
 
