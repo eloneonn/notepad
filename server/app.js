@@ -21,8 +21,8 @@ app.use(express.json());
 app.use('/api/login', loginRouter);
 app.use('/api/notes', userExtractor, notesRouter);
 app.use('/api/users', usersRouter);
-app.use('/api/userprefs', userprefsRouter);
-app.use('/api/recordings', recordingsRouter);
+app.use('/api/userprefs', userExtractor, userprefsRouter);
+app.use('/api/recordings', userExtractor, recordingsRouter);
 
 app.use(errorHandler);
 

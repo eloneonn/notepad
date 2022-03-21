@@ -1,8 +1,6 @@
 import store from '../store';
-
 import { createSlice } from '@reduxjs/toolkit';
 import noteService from '../services/noteService';
-import { initializeRecordings } from './recordingReducer';
 
 const noteSlice = createSlice({
   name: 'notes',
@@ -35,7 +33,6 @@ export const initializeNotes = () => {
       console.log(error);
     }
 
-    dispatch(initializeRecordings());
     dispatch(setNotes(notes));
     dispatch(sortNotes());
   };
@@ -62,7 +59,7 @@ export const updateNote = (note) => {
 export const removeNote = (note) => {
   return async (dispatch) => {
     await dispatch(deleteNote(note));
-    const response = await noteService.remove({ data: { note } });
+    const response = await noteService.remove({ data: note.id });
 
     return response;
   };

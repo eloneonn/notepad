@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const recordingsRouter = require('express').Router();
 const {
   deleteRecording,
@@ -6,7 +7,11 @@ const {
   deleteRecordings
 } = require('../db/recordingsQueries');
 
-recordingsRouter.get('/', async (request, response) => {
+recordingsRouter.get('/', async (request, response, next) => {
+  if (!request.user) {
+    return response.status(401).send('token missing or invalid');
+  }
+
   try {
     var res = await getRecordings([request.query.id]);
   } catch (error) {
@@ -16,7 +21,11 @@ recordingsRouter.get('/', async (request, response) => {
   return response.json(res.rows);
 });
 
-recordingsRouter.post('/', async (request, response) => {
+recordingsRouter.post('/', async (request, response, next) => {
+  if (!request.user) {
+    return response.status(401).send('token missing or invalid');
+  }
+
   const res = await postRecording([
     request.body.id,
     request.body.note_id,
@@ -27,18 +36,26 @@ recordingsRouter.post('/', async (request, response) => {
   return response.json(res.rows);
 });
 
-recordingsRouter.delete('/', async (request, response) => {
+recordingsRouter.delete('/', async (request, response, next) => {
+  if (!request.user) {
+    return response.status(401).send('token missing or invalid');
+  }
+
   try {
-    var res = await deleteRecording([request.body.recording.id]);
+    var res = await deleteRecording([request.query.data]);
   } catch (error) {
     response.status(404).json(error);
   }
   return res;
 });
 
-recordingsRouter.delete('/multiple', async (request, response) => {
+recordingsRouter.delete('/multiple', async (request, response, next) => {
+  if (!request.user) {
+    return response.status(401).send('token missing or invalid');
+  }
+
   try {
-    var res = await deleteRecordings([request.body.note_id]);
+    var res = await deleteRecordings([request.query.data]);
   } catch (error) {
     response.status(404).json(error);
   }

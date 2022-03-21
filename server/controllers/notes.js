@@ -3,6 +3,10 @@ const { getNotes, postNote, putNote, deleteNote } = require('../db/notesQueries'
 const notesRouter = require('express').Router();
 
 notesRouter.get('/', async (request, response, next) => {
+  if (!request.user) {
+    return response.status(401).send('token missing or invalid');
+  }
+
   try {
     var res = await getNotes([request.user.id]);
   } catch (error) {
@@ -33,9 +37,7 @@ notesRouter.post('/', async (request, response, next) => {
 });
 
 notesRouter.put('/', async (request, response, next) => {
-  const user = request.user;
-
-  if (!user) {
+  if (!request.user) {
     return response.status(401).send('token missing or invalid');
   }
 
@@ -48,8 +50,12 @@ notesRouter.put('/', async (request, response, next) => {
 });
 
 notesRouter.delete('/', async (request, response, next) => {
+  if (!request.user) {
+    return response.status(401).send('token missing or invalid');
+  }
+
   try {
-    var res = await deleteNote([request.body.note.id]);
+    var res = await deleteNote([request.query.data]);
   } catch (error) {
     response.status(404).json(error);
   }

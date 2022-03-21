@@ -4,7 +4,10 @@ import { config } from './tokenService';
 const baseUrl = '/api/recordings';
 
 const getAll = async (note_id) => {
-  const response = await axios.get(baseUrl, { params: { id: note_id } }, config());
+  const response = await axios.get(baseUrl, {
+    headers: config().headers,
+    params: { id: note_id }
+  });
   return response.data;
 };
 
@@ -14,11 +17,11 @@ const add = async (newRecording) => {
 };
 
 const remove = (recording) => {
-  axios.delete(baseUrl, recording, config());
+  axios.delete(baseUrl, { headers: config().headers, params: recording });
 };
 
 const removeAllOfNote = (note_id) => {
-  axios.delete(`${baseUrl}/multiple`, note_id, config());
+  axios.delete(`${baseUrl}/multiple`, { headers: config().headers, params: note_id });
 };
 
 const exportedObject = { add, remove, getAll, removeAllOfNote };

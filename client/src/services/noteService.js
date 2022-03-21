@@ -20,8 +20,8 @@ const update = (newObject) => {
   return request.then((response) => response.data);
 };
 
-const remove = (note) => {
-  return axios.delete(baseUrl, note, config());
+const remove = (noteId) => {
+  return axios.delete(baseUrl, { headers: config().headers, params: noteId });
 };
 
 const exportedObject = { getAll, create, update, remove };

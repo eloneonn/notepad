@@ -1,11 +1,12 @@
 import axios from 'axios';
+import { config } from './tokenService';
 const baseUrl = '/api/userprefs';
 
 export const updatePrefs = async (prefs, id) => {
   const request = { prefs, id };
 
   try {
-    await axios.put(baseUrl, request);
+    await axios.put(baseUrl, request, config());
   } catch (error) {
     return error.response;
   }

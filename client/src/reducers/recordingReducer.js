@@ -65,7 +65,7 @@ export const newRecording = (newRecording) => {
 export const removeRecording = (recording) => {
   return async (dispatch) => {
     try {
-      recordingService.remove({ data: { recording } });
+      recordingService.remove({ data: recording.id });
     } catch (error) {
       console.log(error);
     }
@@ -76,7 +76,7 @@ export const removeRecording = (recording) => {
 export const removeRecordingsOfNote = (note_id) => {
   return async (dispatch) => {
     try {
-      recordingService.removeAllOfNote({ data: { note_id } });
+      recordingService.removeAllOfNote({ data: note_id });
     } catch (error) {
       console.log(error);
     }
