@@ -71,31 +71,28 @@ const App = () => {
     }
   });
 
-  if (user === null) {
-    return (
-      <ThemeProvider theme={theme}>
-        <CssBaseline>
-          <Routes>
-            <Route path="/" element={<LoginScreen />} />
-            <Route path="signup" element={<SignupScreen />} />
-          </Routes>
-          <Notification />
-        </CssBaseline>
-      </ThemeProvider>
-    );
-  } else {
-    return (
-      <ThemeProvider theme={theme}>
-        <CssBaseline>
-          <ButtonAppBar />
-          <Container sx={{ paddingLeft: '0px', paddingRight: '0px', py: '4em' }}>
-            <NoteMasonry />
-          </Container>
-          <Notification />
-        </CssBaseline>
-      </ThemeProvider>
-    );
-  }
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline>
+        {user === null ? (
+          <div>
+            <Routes>
+              <Route path="/" element={<LoginScreen />} />
+              <Route path="signup" element={<SignupScreen />} />
+            </Routes>
+          </div>
+        ) : (
+          <div>
+            <ButtonAppBar />
+            <Container sx={{ paddingLeft: '0px', paddingRight: '0px', py: '4em' }}>
+              <NoteMasonry />
+            </Container>
+          </div>
+        )}
+        <Notification />
+      </CssBaseline>
+    </ThemeProvider>
+  );
 };
 
 export default App;
