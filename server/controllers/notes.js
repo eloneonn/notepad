@@ -21,15 +21,25 @@ notesRouter.get('/', async (request, response, next) => {
 });
 
 notesRouter.post('/', async (request, response, next) => {
-  //TODO validaatiot
   const user = request.user;
-
   if (!user) {
     return response.status(401).send('token missing or invalid');
   }
 
+  const newNote = request.body;
+
+  if (newNote.title === '' && newNote.content === '') {
+    response.statusMessage = 'Note empty';
+    return response.status(400).end();
+  }
+
+  if (newNote.title.length > 100) {
+    response.statusMessage = 'Note title is too long (over 100 characters)';
+    return response.status(400).end();
+  }
+
   try {
-    var res = await postNote([request.body.id, user.id, request.body.title, request.body.content]);
+    var res = await postNote([newNote.id, user.id, newNote.title, newNote.content]);
   } catch (error) {
     response.status(400).json(error);
   }
