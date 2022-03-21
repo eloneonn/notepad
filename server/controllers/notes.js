@@ -28,11 +28,6 @@ notesRouter.post('/', async (request, response, next) => {
 
   const newNote = request.body;
 
-  if (newNote.title === '' && newNote.content === '') {
-    response.statusMessage = 'Note empty';
-    return response.status(400).end();
-  }
-
   if (newNote.title.length > 100) {
     response.statusMessage = 'Note title is too long (over 100 characters)';
     return response.status(400).end();
@@ -41,8 +36,9 @@ notesRouter.post('/', async (request, response, next) => {
   try {
     var res = await postNote([newNote.id, user.id, newNote.title, newNote.content]);
   } catch (error) {
-    response.status(400).json(error);
+    return response.status(400).json(error);
   }
+
   return response.status(201).json(res.rows[0]);
 });
 
@@ -50,12 +46,13 @@ notesRouter.put('/', async (request, response, next) => {
   if (!request.user) {
     return response.status(401).send('token missing or invalid');
   }
-
+  console.log(request.body.id);
   try {
     var res = await putNote([request.body.title, request.body.content, request.body.id]);
   } catch (error) {
-    response.status(404).json(error);
+    return response.status(404).json(error).end();
   }
+
   return response.json(res.rows[0]);
 });
 
@@ -67,7 +64,7 @@ notesRouter.delete('/', async (request, response, next) => {
   try {
     var res = await deleteNote([request.query.data]);
   } catch (error) {
-    response.status(404).json(error);
+    return response.status(404).json(error);
   }
 
   return res;
