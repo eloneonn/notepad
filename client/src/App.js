@@ -53,6 +53,20 @@ const App = () => {
             color: colorMode === 'light' ? '#000000' : '#ffffff'
           }
         }
+      },
+      MuiFab: {
+        styleOverrides: {
+          root: {
+            '&:hover': {
+              backgroundColor: colorMode === 'light' ? 'grey' : 'crimson',
+              filter: 'brightness(75%)'
+            },
+            '&.Mui-focusVisible': {
+              backgroundColor: colorMode === 'light' ? 'grey' : 'crimson',
+              filter: 'brightness(75%)'
+            }
+          }
+        }
       }
     }
   });
