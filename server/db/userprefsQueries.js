@@ -11,4 +11,8 @@ const postUserprefs = async (props) => {
   return await db.query('INSERT INTO userprefs(user_id) VALUES($1)', props);
 };
 
-module.exports = { putUserprefs, postUserprefs };
+const deleteUserPrefs = async (props) => {
+  return await db.query('DELETE FROM userprefs WHERE user_id = $1', props);
+};
+
+module.exports = { putUserprefs, postUserprefs, deleteUserPrefs };

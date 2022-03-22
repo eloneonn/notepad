@@ -13,7 +13,7 @@ const CreateButton = ({ type, handler }) => {
   const StyledFab = styled(Fab)(({ theme }) => ({
     position: 'fixed',
     fontSize: 'large',
-    backgroundColor: theme.palette.mode === 'light' ? 'grey' : 'crimson',
+    backgroundColor: theme.palette.mode === 'light' ? 'lightgrey' : 'crimson',
     bottom: bigger ? 10 : 40,
     size: 'large',
     left: '50%',

@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import loginService from '../services/loginService';
-import { initializeColorMode } from './colorModeReducer';
-import { initializeNotes } from './noteReducer';
+import { putUser, putPassword, deleteUser } from '../services/userService';
+import { initializeColorMode, setColorMode } from './colorModeReducer';
+import { clearNotes, initializeNotes } from './noteReducer';
 import { setNotification } from './notificationReducer';
 import { setSorter } from './sorterReducer';
 
@@ -12,7 +13,7 @@ const userSlice = createSlice({
     setUser(state, action) {
       return action.payload;
     },
-    removeUser(state, action) {
+    clearUser(state, action) {
       return null;
     }
   }
@@ -62,5 +63,52 @@ export const initializeUser = () => {
   };
 };
 
-export const { setUser } = userSlice.actions;
+export const updateUser = (user) => {
+  return async (dispatch) => {
+    const res = await putUser(user);
+
+    if (res.status === 200) {
+      dispatch(setNotification('success', 'Account information saved!'));
+      dispatch(setUser(user));
+      window.localStorage.setItem('loggedUser', JSON.stringify(user));
+    } else {
+      dispatch(setNotification('error', res.statusText));
+    }
+  };
+};
+
+export const updatePassword = (oldPassword, newPassword) => {
+  return async (dispatch) => {
+    const res = await putPassword(oldPassword, newPassword);
+
+    if (res.status === 200) {
+      dispatch(logout());
+      dispatch(clearNotes());
+      dispatch(setColorMode('light'));
+      dispatch(setNotification('success', 'Password changed!'));
+
+      return res.status;
+    } else {
+      dispatch(setNotification('error', res.statusText));
+    }
+  };
+};
+
+export const removeUser = (password) => {
+  return async (dispatch) => {
+    const res = await deleteUser(password);
+
+    if (res.status === 200) {
+      dispatch(clearNotes());
+      dispatch(clearUser());
+      dispatch(logout());
+      dispatch(setColorMode('light'));
+      dispatch(setNotification('success', 'Account deleted!'));
+    } else {
+      dispatch(setNotification('error', 'something went wrong'));
+    }
+  };
+};
+
+export const { setUser, clearUser } = userSlice.actions;
 export default userSlice.reducer;

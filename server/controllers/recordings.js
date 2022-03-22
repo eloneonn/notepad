@@ -28,6 +28,7 @@ recordingsRouter.post('/', async (request, response, next) => {
 
   const res = await postRecording([
     request.body.id,
+    request.user.id,
     request.body.note_id,
     request.body.blob,
     request.body.title

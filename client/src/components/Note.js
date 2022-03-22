@@ -188,7 +188,8 @@ const Note = forwardRef(({ note }, ref) => {
             id="note-container"
             sx={{
               height: '100vh',
-              overflow: 'auto'
+              overflow: 'auto',
+              backgroundColor: theme.palette.mode === 'dark' ? '#000000' : '#fff'
             }}>
             <Grid container direction="column" justifyContent="flex-start" alignItems="stretch">
               <Grid item xs={3} sx={{ mb: '4.5em' }}>

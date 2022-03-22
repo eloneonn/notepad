@@ -58,12 +58,10 @@ const App = () => {
         styleOverrides: {
           root: {
             '&:hover': {
-              backgroundColor: colorMode === 'light' ? 'grey' : 'crimson',
-              filter: 'brightness(75%)'
+              backgroundColor: colorMode === 'light' ? 'grey' : 'darkred'
             },
             '&.Mui-focusVisible': {
-              backgroundColor: colorMode === 'light' ? 'grey' : 'crimson',
-              filter: 'brightness(75%)'
+              backgroundColor: colorMode === 'light' ? 'grey' : 'darkred'
             }
           }
         }
