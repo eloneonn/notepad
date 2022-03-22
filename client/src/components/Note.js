@@ -95,11 +95,6 @@ const Note = forwardRef(({ note }, ref) => {
     setUpdated(true);
   };
 
-  const handleClick = (event) => {
-    event.preventDefault();
-    setModalView(true);
-  };
-
   const handleTitleChange = (event) => {
     event.preventDefault();
     setTitle(event.target.value);
@@ -149,7 +144,7 @@ const Note = forwardRef(({ note }, ref) => {
   return (
     <div>
       <Card variant="outlined">
-        <CardActionArea onClick={handleClick} sx={{ padding: '5px' }}>
+        <CardActionArea onClick={() => setModalView(true)} sx={{ padding: '5px' }}>
           <Typography
             sx={{
               fontWeight: 'bold',
@@ -193,9 +188,7 @@ const Note = forwardRef(({ note }, ref) => {
             id="note-container"
             sx={{
               height: '100vh',
-              pb: '8em',
-              overflow: 'auto',
-              backgroundColor: theme.palette.mode === 'dark' ? '#000000' : '#fff'
+              overflow: 'auto'
             }}>
             <Grid container direction="column" justifyContent="flex-start" alignItems="stretch">
               <Grid item xs={3} sx={{ mb: '4.5em' }}>

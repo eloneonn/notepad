@@ -40,6 +40,7 @@ const RecordingControls = ({ recorderState, handlers, note_id }) => {
   return (
     <Box keepMounted>
       <Drawer
+        disableScrollLock
         anchor="bottom"
         open={drawer}
         onBackdropClick={() => setDrawer(false)}

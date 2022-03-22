@@ -75,12 +75,10 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline>
         {user === null ? (
-          <div>
-            <Routes>
-              <Route path="/" element={<LoginScreen />} />
-              <Route path="signup" element={<SignupScreen />} />
-            </Routes>
-          </div>
+          <Routes>
+            <Route path="/" element={<LoginScreen />} />
+            <Route path="signup" element={<SignupScreen />} />
+          </Routes>
         ) : (
           <div>
             <ButtonAppBar />
