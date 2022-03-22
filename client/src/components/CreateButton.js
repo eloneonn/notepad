@@ -14,7 +14,7 @@ const CreateButton = ({ type, handler }) => {
     position: 'fixed',
     fontSize: 'large',
     backgroundColor: theme.palette.mode === 'light' ? 'lightgrey' : 'crimson',
-    bottom: bigger ? 10 : 40,
+    bottom: bigger ? 15 : 47,
     size: 'large',
     left: '50%',
     transform: 'translate(-50%, -50%)',
