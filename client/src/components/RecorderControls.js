@@ -1,19 +1,10 @@
-import {
-  ButtonGroup,
-  Container,
-  Drawer,
-  Grid,
-  IconButton,
-  Typography,
-  useMediaQuery
-} from '@mui/material';
+import { ButtonGroup, Container, Drawer, Grid, IconButton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useState } from 'react';
 import CreateButton from './CreateButton';
 import RecordingsList from './RecordingsList';
 import StopIcon from '@mui/icons-material/Stop';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import { useTheme } from '@emotion/react';
 import { useSelector } from 'react-redux';
 import './styles.css';
 
@@ -30,8 +21,6 @@ const RecordingControls = ({ recorderState, handlers, note_id }) => {
   const { startRecording, saveRecording /*cancelRecording*/ } = handlers;
   const colorMode = useSelector((state) => state.colorMode);
   const [drawer, setDrawer] = useState(false);
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleRecord = () => {
     setDrawer(!drawer);
@@ -49,8 +38,7 @@ const RecordingControls = ({ recorderState, handlers, note_id }) => {
         BackdropProps={{ style: { position: 'absolute' } }}
         ModalProps={{
           container: document.getElementById('note-container'),
-          style: { position: fullScreen ? 'fixed' : 'absolute' },
-          keepMounted: true
+          style: { position: 'absolute' }
         }}>
         <Container sx={{ backgroundColor: colorMode === 'light' ? '#ffffff' : '#121212' }}>
           <Grid container direction="column" justifyContent="flex-start" alignItems="stretch">

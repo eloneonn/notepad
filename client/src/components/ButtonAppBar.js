@@ -118,10 +118,12 @@ const ButtonAppBar = (props) => {
     <div>
       <Box key="searchbox" sx={{ flexGrow: 1, zIndex: 10 }}>
         <HideOnScroll {...props}>
-          <AppBar>
-            <Toolbar
-              key="searchtoolbar"
-              sx={{ backgroundColor: theme.palette.mode === 'dark' ? '#000' : '#fff' }}>
+          <AppBar
+            sx={{
+              backgroundColor: theme.palette.mode === 'dark' ? '#000' : '#fff',
+              backgroundImage: 'none'
+            }}>
+            <Toolbar key="searchtoolbar">
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>

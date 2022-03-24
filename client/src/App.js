@@ -15,8 +15,7 @@ const App = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const colorMode = useSelector((state) => state.colorMode);
-
-  useEffect(() => {
+  const noteViewActive = useEffect(() => {
     dispatch(initializeUser());
   }, [dispatch]);
 
@@ -40,6 +39,13 @@ const App = () => {
     },
 
     components: {
+      MuiCssBaseline: {
+        styleOverrides: {
+          body: {
+            overflow: noteViewActive ? 'hidden' : 'auto'
+          }
+        }
+      },
       MuiMasonry: {
         styleOverrides: {
           root: {

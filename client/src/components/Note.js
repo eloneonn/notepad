@@ -35,6 +35,7 @@ import { useTheme } from '@emotion/react';
 import RecorderControls from './RecorderControls';
 import useRecorder from '../hooks/useRecorder';
 import { removeRecordingsOfNote } from '../reducers/recordingReducer';
+import './styles.css';
 let timeoutID;
 
 const Note = forwardRef(({ note }, ref) => {
