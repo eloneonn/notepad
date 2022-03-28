@@ -11,9 +11,9 @@ export const createUser = async (user) => {
   }
 };
 
-export const putUser = async (newUser) => {
+export const putUser = async (newUser, password) => {
   try {
-    return await axios.put(baseUrl, newUser, config());
+    return await axios.put(baseUrl, { newUser, password }, config());
   } catch (error) {
     return error.response;
   }

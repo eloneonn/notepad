@@ -60,9 +60,9 @@ export const initializeUser = () => {
   };
 };
 
-export const updateUser = (user) => {
+export const updateUser = (user, password) => {
   return async (dispatch) => {
-    const res = await putUser(user);
+    const res = await putUser(user, password);
 
     if (res.status === 200) {
       dispatch(setNotification('success', 'Account information saved!'));

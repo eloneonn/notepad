@@ -45,6 +45,7 @@ import { setColorMode } from '../reducers/colorModeReducer';
 import PasswordIcon from '@mui/icons-material/Password';
 import EmailIcon from '@mui/icons-material/Email';
 import AbcIcon from '@mui/icons-material/Abc';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 function HideOnScroll(props) {
   const { children } = props;
@@ -77,6 +78,7 @@ const ButtonAppBar = (props) => {
   const [oldPassword, setOldPassword] = useState('');
   const [passwordDialogOpen, setPasswordDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const open = Boolean(anchorEl);
 
@@ -94,6 +96,36 @@ const ButtonAppBar = (props) => {
     updatePrefs({ darkmode, sorter, autosave }, user.id);
     dispatch(setSorter(sorter));
     dispatch(setNotification('success', 'Settings saved!'));
+  };
+
+  const handleEmailUpdate = async () => {
+    setLoading(true);
+    await dispatch(updateUser({ ...user, email: newEmail }, oldPassword));
+    setLoading(false);
+    setNewEmail('');
+    setNewName('');
+    setNewPassword('');
+    setOldPassword('');
+  };
+
+  const handleNameUpdate = async () => {
+    setLoading(true);
+    await dispatch(updateUser({ ...user, name: newName }, oldPassword));
+    setLoading(false);
+    setNewEmail('');
+    setNewName('');
+    setNewPassword('');
+    setOldPassword('');
+  };
+
+  const handlePasswordUpdate = async () => {
+    setLoading(true);
+    await dispatch(updatePassword(oldPassword, newPassword));
+    setLoading(false);
+    setNewEmail('');
+    setNewName('');
+    setNewPassword('');
+    setOldPassword('');
   };
 
   const handleDeleteAccount = () => {
@@ -218,13 +250,20 @@ const ButtonAppBar = (props) => {
         <DialogTitle>Change name</DialogTitle>
         <TextField
           variant="standard"
+          type="password"
+          label="enter password"
+          sx={{ margin: '1em', marginTop: '-1em' }}
+          onChange={({ target }) => setOldPassword(target.value)}></TextField>
+
+        <TextField
+          variant="standard"
           label="enter a new name"
           sx={{ margin: '1em', marginTop: '-1em' }}
           onChange={({ target }) => setNewName(target.value)}></TextField>
         <DialogActions>
-          <Button variant="filled" onClick={() => dispatch(updateUser({ ...user, name: newName }))}>
+          <LoadingButton variant="filled" loading={loading} onClick={handleNameUpdate}>
             Confirm
-          </Button>
+          </LoadingButton>
           <Button variant="filled" onClick={() => setNameDialogOpen(false)}>
             Close
           </Button>
@@ -235,15 +274,20 @@ const ButtonAppBar = (props) => {
         <DialogTitle>Change email</DialogTitle>
         <TextField
           variant="standard"
+          type="password"
+          label="enter password"
+          sx={{ margin: '1em', marginTop: '-1em' }}
+          onChange={({ target }) => setOldPassword(target.value)}></TextField>
+
+        <TextField
+          variant="standard"
           label="enter a new email"
           sx={{ margin: '1em', marginTop: '-1em' }}
           onChange={({ target }) => setNewEmail(target.value)}></TextField>
         <DialogActions>
-          <Button
-            variant="filled"
-            onClick={() => dispatch(updateUser({ ...user, email: newEmail }))}>
+          <LoadingButton variant="filled" loading={loading} onClick={handleEmailUpdate}>
             Confirm
-          </Button>
+          </LoadingButton>
           <Button variant="filled" onClick={() => setEmailDialogOpen(false)}>
             Close
           </Button>
@@ -265,9 +309,7 @@ const ButtonAppBar = (props) => {
           sx={{ margin: '1em', marginTop: '-0.5em' }}
           onChange={({ target }) => setNewPassword(target.value)}></TextField>
         <DialogActions>
-          <Button
-            variant="filled"
-            onClick={() => dispatch(updatePassword(oldPassword, newPassword))}>
+          <Button variant="filled" onClick={handlePasswordUpdate}>
             Confirm
           </Button>
           <Button variant="filled" onClick={() => setPasswordDialogOpen(false)}>

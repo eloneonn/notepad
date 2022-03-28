@@ -54,19 +54,26 @@ usersRouter.put('/', async (request, response, next) => {
   if (!request.user) {
     return response.status(401).send('token missing or invalid');
   }
+  const newUser = request.body.newUser;
+  const password = request.body.password;
 
-  if (request.body.name === undefined || request.body.name.trim() === '') {
+  if (!(await bcrypt.compare(password, request.user.hash))) {
+    response.statusMessage = 'Wrong password';
+    return response.status(401).end();
+  }
+
+  if (newUser.name === undefined || newUser.name.trim() === '') {
     response.statusMessage = 'Invalid name';
     return response.status(400).end();
   }
 
-  if (!emailValidator.validate(request.body.email)) {
+  if (!emailValidator.validate(newUser.email)) {
     response.statusMessage = 'Invalid email';
     return response.status(400).end();
   }
 
   try {
-    var res = await updateUser([request.user.id, request.body.name, request.body.email]);
+    var res = await updateUser([newUser.id, newUser.name, newUser.email]);
   } catch (error) {
     next(error);
   }
