@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
-    "postinstall": "npm install --prefix server && npm install --prefix frontend-app"
+    "postinstall": "npm install --prefix server && npm install --prefix client"
   },
   "author": "Onni Elonen",
   "license": "ISC",
