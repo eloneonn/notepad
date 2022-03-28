@@ -128,7 +128,7 @@ usersRouter.delete('/', async (request, response, next) => {
     next(error);
   }
 
-  return response.status(200).end();
+  return response.status(204).end();
 });
 
 usersRouter.get('/', async (request, response) => {

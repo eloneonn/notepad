@@ -4,6 +4,7 @@ import { putUser, putPassword, deleteUser } from '../services/userService';
 import { initializeColorMode, setColorMode } from './colorModeReducer';
 import { clearNotes } from './noteReducer';
 import { setNotification } from './notificationReducer';
+import { clearRecordings } from './recordingReducer';
 import { setSorter } from './sorterReducer';
 
 const userSlice = createSlice({
@@ -95,8 +96,9 @@ export const removeUser = (password) => {
   return async (dispatch) => {
     const res = await deleteUser(password);
 
-    if (res.status === 200) {
+    if (res.status === 204) {
       dispatch(clearNotes());
+      dispatch(clearRecordings());
       dispatch(clearUser());
       dispatch(logout());
       dispatch(setColorMode('light'));
