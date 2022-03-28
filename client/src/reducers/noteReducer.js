@@ -35,6 +35,7 @@ export const initializeNotes = () => {
 
     dispatch(setNotes(notes));
     dispatch(sortNotes());
+    return 'initialized';
   };
 };
 

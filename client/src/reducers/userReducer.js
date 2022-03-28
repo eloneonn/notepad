@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import loginService from '../services/loginService';
 import { putUser, putPassword, deleteUser } from '../services/userService';
 import { initializeColorMode, setColorMode } from './colorModeReducer';
-import { clearNotes, initializeNotes } from './noteReducer';
+import { clearNotes } from './noteReducer';
 import { setNotification } from './notificationReducer';
 import { setSorter } from './sorterReducer';
 
@@ -29,7 +29,6 @@ export const login = (user) => {
         dispatch(setNotification('success', 'Login succesful!'));
         dispatch(setUser(resultedUser));
         dispatch(setSorter(resultedUser.sorter));
-        dispatch(initializeNotes());
         dispatch(initializeColorMode());
       }
     } catch (error) {
@@ -54,10 +53,8 @@ export const initializeUser = () => {
 
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
-      console.log(user);
       dispatch(setUser(user));
       dispatch(setSorter(user.sorter));
-      dispatch(initializeNotes());
       dispatch(initializeColorMode());
     }
   };

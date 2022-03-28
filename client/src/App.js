@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Container, CssBaseline } from '@mui/material';
+import { Container, CssBaseline, useMediaQuery } from '@mui/material';
 import ButtonAppBar from './components/ButtonAppBar';
 import NoteMasonry from './components/NoteMasonry';
 import LoginScreen from './components/LoginScreen';
@@ -15,7 +15,8 @@ const App = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const colorMode = useSelector((state) => state.colorMode);
-  const noteViewActive = useEffect(() => {
+
+  useEffect(() => {
     dispatch(initializeUser());
   }, [dispatch]);
 
@@ -37,15 +38,7 @@ const App = () => {
         color: colorMode === 'light' ? '#000000' : '#ffffff'
       }
     },
-
     components: {
-      MuiCssBaseline: {
-        styleOverrides: {
-          body: {
-            overflow: noteViewActive ? 'hidden' : 'auto'
-          }
-        }
-      },
       MuiMasonry: {
         styleOverrides: {
           root: {
@@ -75,6 +68,8 @@ const App = () => {
     }
   });
 
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline>
@@ -86,7 +81,8 @@ const App = () => {
         ) : (
           <div>
             <ButtonAppBar />
-            <Container sx={{ paddingLeft: '0px', paddingRight: '0px', py: '4em' }}>
+            <Container
+              sx={{ paddingLeft: '0px', paddingRight: '0px', py: fullScreen ? '4em' : '5em' }}>
               <NoteMasonry />
             </Container>
           </div>

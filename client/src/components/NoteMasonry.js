@@ -1,18 +1,21 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import Note from './Note';
 import Masonry from '@mui/lab/Masonry';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Typography } from '@mui/material';
 import CreateButton from './CreateButton';
-import { appendNote, newNote } from '../reducers/noteReducer';
+import { appendNote, initializeNotes, newNote } from '../reducers/noteReducer';
 import { v4 as uuidv4 } from 'uuid';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 const NoteMasonry = () => {
   const filter = useSelector((state) => state.filter);
   const notes = useSelector((state) => state.notes);
   const dispatch = useDispatch();
   const refs = useRef([]);
+
+  const [init, setInit] = useState(false);
 
   const filteredNotes = notes.filter(
     (n) =>
@@ -35,13 +38,22 @@ const NoteMasonry = () => {
     dispatch(newNote(newNoteObj));
   };
 
+  useEffect(() => {
+    dispatch(initializeNotes()).then((res) => (res === 'initialized') & setInit(true));
+  }, [dispatch]);
+
   return (
     <Box key="masonry-box">
       {notes.length === 0 ? (
         <Container
           sx={{ marginTop: 10, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Typography sx={{ opacity: '60%' }}>You haven't created any notes yet</Typography>
-          <Typography sx={{ opacity: '60%' }}>Use the button below</Typography>
+          {init ? (
+            <Typography textAlign={'center'} sx={{ opacity: '60%' }}>
+              You haven't created any notes yet<br></br>Use the button below
+            </Typography>
+          ) : (
+            <LoadingButton loading={true} />
+          )}
         </Container>
       ) : (
         <div>
