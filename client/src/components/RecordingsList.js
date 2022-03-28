@@ -8,6 +8,7 @@ const RecordingsList = ({ note_id }) => {
   const dispatch = useDispatch();
   const recordingsState = useSelector((state) => state.recordings);
   const recordings = recordingsState.filter((e) => e.note_id === note_id);
+  const url = 'api/recordings/audiofile?path=';
 
   useEffect(() => {
     dispatch(initializeRecordings(note_id));
@@ -22,7 +23,11 @@ const RecordingsList = ({ note_id }) => {
         <List>
           {recordings.map((record) => (
             <ListItem alignItems="center" key={record.id}>
-              <audio controls src={record.blobURL}></audio>
+              <audio
+                controls
+                src={
+                  typeof record.blobURL !== 'undefined' ? record.blobURL : `${url}${record.path}`
+                }></audio>
               <IconButton onClick={() => dispatch(removeRecording(record))}>
                 <DeleteIcon />
               </IconButton>

@@ -21,6 +21,7 @@ const update = (newObject) => {
 };
 
 const remove = (noteId) => {
+  console.log(noteId);
   return axios.delete(baseUrl, { headers: config().headers, params: noteId });
 };
 

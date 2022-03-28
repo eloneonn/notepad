@@ -6,9 +6,13 @@ const getRecordings = async (props) => {
 
 const postRecording = async (props) => {
   return await db.query(
-    'INSERT INTO recordings (id, user_id, note_id, blob, title) VALUES ($1, $2, $3, $4, $5)',
+    'INSERT INTO recordings (id, user_id, note_id, title) VALUES ($1, $2, $3, $4 )',
     props
   );
+};
+
+const putRecording = async (props) => {
+  return await db.query('UPDATE recordings SET path = $1 WHERE id = $2', props);
 };
 
 const deleteRecording = async (props) => {
@@ -28,5 +32,6 @@ module.exports = {
   postRecording,
   deleteRecording,
   deleteRecordings,
-  deleteRecordingsOfUser
+  deleteRecordingsOfUser,
+  putRecording
 };

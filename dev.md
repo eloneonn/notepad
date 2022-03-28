@@ -46,7 +46,7 @@
 - **FIXED** Fix creating a new note having to wait for database for id
 - Fix main view having to render twice when logging in (2nd render after fetching notes from db)
 - **ADDED** Implement autosave for notes
-- Body is still scrollable when in note dialog & other scrollwheel related bugs
+- **FIXED** Body is still scrollable when in note dialog & other scrollwheel related bugs
 - **FIXED** Search bar loses focus when a character is typed
 - **ADDED** eslint and prettier
 - **FIXED** Deleting note does not delete recordings

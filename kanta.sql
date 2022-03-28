@@ -1,0 +1,47 @@
+/* ONLY FOR ILLUSTRATIVE PURPOSES */
+
+
+/* USERS-TABLE */
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    type_id INTEGER REFERENCES usertype DEFAULT 1,
+    email VARCHAR(128) UNIQUE,
+    name VARCHAR(128),
+    hash CHAR(60)
+);
+
+/* USERPREFERENCES-TABLE */
+
+CREATE TABLE users (
+    user_id INTEGER REFERENCES users,
+
+);
+
+/* USERTYPE-TABLE  */
+
+CREATE TABLE usertype (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL
+);
+
+/* NOTES-TABLE */
+
+CREATE TABLE notes (
+    id UUID PRIMARY KEY,
+    user_id INTEGER REFERENCES users,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    title VARCHAR(50),
+    content TEXT
+); 
+
+/* RECORDINGS-TABLE*/
+
+CREATE TABLE recordings (
+    id UUID PRIMARY KEY,
+    user_id INTEGER REFERENCES users,
+    note_id UUID REFERENCES notes,
+    title VARCHAR(50),
+    path VARCHAR(128)
+);

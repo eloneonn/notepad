@@ -60,7 +60,6 @@ notesRouter.delete('/', async (request, response, next) => {
   if (!request.user) {
     return response.status(401).send('token missing or invalid');
   }
-
   try {
     var res = await deleteNote([request.query.data]);
   } catch (error) {

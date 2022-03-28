@@ -31,7 +31,11 @@ const userExtractor = async (request, response, next) => {
       } catch (error) {
         next();
       }
-      request.user = res.rows[0];
+      if (res.rows.length !== 0) {
+        request.user = res.rows[0];
+      } else {
+        console.error('JsonWebTokenError');
+      }
     }
   }
 
