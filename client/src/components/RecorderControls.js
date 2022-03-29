@@ -63,15 +63,19 @@ const RecordingControls = ({ recorderState, handlers, note_id }) => {
                 <ButtonGroup variant="outlined">
                   <IconButton
                     className={initRecording ? 'recording-animation' : ''}
+                    disabled={initRecording}
                     size="large"
                     onClick={() => startRecording()}
-                    sx={{ color: initRecording ? 'crimson' : 'primary' }}>
+                    sx={{
+                      color: initRecording ? 'crimson' : 'primary',
+                      '&.Mui-disabled': { color: 'crimson' }
+                    }}>
                     <FiberManualRecordIcon />
                   </IconButton>
                   <IconButton
                     size="large"
                     onClick={() => saveRecording()}
-                    disabled={recordingSeconds === 0}>
+                    disabled={!initRecording}>
                     <StopIcon />
                   </IconButton>
                 </ButtonGroup>

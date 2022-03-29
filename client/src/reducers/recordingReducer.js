@@ -27,7 +27,17 @@ const recordingSlice = createSlice({
 
 export const initializeRecordings = (note_id) => {
   return async (dispatch) => {
-    const recordings = await recordingService.getAll(note_id);
+    try {
+      var res = await recordingService.getAll(note_id);
+    } catch (error) {
+      console.log(error);
+    }
+
+    if (res.status === 204) {
+      return;
+    }
+
+    const recordings = res.data;
 
     recordings.forEach(async (recording) => {
       dispatch(appendRecording(recording));

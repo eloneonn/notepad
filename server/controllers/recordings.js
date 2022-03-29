@@ -6,11 +6,10 @@ const multer = require('multer');
 const storage = multer.diskStorage({
   destination: './recordings',
   filename: function (req, file, cb) {
-    console.log(req.query.id);
     cb(null, `${req.query.id}.ogg`);
   }
 });
-const upload = multer({ storage: storage });
+const upload = multer({ storage: storage, limits: { fileSize: 10000000 } });
 const {
   deleteRecording,
   postRecording,
@@ -29,7 +28,11 @@ recordingsRouter.get('/', async (request, response, next) => {
     return response.status(404).json(error);
   }
 
-  return response.status(204).send(res.rows);
+  if (res.rows.length === 0) {
+    return response.status(204).end();
+  }
+
+  return response.send(res.rows);
 });
 
 recordingsRouter.get('/audiofile', async (request, response, next) => {

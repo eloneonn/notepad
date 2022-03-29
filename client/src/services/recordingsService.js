@@ -4,11 +4,10 @@ import { config } from './tokenService';
 const baseUrl = '/api/recordings';
 
 const getAll = async (note_id) => {
-  const response = await axios.get(baseUrl, {
+  return await axios.get(baseUrl, {
     headers: config().headers,
     params: { id: note_id }
   });
-  return response.data;
 };
 
 const getFile = (path) => {
