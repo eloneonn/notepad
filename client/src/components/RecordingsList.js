@@ -22,7 +22,10 @@ const RecordingsList = ({ note_id }) => {
       {recordings.length > 0 ? (
         <List>
           {recordings.map((record) => (
-            <ListItem alignItems="center" key={record.id}>
+            <ListItem
+              alignItems="center"
+              key={record.id}
+              sx={{ alignContent: 'center', justifyContent: 'center' }}>
               <audio
                 controls
                 src={
