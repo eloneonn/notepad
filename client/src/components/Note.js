@@ -26,7 +26,6 @@ import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DoneIcon from '@mui/icons-material/Done';
 import ShortTextIcon from '@mui/icons-material/ShortText';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import wordService from '../services/wordService';
 import { useDispatch } from 'react-redux';
 import { removeNote, updateNote } from '../reducers/noteReducer';
@@ -267,9 +266,7 @@ const Note = forwardRef(({ note }, ref) => {
                       backgroundColor: theme.palette.mode === 'dark' ? '#000000' : '#fff'
                     }}>
                     <Toolbar disableGutters>
-                      <IconButton size="large" mr="2" aria-label="back">
-                        <MoreVertIcon />
-                      </IconButton>
+                      <Box mr="2" sx={{ padding: '24px' }}></Box>
                       <Typography
                         variant="caption"
                         sx={{
