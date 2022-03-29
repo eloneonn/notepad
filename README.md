@@ -1,15 +1,15 @@
 # Notepad
 Notepad is an open source text editing app aimed specifically for songwriters
 
-Link to app: https://hidden-headland-35621.herokuapp.com/
+### Link to app: https://hidden-headland-35621.herokuapp.com/
 
-Link to diary: https://github.com/eloneonn/notepad/blob/main/Tuntip%C3%A4iv%C3%A4kirja.md
+### Link to diary: https://github.com/eloneonn/notepad/blob/main/Tuntip%C3%A4iv%C3%A4kirja.md
 
 ## Features
 
 The app is a basic note-taking app with some special features geared towards songwriters. Apart from basic functionality, the app features recording voice memos and has integrated rhyme and synonym dictionaries built utilizing the Datamuse API. Other features include darkmode, autosaving notes and . The full-fledged token-based user-authentication ensures security and privacy, while . The app is fully responsive and can be comfortably used on a number of devices and environments.
 
-The recording feature was built with help from [Leonardo Bravo's article on dev.to](https://dev.to/jleonardo007/create-a-voice-recorder-with-react-32j6) [GitHub-link](https://github.com/jleonardo007/voice-recorder-example).
+The recording feature was built with help from [Leonardo Bravo's article on dev.to](https://dev.to/jleonardo007/create-a-voice-recorder-with-react-32j6), [GitHub-link](https://github.com/jleonardo007/voice-recorder-example).
 
 ## Usage
 
