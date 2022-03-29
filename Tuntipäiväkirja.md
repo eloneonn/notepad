@@ -53,3 +53,5 @@
 | 29.maalis | 3        | siivoilua, bugifiksausta, statuskoodien korjausta             |
 |           | 1        | audiotiedostoille maksimikoko                                 |
 |           | 1        | readmen päivitys                                              |
+| --------- | -------- | ------------------------------------------------------------- |
+| YHT:      | 177      |                                                               |
