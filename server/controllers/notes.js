@@ -14,7 +14,7 @@ notesRouter.get('/', async (request, response, next) => {
   }
 
   if (res.rows.length === 0) {
-    return response.status(404).send('0 notes found');
+    return response.status(204).end();
   } else {
     return response.json(res.rows);
   }

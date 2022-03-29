@@ -29,7 +29,7 @@ recordingsRouter.get('/', async (request, response, next) => {
     return response.status(404).json(error);
   }
 
-  return response.send(res.rows);
+  return response.status(204).send(res.rows);
 });
 
 recordingsRouter.get('/audiofile', async (request, response, next) => {

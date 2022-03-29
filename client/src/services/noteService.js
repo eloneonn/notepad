@@ -6,22 +6,18 @@ const baseUrl = 'api/notes';
 //? KAIKKI ASYNC/AWAITIKSI?
 
 const getAll = async () => {
-  const response = await axios.get(baseUrl, config());
-  return response.data;
+  return await axios.get(baseUrl, config());
 };
 
 const create = async (newObject) => {
-  const response = await axios.post(baseUrl, newObject, config());
-  return response.data;
+  return await axios.post(baseUrl, newObject, config());
 };
 
-const update = (newObject) => {
-  const request = axios.put(baseUrl, newObject, config());
-  return request.then((response) => response.data);
+const update = async (newObject) => {
+  return await axios.put(baseUrl, newObject, config());
 };
 
 const remove = (noteId) => {
-  console.log(noteId);
   return axios.delete(baseUrl, { headers: config().headers, params: noteId });
 };
 

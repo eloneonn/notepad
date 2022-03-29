@@ -28,12 +28,16 @@ const noteSlice = createSlice({
 export const initializeNotes = () => {
   return async (dispatch) => {
     try {
-      var notes = await noteService.getAll();
+      var res = await noteService.getAll();
     } catch (error) {
       console.log(error);
     }
 
-    dispatch(setNotes(notes));
+    if (res.status === 204) {
+      return 'initialized';
+    }
+
+    dispatch(setNotes(res.data));
     dispatch(sortNotes());
     return 'initialized';
   };
@@ -43,7 +47,7 @@ export const newNote = (newNote) => {
   return async (dispatch) => {
     const response = await noteService.create(newNote);
 
-    dispatch(changeNote(response));
+    dispatch(changeNote(response.data));
     dispatch(sortNotes());
   };
 };
@@ -53,7 +57,7 @@ export const updateNote = (note) => {
     await dispatch(changeNote(note));
     const response = await noteService.update(note);
 
-    return response;
+    return response.data;
   };
 };
 

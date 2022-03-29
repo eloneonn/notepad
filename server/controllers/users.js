@@ -7,7 +7,6 @@ const { postUserprefs, deleteUserPrefs } = require('../db/userprefsQueries');
 const {
   checkEmail,
   postUser,
-  getUsers,
   updateUser,
   updatePassword,
   deleteUser
@@ -36,7 +35,7 @@ usersRouter.post('/', async (request, response) => {
 
   if (res.rows.length !== 0) {
     response.statusMessage = 'Email already in use';
-    return response.status(400).end();
+    return response.status(409).end();
   }
 
   const passwordHash = await bcrypt.hash(body.password, SALTROUNDS);
@@ -129,11 +128,6 @@ usersRouter.delete('/', async (request, response, next) => {
   }
 
   return response.status(204).end();
-});
-
-usersRouter.get('/', async (request, response) => {
-  const res = await getUsers();
-  return response.json(res.rows);
 });
 
 module.exports = usersRouter;

@@ -26,8 +26,4 @@ const deleteUser = async (props) => {
   return await db.query('DELETE FROM users WHERE id = $1', props);
 };
 
-const getUsers = async (props) => {
-  return await db.query('SELECT FROM users', props);
-};
-
-module.exports = { checkEmail, postUser, getUsers, updateUser, updatePassword, deleteUser };
+module.exports = { checkEmail, postUser, updateUser, updatePassword, deleteUser };
