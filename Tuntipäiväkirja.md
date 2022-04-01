@@ -53,5 +53,6 @@
 | 29.maalis | 3        | siivoilua, bugifiksausta, statuskoodien korjausta             |
 |           | 1        | audiotiedostoille maksimikoko                                 |
 |           | 1        | readmen päivitys                                              |
+| 01.huhti  | 4        | schema.sql ja bugifiksailua                                   |
 | --------- | -------- | ------------------------------------------------------------- |
-| YHT:      | 177      |                                                               |
+| YHT:      | 181      |                                                               |
