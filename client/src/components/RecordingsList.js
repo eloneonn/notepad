@@ -6,6 +6,7 @@ import { initializeRecordings, removeRecording } from '../reducers/recordingRedu
 
 const RecordingsList = ({ note_id }) => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
   const recordingsState = useSelector((state) => state.recordings);
   const recordings = recordingsState.filter((e) => e.note_id === note_id);
   const url = 'api/recordings/audiofile?path=';
@@ -29,7 +30,9 @@ const RecordingsList = ({ note_id }) => {
               <audio
                 controls
                 src={
-                  typeof record.blobURL !== 'undefined' ? record.blobURL : `${url}${record.path}`
+                  typeof record.blobURL !== 'undefined'
+                    ? record.blobURL
+                    : `${url}${record.path}&token=${user.token}&user_id=${user.id}`
                 }></audio>
               <IconButton onClick={() => dispatch(removeRecording(record))}>
                 <DeleteIcon />

@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 const recordingsRouter = require('express').Router();
+const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const { request } = require('http');
 const multer = require('multer');
@@ -17,6 +18,7 @@ const {
   deleteRecordings,
   putRecording
 } = require('../db/recordingsQueries');
+const { SECRET } = require('../utils/config');
 
 recordingsRouter.get('/', async (request, response, next) => {
   if (!request.user) {
@@ -36,7 +38,11 @@ recordingsRouter.get('/', async (request, response, next) => {
 });
 
 recordingsRouter.get('/audiofile', async (request, response, next) => {
-  response.download(request.query.path);
+  const decodedToken = jwt.verify(request.query.token, SECRET);
+
+  if (decodedToken.id === Number(request.query.user_id)) {
+    response.download(request.query.path);
+  }
 });
 
 recordingsRouter.post('/', async (request, response, next) => {
