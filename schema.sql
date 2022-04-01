@@ -1,4 +1,4 @@
-/* USERTYPE-TABLE (regular: id = 1, admin: id = 2) */
+/* THIS CREATES ALL NECESSARY TABLES, USERTYPES (regular: id = 1, admin: id = 2) AND FUNCTIONS */
 
 CREATE TABLE usertype (
     id SERIAL PRIMARY KEY,
@@ -9,8 +9,6 @@ INSERT INTO usertype (name) VALUES
     ('regular'), 
     ('admin');
 
-/* USERS-TABLE */
-
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     type_id INTEGER REFERENCES usertype DEFAULT 1,
@@ -19,17 +17,13 @@ CREATE TABLE users (
     hash CHAR(60)
 );
 
-/* USERPREFERENCES-TABLE */
-
-CREATE TABLE users (
+CREATE TABLE userpreferences (
     id SERIAL PRIMARY KEY
     user_id INTEGER REFERENCES users,
     darkmode BOOLEAN DEFAULT false,
     sorter VARCHAR(16) DEFAULT 'Last created',
     autosave BOOLEAN DEFAULT true
 );
-
-/* NOTES-TABLE */
 
 CREATE TABLE notes (
     id UUID PRIMARY KEY,
@@ -40,8 +34,6 @@ CREATE TABLE notes (
     content TEXT
 ); 
 
-/* RECORDINGS-TABLE*/
-
 CREATE TABLE recordings (
     id UUID PRIMARY KEY,
     user_id INTEGER REFERENCES users,
@@ -49,8 +41,6 @@ CREATE TABLE recordings (
     title VARCHAR(255),
     path VARCHAR(255)
 );
-
-/* FUNCTION AND TRIGGER FOR UPDATING note.modified_at -FIELD */
 
 CREATE OR REPLACE FUNCTION update_timestamp()
 RETURNS TRIGGER AS $$

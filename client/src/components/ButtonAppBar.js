@@ -160,6 +160,8 @@ const ButtonAppBar = (props) => {
                 <SearchIcon />
               </SearchIconWrapper>
               <InputBase
+                autoComplete="off"
+                type="search"
                 spellCheck="false"
                 value={filter}
                 onChange={({ target }) => dispatch(setFilter(target.value))}
@@ -251,6 +253,7 @@ const ButtonAppBar = (props) => {
         <TextField
           variant="standard"
           type="password"
+          autoComplete="off"
           label="enter password"
           sx={{ margin: '1em', marginTop: '-1em' }}
           onChange={({ target }) => setOldPassword(target.value)}></TextField>

@@ -22,16 +22,16 @@ const errorHandler = (error, request, response, next) => {
 const userExtractor = async (request, response, next) => {
   const authorization = request.get('authorization');
 
-  console.log('Request token:', authorization);
   if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
     const decodedToken = jwt.verify(authorization.substring(7), SECRET);
     if (decodedToken) {
       try {
         var res = await db.query('SELECT * FROM users WHERE id = $1', [decodedToken.id]);
       } catch (error) {
-        next();
+        next(error);
       }
-      if (res.rows.length !== 0) {
+
+      if (typeof res !== 'undefined') {
         request.user = res.rows[0];
       } else {
         console.error('JsonWebTokenError');
