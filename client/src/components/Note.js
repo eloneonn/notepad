@@ -189,7 +189,7 @@ const Note = forwardRef(({ note }, ref) => {
             sx={{
               height: '100vh',
               overflow: 'auto',
-              backgroundColor: theme.palette.mode === 'dark' ? '#000000' : '#fff'
+              backgroundColor: theme.palette.mode === 'dark' ? '#070707' : '#fff'
             }}>
             <Grid container direction="column" justifyContent="flex-start" alignItems="stretch">
               <Grid item xs={3} sx={{ mb: '4.5em' }}>
@@ -198,7 +198,7 @@ const Note = forwardRef(({ note }, ref) => {
                     elevation={0}
                     sx={{
                       position: fullScreen ? 'fixed' : 'absolute',
-                      backgroundColor: theme.palette.mode === 'dark' ? '#000000' : '#fff',
+                      backgroundColor: theme.palette.mode === 'dark' ? '#070707' : '#fff',
                       padding: '0.5em 0.5em 0.5em 0.5em'
                     }}>
                     <Toolbar disableGutters>

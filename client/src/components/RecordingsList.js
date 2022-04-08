@@ -33,7 +33,11 @@ const RecordingsList = ({ note_id }) => {
                   typeof record.blobURL !== 'undefined'
                     ? record.blobURL
                     : `${url}${record.path}&token=${user.token}&user_id=${user.id}`
-                }></audio>
+                }
+                style={{
+                  width: '100%',
+                  maxWidth: '350px'
+                }}></audio>
               <IconButton onClick={() => dispatch(removeRecording(record))}>
                 <DeleteIcon />
               </IconButton>
